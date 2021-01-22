@@ -1,2 +1,2 @@
 # Speare
-'Tis the dopest script thy shall lay thine eyes upon
+Mine script is of the upmost eloquence, and contains superb lexicon--that of which is considerably complex when compared to the average gentleman or fair maiden.
