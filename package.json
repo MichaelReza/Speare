@@ -1,0 +1,23 @@
+{
+  "name": "speare",
+  "version": "1.0.0",
+  "description": "A dapper programming language for the sophisticated and wealthy",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MichaelReza/Speare.git"
+  },
+  "author": "Megan Reyes, Caitlin Colina, Damian Browne, Cameron Gould, Andrew Rossell, Michael Reza",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MichaelReza/Speare/issues"
+  },
+  "homepage": "https://github.com/MichaelReza/Speare#readme",
+  "dependencies": {
+    "ohm": "^0.10.4"
+  }
+}

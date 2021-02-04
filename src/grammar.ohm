@@ -1,0 +1,117 @@
+Speare {
+  Program             = Corollary+
+                      | Statement+
+  Corollary           = enter type varname "(" ListOf<Param, ","> ")" "{" Body "}"
+  Body                = Statement+ "returneth" Statement                              --nonvoid
+                      | Statement+                                                    --void
+  Statement           = alloweth varname "be" IncExp                                  --variable
+                      | varname "be" IncExp                                           --assignment
+                      | "speaketh(" IncExp ")"                                        --print
+                      | IncExp                                                        --expression
+  IncExp              = IncExp (incrementby | decrementby) RelExp                     --incdecby
+                      | IncExp (increment | decrement)                                --incdec
+                      | RelExp
+  RelExp              = AddSub "tis" AddSub                                           --equality
+                      | AddSub                                                        --defer
+  AddSub              = AddSub (subtraction | addition) MultDiv                       --addorsubtract
+                      | MultDiv                                                       --defer
+  MultDiv             = MultDiv (multiplication | division | modulus) Exponentiate    --multordiv
+                      | Exponentiate
+  Exponentiate        = Factor (exponentiate) Exponentiate                            --raisepower
+                      | Factor
+  Factor              = varname
+                      | numeral
+                      | "(" AddSub ")"                                                --parens
+                      | ("nay" | abs | sqrt)	"(" Factor ")"                          --unary
+  
+  
+  // Define ids for variables, params
+  varname             = ~keyword letter alnum*                                        --number
+                      | ~keyword "\"" letter* "\""                                    --string
+  Param               = type varname
+  
+  //Reserved keywords
+  alloweth            = "alloweth" ~alnum
+  enter               = "enter"
+  type                =	primativeType
+                      | dsType
+
+  //Non-DS types                              
+  primativeType       = "Indistinguishable"
+                      | "ToBeOrNotToBe"
+                      | "Numeral"
+                      | "Lexicographical"
+                      | "IllUsed"
+                      | "Ideogram"
+                      | "Corollary"
+                      | "Accommodation"
+
+  //Data Structures                                  
+  dsType              = "Array"
+                      | "Dictionary"
+                      | "Tuple"
+
+  // Types                          
+  indistinguishable   = "indistinguishable" ~alnum
+  tobeornottobe       =	"fallicious" | "faithful"                                     --binary
+  numeral             = digit+ ("." digit+)?
+  lexicographical     = "\"" alnum "\""
+  illused             = "null"
+
+  // Operations
+  addition            = "with"
+  subtraction         = "without"
+  multiplication      = "accumulate"
+  division            = "sunder"
+  modulus             = "residue"
+  exponentiate        = "exponentiate"
+  abs                 = "absolutization" ~alnum
+  sqrt                = "quadrangle" ~alnum
+  
+  // Relational and Logical operations
+  relop               = "tis nobler"
+                      | "tis lesser"
+                      | "tis not"
+                      | "tis"
+                      | "nobler"
+                      | "lesser"
+  logicalop           = "furthermore"
+                      | "alternatively"
+                      | "nay"
+  
+  //Incrementing
+  assignment          = "be"
+  increment           = "increment"
+  incrementby         = "incrementby"
+  decrement           = "decrement"
+  decrementby         = "decrementby"
+  
+  // Defining symbols
+  ideogram            = addition
+                      | subtraction
+                      | multiplication
+                      | division
+                      | modulus
+                      | assignment
+                      | relop
+                      | logicalop
+                      | sqrt
+                      | abs
+                      | increment
+                      | decrement
+  
+  // Defining Objects
+  accommodation	      = indistinguishable
+                      | tobeornottobe
+                      | numeral
+                      | lexicographical
+                      | ideogram
+                      | enter
+                      | illused
+   
+   //Defining Reserved Words
+   keyword            = ideogram
+                      | alloweth
+                      | accommodation
+  	
+}
