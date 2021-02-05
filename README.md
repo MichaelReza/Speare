@@ -4,6 +4,8 @@
 
 ## 1 | Introduction to Speare
 
+Friends, Romans, countrymen, lend me your ears...
+
 Welcome to the realm of sophisticated programming. No more are the days of writing simplistic "for" loops, "if-else" statements, and "classes". Speare brings sophistication to the computer science industry, with terms that only Shakespeare himself might take interest in. With _Speare_, your code will be quite the _superiority complex_ stamp on your GitHub account. Try Speare today!
 
 <br />
