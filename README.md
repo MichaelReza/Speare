@@ -1,4 +1,4 @@
-> {_Insert Logo Here_}
+<img src="Team Resources/Logo Ideas/speare_fancy.png">
 
 # Speare
 
@@ -12,10 +12,11 @@ Welcome to the realm of sophisticated programming. No more are the days of writi
 
 Speare has a number of different features:
 
-- Here is one
-- Here is another
-- As you can see, this is a WIP
-- But here is another
+- Static typing
+- Classes for object-oriented flow
+- Nesting
+- Sophistication
+- JS-like numeric types
 
 Make sure to utilize them all to get the best out of Speare.
 
