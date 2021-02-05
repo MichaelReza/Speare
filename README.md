@@ -23,150 +23,379 @@ Make sure to utilize them all to get the best out of Speare.
 
 ## 3 | Example Code
 
-Below, you will find a comprehensive set of examples of code in Speare, and the identical example written in JavaScript. Hopefully this will allow you to see just how bland and homespun other languages are, compared to Speare.
+Below, you will find a comprehensive set of examples of code in Speare. Hopefully this will allow you to see just how bland and homespun other languages are, compared to Speare.
 
-### 3.1 | Printing & Comments
+### Hello World:
+
+<table>
+<tr> <th>JavaScript</th><th>Speare</th><tr>
+</tr>
+
+<td>
+
+`console.log("hello, world")`
+
+</td>
+
+<td>
+
+`speaketh("hello world")`
+
+</td>
+</table>
+
+### Functions:
+
+- Declared with 'enter`
+- Comma separated parameters
+- Parameters must have their type
+
+<table>
+<tr> <th>JavaScript</th><th>Speare</th><tr>
+</tr>
+
+<td>
+
+```javascript
+function foo(bar, baz) {
+  let x = 0;
+  return x;
+}
+```
+
+</td>
+
+<td>
+
+```
+enter Numeral foo(Numeral bar, Numeral baz) {
+  alloweth x be 0
+  returneth x
+}
+```
+
+</td>
+</table>
+
+### Variable Declaration and Assignment
+
+- Speare allows for both declaration and assignment of variables
+- Speare requires that you state the type of the variable you are creating
+
+<table>
+<tr> <th>JavaScript</th><th>Speare</th><tr>
+</tr>
+
+<td>
+
+```javascript
+var a;
+var b = 0;
+var c = "hello";
+```
+
+</td>
+
+<td>
+
+```
+alloweth Numeral a
+alloweth Numeral b be 0
+alloweth Lexicographical c be "hello"
+```
+
+</td>
+</table>
+
+### Conditionals
+
+<table>
+<tr> <th>JavaScript</th><th>Speare</th><tr>
+</tr>
+
+<td>
+
+```javascript
+if (x == 10) {
+  console.log(x);
+} else if (x > 10) {
+  console.log("greater");
+} else {
+  console.log("less");
+}
+```
+
+</td>
+
+<td>
+
+```
+whether (x tis 10) {
+  speaketh(x)
+}
+subsequently (x nobler 10) {
+  speaketh("greater")
+}
+otherwise {
+  speaketh("less")
+}
+```
+
+</td>
+</table>
+
+### For, For-in Loops
+
+- For loops in Speare must have two or three statements within them
+
+<table>
+<tr> <th>JavaScript</th><th>Speare</th><tr>
+</tr>
+
+<td>
+
+```javascript
+for (int x = 0; x < 10; x++>) {
+  for (x in dataset) {
+    y += 5;
+  }
+}
+```
+
+</td>
+
+<td>
+
+```
+in regards to(alloweth x be 0, x lesser 10, x increment) {
+  in regards to (x within dataset) {
+    y incrementby 5
+  }
+}
+```
+
+</td>
+</table>
+
+### While, Do-While loops
+
+<table>
+<tr> <th>JavaScript</th><th>Speare</th><tr>
+</tr>
+
+<td>
+
+```javascript
+while (x) {
+  do {
+    y++;
+  } while (y <= 10);
+}
+```
+
+</td>
+
+<td>
+
+```
+whilst(x) {
+  execute {
+    y increment
+  } whilst(y tis lesser 10)
+}
+
+
+```
+
+</td>
+</table>
+
+### Switch Case
+
+<table>
+<tr> <th>JavaScript</th><th>Speare</th><tr>
+</tr>
+
+<td>
+
+```javascript
+switch (x) {
+  case 0:
+    y = 0;
+    break;
+  case 1:
+    y = 1;
+    break;
+}
+```
+
+</td>
+
+<td>
+
+```
+trigger(x) {
+  condition 0:
+    y be 0;
+    exit;
+  condition 1:
+    y be 1;
+    exit;
+}
+```
+
+</td>
+</table>
+
+### 3.1 | Printing
 
 Printing in Speare is easy if you're a lexicographer:
 
-`Example code`
-
-See? Commenting can be seen in the same light:
-
-`Example Code`
+`speaketh("quite superior, i must say")`
 
 ### 3.2 | Numbers and Arithmetic
 
-All the arithmetic is the same in Speare as most other languages:
+Arithmetic is quite fancy! Here are some examples:
 
-`Example Code`
+#### Addition
+
+`x with 6` adds 6 to the variable `x`.
+
+#### Subtraction
+
+`x without 6` subtracts 6 from the variable `x`.
+
+#### Multiplication
+
+`x accumulate 6` gets the product of 6 and `x`.
+
+#### Division
+
+`x sunder 6` gets the quotient of 6 and `x`.
+
+#### Modulus
+
+`x residue 6` gets the remainder of `x` divided by 6.
+
+#### Exponents
+
+`x exponentiate 6` raises `x` to the 6th power.
+
+#### Absolute value
+
+`absolutization(x)` is the absolute value of `x`.
+
+#### Square root
+
+`quadrangle(x)` gets the square root of `x`.
 
 So you don't have to worry about your lackluster English skills in this part of the Speare language.
 
 ### 3.3 | Variables & Types
 
-###### This section will outline all of the types found in Speare
+Similar to Java, declaring or initializing a variable requires that you explicitly provide its type:
+
+`alloweth Numeral x be 0`
+
+Speare types include:
+
+- Numeral (integer, float, etc.)
+- Lexicographical (strings)
+- ToBeOrNotToBe (boolean)
+- Indistinguishable (None)
+- Ideogram (symbol)
+- Enter (function)
+- IllUsed (null)
+- Accommodation (object)
 
  <br />
 
-#### 3.3.1 | Number
+#### 3.3.1 | Numeral
 
-The number type contains what other languages might consider both "integers" and "floats" (or in some cases, doubles). Here is how they work in Speare:
+The numeral type contains what other languages might consider both "integers" and "floats" (or in some cases, doubles).
 
-`Example Code`
-
-<br />
-
-#### 3.3.2 | String
-
-Strings work as expected:
-
-`Example Code`
-
-#### 3.3.3 | Boolean
-
-The Boolean values are a bit different in Speare compared to JavaScript:
-
-`Example Code`
+`alloweth Numeral x be 6 with 7 without 8 exponentiate 9`
 
 <br />
 
-#### 3.3.4 | Array
+#### 3.3.2 | Lexicographical
 
-The Array type is very special in Speare:
+Lexicographicals are strings, easy enough.
 
-`Example Code`
+`alloweth Lexicographical be "I am so sophisticated"`
 
-<br />
+#### 3.3.3 | ToBeOrNotToBe
 
-#### 3.3.5 | Function
+That is the question, is it not? These are true/false values of `faithful` and `fallacious`.
 
-Function declaration is quite the mouthful:
-
-`Example Code`
-
-And you can return like so:
-
-`Example Code`
+`alloweth ToBeOrNotToBe flatearththeory be fallacious`
 
 <br />
 
-#### 3.3.6 | Object
+### 3.4 | Compositions
 
-Objects are the root of each type in Speare. Just as everything in the universe is made up of some object:
+Compositions... or as the casuals call them, "classes," are very simple to create in Speare, yet so snazzy.
 
-`Example Code`
+`Composition Foo {...}`
 
-<br />
-
-### 3.4 | Loops
-
-###### This section will cover both types of loops in Speare
-
-<br />
-
-#### 3.4.1 | For Loops
-
-Deterministic loops in Speare are verbose:
-
-`deterministically(...)`
-
-  <br />
-
-#### 3.4.2 | While Loops
-
-non-deterministic loops are the same way:
-
-`nondeterministically(...)`
-
-  <br />
-
-### 3.5 | Functions & Return Statements
-
-Defining a function looks like this:
-
-`demarcate foo(...)`
-
-and returning a value:
-
-`reimburse ...`
-
-<br />
-
-### 3.6 | Structures & Classes
-
-Classes (or structures) can be defined as such:
-
-`configuration Foo(...)`
-
-### 3.7 | Reserved Words
+### 3.6 | Reserved Words
 
 Here is a list of all reserved words in the language:
 
-- word
-- word
-- word
-- word
-- word
-- word
-- word
-- word
+- alloweth
+- enter
+- ToBeOrNotToBe
+- Numeral
+- Lexicographical
+- IllUsed
+- Ideogram
+- Corollary
+- indistinguishable
+- fallacious
+- faithful
+- null
+- with
+- without
+- accumulate
+- sunder
+- residue
+- exponentiate
+- absolutization
+- quadrangle
+- Composition
+- tis nobler
+- tis not
+- tis lesser
+- tis
+- nobler
+- lesser
+- furthermore
+- alternatively
+- nay
+- be
+- increment
+- incrementby
+- decrement
+- decrementby
+- whether
+- subsequently
+- otherwise
+- trigger
+- condition
+- exit
+- whilst
+- execute
+- in regards to
+- within
 
 <br />
 
-### 3.8 | Semantic Errors
+### 3.7 | Semantic Errors
 
-Here is a list of all possible semantic errors you could recieve:
-
-- error
-- error
-- error
-- error
-- error
-- error
+As this language grows and begins to function, we will add a section on semantics!:
 
 <br />
 
 ### 4.0 | Installation
 
-###### How to install Speare
+You cannot currently install and run Speare, but you can check out our tests by pulling the repository and running `npm install`, then `npm test` to see all of our current tests for the grammar of Speare.
