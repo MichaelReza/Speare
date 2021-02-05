@@ -1,4 +1,4 @@
-<img src="Team Resources/Logo Ideas/speare_fancy.png" =250x>
+<img src="Team Resources/Logo Ideas/speare_fancy.png">
 
 # Speare
 
