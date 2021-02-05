@@ -323,7 +323,7 @@ The numeral type contains what other languages might consider both "integers" an
 
 Lexicographicals are strings, easy enough.
 
-`alloweth Lexicographical be "I am so sophisticated"`
+`alloweth Lexicographical myopinion be "I am so sophisticated"`
 
 #### 3.3.3 | ToBeOrNotToBe
 
