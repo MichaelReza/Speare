@@ -2,9 +2,10 @@ import assert from "assert"
 import parse from "../src/parser.js"
 
 const goodPrograms = {
+  "Recognizes empty program" : "",
   "Recognizes a simple print statement" : "alloweth myVar be \"hello\"",
   "Recognizes a print statement" : "speaketh(x accumulate 5)",
-  "Recognizes arithmetic +-" : "x with 5 without 6",
+  "Recognizes arithmetic +-" : "x = x with 5 without 6)",
   "Recognizes arithmetic */" : "x accumulate 6 sunder 12",
   "Recognizes functions" : "enter ToBeOrNotToBe foo(Numeral x) { \
         alloweth x be 1 \
@@ -18,7 +19,6 @@ const goodPrograms = {
 }
 
 const badPrograms = {
-  "Disallows empty program" : "",
   "Disallows incomplete statement" : "alloweth",
   "Disallows incomplete statement" : "alloweth increment be",
   "Disallows declaration" : "allow x",

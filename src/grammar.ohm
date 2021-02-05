@@ -1,33 +1,45 @@
 Speare {
-  Program             = Corollary+
-                      | Statement+
-  Corollary           = enter type varname "(" ListOf<Param, ","> ")" "{" Body "}"
-  Body                = Statement+ "returneth" Statement                              --nonvoid
-                      | Statement+                                                    --void
-  Statement           = alloweth varname "be" IncExp                                  --variable
-                      | varname "be" IncExp                                           --assignment
-                      | "speaketh(" IncExp ")"                                        --print
-                      | IncExp                                                        --expression
-  IncExp              = IncExp (incrementby | decrementby) RelExp                     --incdecby
-                      | IncExp (increment | decrement)                                --incdec
-                      | RelExp
-  RelExp              = AddSub "tis" AddSub                                           --equality
-                      | AddSub                                                        --defer
-  AddSub              = AddSub (subtraction | addition) MultDiv                       --addorsubtract
-                      | MultDiv                                                       --defer
-  MultDiv             = MultDiv (multiplication | division | modulus) Exponentiate    --multordiv
-                      | Exponentiate
-  Exponentiate        = Factor (exponentiate) Exponentiate                            --raisepower
-                      | Factor
-  Factor              = varname
-                      | numeral
-                      | "(" AddSub ")"                                                --parens
-                      | ("nay" | abs | sqrt)	"(" Factor ")"                          --unary
+  Program       = Composition*
+  Composition   = "Composition" varname "{" Corollary* "}"                      --class
+                | Corollary+
+  Corollary     = enter type varname "(" ListOf<Param, ","> ")" "{" Body "}"    --function
+                | Body
+  Body          = Statement+
+  Statement     = ContFlow+
+                | alloweth varname "be" RelExp                                  --variable
+                | varname "be" (Statement | RelExp)                             --assignment
+                | "speaketh(" RelExp ")"										                    --print
+                | "returneth" (varname | RelExp)                                --return
+                | varname (incrementby | decrementby) RelExp                    --incdecby
+                | varname (increment | decrement)                               --incdec
+  ContFlow      = if "(" LogicExp+ ") {" Body "}" elif "(" LogicExp+ ") {" Body "}" else "{" Body "}" --complexconditional
+                | switch "(" Factor ") {" (case Factor ":" Body break?)+        --switchcase
+                | for "(" Statement "," Statement "," Statement ") {" Body break? "}"                 --forloop
+                | for "(" varname in varname ") {" Body break? "}"              --forin
+                | while "(" LogicExp+ ") {" Body break? "}"                     --while
+                | do "{" Body break? "}" while "(" LogicExp+ ")"                --dowhile
+                | if "(" LogicExp+ ") {" Body "}" else "{" Body "}"             --twostepconditional
+                | if "(" LogicExp+ ") {" Body "}"                               --basicconditional
+  LogicExp      = RelExp logicalop RelExp                                       --logicalcombo
+                | RelExp
+  RelExp        = AddSub relop AddSub                                           --equality
+                | AddSub                                                        --defer
+  AddSub        = AddSub (subtraction | addition) MultDiv                       --addorsubtract
+                | MultDiv                                                       --defer
+  MultDiv       = MultDiv (multiplication | division | modulus) Exponentiate    --multordiv
+                | Exponentiate
+  Exponentiate  = Factor (exponentiate) Exponentiate                            --raisepower
+                | Factor
+  Factor        = varname
+                | numeral
+                | "(" AddSub ")"                                                --parens
+                | ("nay" | abs | sqrt)	"(" Factor ")"                          --unary
+  
   
   
   // Define ids for variables, params
-  varname             = ~keyword letter alnum*                                        --number
-                      | ~keyword "\"" letter* "\""                                    --string
+  varname             = ~keyword letter alnum*                                  --number
+                      | ~keyword "\"" letter* "\""                              --string
   Param               = type varname
   
   //Reserved keywords
@@ -37,26 +49,25 @@ Speare {
                       | dsType
 
   //Non-DS types                              
-  primativeType       = "Indistinguishable"
-                      | "ToBeOrNotToBe"
+  primativeType	= "Indistinguishable"
+  			              | "ToBeOrNotToBe"
                       | "Numeral"
                       | "Lexicographical"
                       | "IllUsed"
                       | "Ideogram"
                       | "Corollary"
-                      | "Accommodation"
 
   //Data Structures                                  
   dsType              = "Array"
-                      | "Dictionary"
+  			              | "Dictionary"
                       | "Tuple"
 
   // Types                          
-  indistinguishable   = "indistinguishable" ~alnum
-  tobeornottobe       =	"fallicious" | "faithful"                                     --binary
+  indistinguishable	  = "indistinguishable" ~alnum
+  tobeornottobe	   	  =	"fallacious" | "faithful"                               --binary
   numeral             = digit+ ("." digit+)?
-  lexicographical     = "\"" alnum "\""
-  illused             = "null"
+  lexicographical	    = "\"" alnum "\""
+  illused			        = "null"
 
   // Operations
   addition            = "with"
@@ -67,28 +78,52 @@ Speare {
   exponentiate        = "exponentiate"
   abs                 = "absolutization" ~alnum
   sqrt                = "quadrangle" ~alnum
+  composition         = "Composition" ~alnum
   
   // Relational and Logical operations
-  relop               = "tis nobler"
-                      | "tis lesser"
+  relop				        = "tis nobler"
                       | "tis not"
+  					          | "tis lesser"
                       | "tis"
                       | "nobler"
                       | "lesser"
-  logicalop           = "furthermore"
-                      | "alternatively"
+  logicalop			      = "furthermore"
+  					          | "alternatively"
                       | "nay"
   
   //Incrementing
-  assignment          = "be"
+  assignment		      = "be"
   increment           = "increment"
   incrementby         = "incrementby"
   decrement           = "decrement"
   decrementby         = "decrementby"
   
+  // Control Flow
+  if                  = "whether"
+  elif                = "subsequently"
+  else                = "otherwise"
+  switch              = "trigger"
+  case                = "condition"
+  break               = "exit"
+  while               = "whilst"
+  do                  = "execute"
+  for                 = "in regards to"
+  in                  = "within"
+  
+  controlflow         = elif
+                      | for
+                      | if
+                      | else
+                      | switch
+                      | case
+                      | break
+                      | while
+                      | do
+                      | in
+  
   // Defining symbols
-  ideogram            = addition
-                      | subtraction
+  ideogram			      = addition
+  					          | subtraction
                       | multiplication
                       | division
                       | modulus
@@ -102,16 +137,19 @@ Speare {
   
   // Defining Objects
   accommodation	      = indistinguishable
-                      | tobeornottobe
+  					          | tobeornottobe
                       | numeral
-                      | lexicographical
+  					          | lexicographical
                       | ideogram
                       | enter
                       | illused
    
    //Defining Reserved Words
-   keyword            = ideogram
-                      | alloweth
-                      | accommodation
+   keyword			      = ideogram ~alnum
+                      | type ~alnum
+   					          | alloweth ~alnum
+                      | accommodation ~alnum
+                      | composition ~alnum
+                      | controlflow ~alnum
   	
 }
