@@ -10,88 +10,118 @@
 // // entire AST. It even works well if you analyze the AST and turn it into a
 // // graph with cycles.
 
-// import util from "util"
+import util from "util";
 
-// export class Program {
-//   constructor(statements) {
-//     this.statements = statements
-//   }
-//   [util.inspect.custom]() {
-//     return prettied(this)
-//   }
-// }
+export class Program {
+  constructor(works, statements) {
+    this.works = works;
+    this.statements = statements;
+  }
+  [util.inspect.custom]() {
+    return prettied(this);
+  }
+}
 
-// export class VariableDeclaration {
-//   constructor(name, initializer) {
-//     Object.assign(this, { name, initializer })
-//   }
-// }
+export class Composition {
+  constructor(id, compBody) {
+    Object.assign(this, { id, compBody });
+  }
+}
 
-// export class Variable {
-//   constructor(name) {
-//     this.name = name
-//   }
-// }
+export class Corollary {
+  constructor(type, id, params, body) {
+    Object.assign(this, { type, id, params, body });
+  }
+}
 
-// export class Assignment {
-//   constructor(target, source) {
-//     Object.assign(this, { target, source })
-//   }
-// }
-
-// export class PrintStatement {
-//   constructor(argument) {
-//     this.argument = argument
+// export class Statement {
+//   constructor(relExp) {
+//     this.relExp = relExp
 //   }
 // }
 
-// export class BinaryExpression {
-//   constructor(op, left, right) {
-//     Object.assign(this, { op, left, right })
-//   }
-// }
+export class Param {
+  constructor(type, varname) {
+    Object.assign(this, { type, varname });
+  }
+}
 
-// export class UnaryExpression {
-//   constructor(op, operand) {
-//     Object.assign(this, { op, operand })
-//   }
-// }
+export class ContFlow {
+  constructor(target, source) {
+    Object.assign(this, { target, source });
+  }
+}
 
-// export class IdentifierExpression {
-//   constructor(name) {
-//     this.name = name
-//   }
-// }
+export class Factor {
+  constructor(sign, factor) {
+    Object.assign(this, { sign, factor });
+  }
+}
 
+export class BinaryExpression {
+  constructor(op, left, right) {
+    Object.assign(this, { op, left, right });
+  }
+}
 
-// // Source: 
-// function prettied(node) {
-//   // Return a compact and pretty string representation of the node graph,
-//   // taking care of cycles. Written here from scratch because the built-in
-//   // inspect function, while nice, isn't nice enough.
-//   const tags = new Map()
+export class MultDiv {
+  constructor(multdiv, op, expo) {
+    Object.assign(this, { multdiv, op, expo });
+  }
+}
 
-//   function tag(node) {
-//     if (tags.has(node) || typeof node !== "object" || node === null) return
-//     tags.set(node, tags.size + 1)
-//     for (const child of Object.values(node)) {
-//       Array.isArray(child) ? child.forEach(tag) : tag(child)
-//     }
-//   }
+export class Expo {
+  constructor(factor, op, expo) {
+    Object.assign(this, { factor, op, expo });
+  }
+}
 
-//   function* lines() {
-//     function view(e) {
-//       if (tags.has(e)) return `#${tags.get(e)}`
-//       if (Array.isArray(e)) return `[${e.map(view)}]`
-//       return util.inspect(e)
-//     }
-//     for (let [node, id] of [...tags.entries()].sort((a, b) => a[1] - b[1])) {
-//       let [type, props] = [node.constructor.name, ""]
-//       Object.entries(node).forEach(([k, v]) => (props += ` ${k}=${view(v)}`))
-//       yield `${String(id).padStart(4, " ")} | ${type}${props}`
-//     }
-//   }
+export class AddSub {
+  constructor(addsub) {
+    this.addsub = addsub;
+  }
+}
 
-//   tag(node)
-//   return [...lines()].join("\n")
-// }
+export class IdentifierExpression {
+  constructor(name) {
+    this.name = name;
+  }
+}
+
+export class Type {
+  constructor(name) {
+    this.name = name;
+  }
+}
+
+// Source:
+function prettied(node) {
+  // Return a compact and pretty string representation of the node graph,
+  // taking care of cycles. Written here from scratch because the built-in
+  // inspect function, while nice, isn't nice enough.
+  const tags = new Map();
+
+  function tag(node) {
+    if (tags.has(node) || typeof node !== "object" || node === null) return;
+    tags.set(node, tags.size + 1);
+    for (const child of Object.values(node)) {
+      Array.isArray(child) ? child.forEach(tag) : tag(child);
+    }
+  }
+
+  function* lines() {
+    function view(e) {
+      if (tags.has(e)) return `#${tags.get(e)}`;
+      if (Array.isArray(e)) return `[${e.map(view)}]`;
+      return util.inspect(e);
+    }
+    for (let [node, id] of [...tags.entries()].sort((a, b) => a[1] - b[1])) {
+      let [type, props] = [node.constructor.name, ""];
+      Object.entries(node).forEach(([k, v]) => (props += ` ${k}=${view(v)}`));
+      yield `${String(id).padStart(4, " ")} | ${type}${props}`;
+    }
+  }
+
+  tag(node);
+  return [...lines()].join("\n");
+}
