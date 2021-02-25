@@ -1,5 +1,6 @@
 import fs from "fs"
 import ohm from "ohm-js"
+import { BinaryExpression } from "./ast"
 
 const grammar = ohm.grammar(fs.readFileSync("./src/grammar.ohm"))
 
@@ -47,37 +48,54 @@ const astBuilder = aelGrammar.createSemantics().addOperation("ast", {
                             _elif.sourceString, le2.ast(), body2.ast(),
                             _else.sourceString, body3.ast())
   },  
+  ContFlow_Switch(swtch, factor, _sb, cse, factor2, _col, body, brk, _eb) {
+    return new ast.ContFlow(swtch.sourceString, factor.ast(), cse.sourceString, factor2.ast(), body.ast(), brk.sourceString)
+  },
   ContFlow_For(_for, _sp, s1, _comma, s2, _comma2, s3, _ep, _sb, body, brk, _eb) {
     return new ast.ContFlow(_for.sourceString, s1.ast(), s2.ast(), s3.ast(), body.ast(), brk.sourceString)
   },
-  ContFlow_Switch(_switch, factor, _sb, _case, factor2, _col, body, brk, _eb) {
-    return new ast.ContFlow(factor.ast(), factor2.ast, body.ast(), brk.sourceString)
+  ContFlow_ForIn(_for, _sp, var1, _in, var2, _ep, _sb, body, brk, _eb) {
+    return new ast.ContFlow(_for.sourceString, var1.ast(), var2.ast(), body.ast(), brk.sourceString)
   },
-  // LogicExp(op, operand) {
-  //   return new ast.UnaryExpression(op.sourceString, operand.ast())
-  // },
-  // RelExp(_open, expression, _close) {
-  //   return expression.ast()
-  // },
-  // AddSub(_open, expression, _close) {
-  //   return expression.ast()
-  // },
-  // MultDiv(_open, expression, _close) {
-  //   return expression.ast()
-  // },
-  // Exponentiate(_open, expression, _close) {
-  //   return expression.ast()
-  // },
-  // Factor(_open, expression, _close) {
-  //   return expression.ast()
-  // },
-  
-  // Var(id) {
-  //   return new ast.IdentifierExpression(this.sourceString)
-  // },
-  // num(_whole, _point, _fraction) {
-  //   return Number(this.sourceString)
-  // },
+  ContFlow_While(whle, _sp, logicExp, _ep, _sb, body, brk, _eb) {
+    return new ast.ContFlow(whle.sourceString, logicExp.ast(), body.ast(), brk.sourceString)
+  },
+  ContFlow_Do(doo, _sb, body, brk, _eb, whle, _sp, logExp, _ep) {
+    return new ast.ContFlow(doo.sourceString, body.ast(), brk.sourceString, whle.sourceString, logExp.ast())
+  },
+  LogicExp(lexp, op, rexp) {
+    return new BinaryExpression(lexp.ast(), op.sourceString, rexp.ast())
+  },
+  RelExp(addsub, op, multdiv) {
+    return new BinaryExpression(addsub.ast(), op.sourceString, multdiv.ast())
+  },
+  AddSub(addsub, op, multdiv) {
+    return new BinaryExpression(addsub.ast(), op.sourceString, multdiv.ast())
+  },
+  MultDiv(multdiv, op, expo) {
+    return new MultDiv(multdiv.ast(), op.sourceString, expo.ast())
+  },
+  Exponentiate(factor, op, expo) {
+    return new ast.Expo(factor.ast(), op.sourceString, expo.ast())
+  },
+  Factor_AddSub(_sp, addSub, _cp) {
+    return new ast.AddSub(addSub.ast())
+  },
+  Factor_Factor(sign, _sp, factor, _cp) {
+    return new ast.Factor(sign.sourceString, factor.ast())
+  },
+  Param(type, varname) {
+    return new ast.Param(type.ast(), varname.sourceString)
+  },
+  Varname(id) {
+    return new ast.IdentifierExpression(this.sourceString)
+  },
+  Type_Primitive(primitiveType) {
+    return new ast.Type(primitiveType.ast())
+  },
+  Type_DS(dsType) {
+    return new ast.Type(dsType.ast())
+  }
 })
 
 export default function parse(sourceCode) {
