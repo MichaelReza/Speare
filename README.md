@@ -95,6 +95,8 @@ enter Numeral foo(Numeral bar, Numeral baz) {
 var a;
 var b = 0;
 var c = "hello";
+var d = [6, 4, 3];
+var e = { 6: 12, 3: 7 };
 ```
 
 </td>
@@ -105,6 +107,8 @@ var c = "hello";
 alloweth Numeral a
 alloweth Numeral b be 0
 alloweth Lexicographical c be "hello"
+alloweth Liste d be [6, 4, 3]
+alloweth Concordance e be {6 : 12, 3 : 7}
 ```
 
 </td>
@@ -310,6 +314,8 @@ Speare types include:
 - Enter (function)
 - IllUsed (null)
 - Accommodation (object)
+- Liste (list)
+- Concordance (dictionary)
 
  <br />
 
@@ -341,7 +347,7 @@ Compositions... or as the casuals call them, "classes," are very simple to creat
 
 `Composition Foo {...}`
 
-### 3.6 | Reserved Words
+### 3.5 | Reserved Words
 
 Here is a list of all reserved words in the language:
 
@@ -393,7 +399,7 @@ Here is a list of all reserved words in the language:
 
 <br />
 
-### 3.7 | Semantic Errors
+### 3.6 | Semantic Errors
 
 As this language grows and begins to function, we will add a section on semantics!:
 
