@@ -53,31 +53,31 @@ const astBuilder = aelGrammar.createSemantics().addOperation("ast", {
   ContFlow_Switch(_switch, factor, _sb, _case, factor2, _col, body, brk, _eb) {
     return new ast.ContFlow(factor.ast(), factor2.ast, body.ast(), brk.sourceString)
   },
-  LogicExp(op, operand) {
-    return new ast.UnaryExpression(op.sourceString, operand.ast())
-  },
-  RelExp(_open, expression, _close) {
-    return expression.ast()
-  },
-  AddSub(_open, expression, _close) {
-    return expression.ast()
-  },
-  MultDiv(_open, expression, _close) {
-    return expression.ast()
-  },
-  Exponentiate(_open, expression, _close) {
-    return expression.ast()
-  },
-  Factor(_open, expression, _close) {
-    return expression.ast()
-  },
+  // LogicExp(op, operand) {
+  //   return new ast.UnaryExpression(op.sourceString, operand.ast())
+  // },
+  // RelExp(_open, expression, _close) {
+  //   return expression.ast()
+  // },
+  // AddSub(_open, expression, _close) {
+  //   return expression.ast()
+  // },
+  // MultDiv(_open, expression, _close) {
+  //   return expression.ast()
+  // },
+  // Exponentiate(_open, expression, _close) {
+  //   return expression.ast()
+  // },
+  // Factor(_open, expression, _close) {
+  //   return expression.ast()
+  // },
   
-  Var(id) {
-    return new ast.IdentifierExpression(this.sourceString)
-  },
-  num(_whole, _point, _fraction) {
-    return Number(this.sourceString)
-  },
+  // Var(id) {
+  //   return new ast.IdentifierExpression(this.sourceString)
+  // },
+  // num(_whole, _point, _fraction) {
+  //   return Number(this.sourceString)
+  // },
 })
 
 export default function parse(sourceCode) {
