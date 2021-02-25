@@ -5,7 +5,7 @@ Speare {
   Corollary     = enter type varname "(" ListOf<Param, ","> ")" "{" Body "}"    --function
   Body          = (Statement | Work)*
   Statement     = ContFlow+
-                | alloweth varname "be" RelExp                                  --variable
+                | alloweth type varname "be" RelExp                                  --variable
                 | varname "be" (Statement | RelExp)                             --assignment
                 | "speaketh(" RelExp ")"                                        --print
                 | "returneth" (varname | RelExp)                                --return

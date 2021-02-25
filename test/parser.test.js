@@ -11,15 +11,15 @@ const goodPrograms = {
   "Recognizes arithmetic print statement" : "speaketh(6 with 7)",
 
   // Variable Declaration:
-  "Recognizes declaration of Integer numerals" : "alloweth x be 6",
-  "Recognizes declaration of floating point numerals" : "alloweth x be 6.3373685",
-  "Recognizes declaration of strings" : "alloweth x be \"word\"",
-  "Recognizes declaration of null value" : "alloweth x be null",
-  "Recognizes declaration of boolean truth" : "alloweth x be faithful",
-  "Recognizes declaration of boolean false" : "alloweth x be fallacious",
-  "Recognizes declaration of Nonetype" : "alloweth x be indistinguishable",
-  "Recognizes declaration of Liste" : "alloweth x be [3, 5, 7, 9]",
-  "Recognizes declaration of Concordance" : "alloweth x be {12 : 6, 3 : 4, 8 : 9}",
+  "Recognizes declaration of Integer numerals" : "alloweth Numeral x be 6",
+  "Recognizes declaration of floating point numerals" : "alloweth Numeral x be 6.3373685",
+  "Recognizes declaration of strings" : "alloweth Lexicographical x be \"word\"",
+  "Recognizes declaration of null value" : "alloweth IllUsed x be null",
+  "Recognizes declaration of boolean truth" : "alloweth ToBeOrNotToBe x be faithful",
+  "Recognizes declaration of boolean false" : "alloweth ToBeOrNotToBe x be fallacious",
+  "Recognizes declaration of Nonetype" : "alloweth Indistinguishable x be indistinguishable",
+  "Recognizes declaration of Liste" : "alloweth Liste x be [3, 5, 7, 9]",
+  "Recognizes declaration of Concordance" : "alloweth Concordance x be {12 : 6, 3 : 4, 8 : 9}",
   // Arithmetic:
   "Recognizes a print statement" : "speaketh(x accumulate 5)",
   "Recognizes arithmetic +-" : "x be x with 5 without 6",
@@ -32,11 +32,11 @@ const goodPrograms = {
 
   // Functions:
   "Recognizes basic functions" : "enter ToBeOrNotToBe foo(Numeral x) { \
-        alloweth x be 1 \
+        alloweth Numeral x be 1 \
         returneth x \
         }",
   "Recognizes nested functions" : "enter ToBeOrNotToBe foo(Numeral x) { \
-      alloweth x be 1 \
+      alloweth Numeral x be 1 \
         enter ToBeOrNotToBe bar() { \
           speaketh(\"hello\") \
         } \
@@ -46,7 +46,7 @@ const goodPrograms = {
   "Recognizes empty class" : "Composition foo {}",
   "Recognizes classes" : "Composition foo { \
     enter ToBeOrNotToBe foo(Numeral x) { \
-    alloweth x be 1 \
+    alloweth Numeral x be 1 \
     returneth x \
     } \
   }",
@@ -56,23 +56,23 @@ const goodPrograms = {
     }",
   "Recognizes nested classes in complex configuration" : "Composition foo { \
     enter ToBeOrNotToBe foo(Numeral x) { \
-    alloweth x be 1 \
+    alloweth Numeral x be 1 \
     returneth x \
     } \
     Composition bar { \
     } \
     enter ToBeOrNotToBe foo(Numeral x) { \
-    alloweth x be 1 \
+    alloweth Numeral x be 1 \
     returneth x \
     } \
     }",
 
   // For loops:
-  "Recognizes basic for loop" : "in regards to (alloweth x be 0, x nobler 20, x decrement) { \
+  "Recognizes basic for loop" : "in regards to (alloweth Numeral x be 0, x nobler 20, x decrement) { \
       speaketh(x) \
     }",
-  "Recognizes nested for loop" : "in regards to (alloweth x be 0, x nobler 20, x decrement) { \
-      in regards to (alloweth y be 0, y nobler 20, y decrement) { \
+  "Recognizes nested for loop" : "in regards to (alloweth Numeral x be 0, x nobler 20, x decrement) { \
+      in regards to (alloweth Numeral y be 0, y nobler 20, y decrement) { \
         speaketh(\"nested\") \
       } \
     }",
