@@ -18,6 +18,8 @@ const goodPrograms = {
   "Recognizes declaration of boolean truth" : "alloweth x be faithful",
   "Recognizes declaration of boolean false" : "alloweth x be fallacious",
   "Recognizes declaration of Nonetype" : "alloweth x be indistinguishable",
+  "Recognizes declaration of Liste" : "alloweth x be [3, 5, 7, 9]",
+  "Recognizes declaration of Concordance" : "alloweth x be {12 : 6, 3 : 4, 8 : 9}",
   // Arithmetic:
   "Recognizes a print statement" : "speaketh(x accumulate 5)",
   "Recognizes arithmetic +-" : "x be x with 5 without 6",
@@ -43,20 +45,25 @@ const goodPrograms = {
   // Classes:
   "Recognizes empty class" : "Composition foo {}",
   "Recognizes classes" : "Composition foo { \
-    alloweth x be faithful \
-    }",
+    enter ToBeOrNotToBe foo(Numeral x) { \
+    alloweth x be 1 \
+    returneth x \
+    } \
+  }",
   "Recognizes nested classes" : "Composition foo { \
     Composition bar { \
     } \
     }",
   "Recognizes nested classes in complex configuration" : "Composition foo { \
-    whether (x nobler y) { \
-    speaketh(\"hello\") \
+    enter ToBeOrNotToBe foo(Numeral x) { \
+    alloweth x be 1 \
+    returneth x \
     } \
     Composition bar { \
     } \
-    whether (x nobler y) { \
-    speaketh(\"hello\") \
+    enter ToBeOrNotToBe foo(Numeral x) { \
+    alloweth x be 1 \
+    returneth x \
     } \
     }",
 
