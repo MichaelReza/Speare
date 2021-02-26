@@ -64,6 +64,12 @@ export class ForIn {
   }
 }
 
+export class WhileLoop {
+  constructor(whle, logicExp, body, brk) {
+    Object.assign(this, {whle, logicExp, body, brk})
+  }
+}
+
 export class DoWhile {
   constructor(doo, body, brk, whle, logExp) {
     Object.assign(this, {doo, body, brk, whle, logExp})
