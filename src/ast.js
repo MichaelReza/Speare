@@ -39,6 +39,44 @@ export class Param {
   }
 }
 
+// Statement ------------------------------------------
+export class VariableInitialization {
+  constructor(type, name, initializer) {
+    Object.assign(this, { type, name, initializer });
+  }
+}
+
+export class VariableAssignment {
+  constructor(name, value) {
+    Object.assign(this, {name, value})
+  }
+}
+
+export class Print {
+  constructor(expression) {
+    this.expression = expression
+  }
+}
+
+export class Return {
+  constructor(expression) {
+    this.expression = expression
+  }
+}
+
+export class IncDecBy {
+  constructor(name, op, expression) {
+    Object.assign(this, {name, op, expression})
+  }
+}
+
+export class IncDec {
+  constructor(name, op) {
+    Object.assign(this, {name, op})
+  }
+}
+// End Statement -------------------------------
+
 // ContFlow -----------------------------------------------------------------
 export class IfStatement {
   constructor(_if, exp1, bd1, _elif, exp2, bd2, _else, exp3, bd3) {
@@ -77,44 +115,6 @@ export class DoWhile {
 }
 // End ContFlow --------------------------------------------
 
-// Statement ------------------------------------------
-export class VariableInitialization {
-  constructor(type, name, initializer) {
-    Object.assign(this, { type, name, initializer });
-  }
-}
-
-export class VariableAssignment {
-  constructor(name, value) {
-    Object.assign(this, {name, value})
-  }
-}
-
-export class Print {
-  constructor(expression) {
-    this.expression = expression
-  }
-}
-
-export class Return {
-  constructor(expression) {
-    this.expression = expression
-  }
-}
-
-export class IncDecby {
-  constructor(name, op, expression) {
-    Object.assign(this, {name, op, expression})
-  }
-}
-
-export class IncDec {
-  constructor(name, op) {
-    Object.assign(this, {name, op})
-  }
-}
-// End Statement -------------------------------
-
 export class BinaryExpression {
   constructor(left, op, right) {
     Object.assign(this, { left, op, right });
@@ -130,6 +130,12 @@ export class UnaryExpression {
 export class IdentifierExpression {
   constructor(name) {
     this.name = name;
+  }
+}
+
+export class NestedExpression {
+  constructor(expression) {
+    this.expression = expression;
   }
 }
 

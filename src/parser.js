@@ -12,10 +12,7 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
     return new ast.Composition(id.sourceString, compBody.ast())
   },
   Corollary(_enter, type, id, _sb, params,  _eb, _sbrace, body, _eBrace) {
-    return new ast.Corollary(id.sourceString, type.sourceString, params.asIteration().ast(), body.ast())
-  },
-  Statement_Control(contFlow) {
-    return new ast.ContFlow(contFlow.ast())
+    return new ast.Corollary(type.sourceString, id.sourceString, params.asIteration().ast(), body.ast())
   },
   Statement_Initializer(_allow ,type, id, _be, relExp) {
     return new ast.VariableInitialization(id.sourceString, type.sourceString, relExp.ast())
@@ -36,7 +33,7 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
     return new ast.Return(relExp.ast())
   },
   Statement_IncDecBy(id, op, relExp) {
-    return new ast.IncDecby(id.sourceString, op.sourceString, relExp.ast())
+    return new ast.IncDecBy(id.sourceString, op.sourceString, relExp.ast())
   },
   Statement_IncDec(id, op) {
     return new ast.IncDec(id.sourceString, op.sourceString)
@@ -64,31 +61,31 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
     return new ast.ContFlow(doo.sourceString, body.ast(), brk.sourceString, whle.sourceString, logExp.ast())
   },
   LogicExp(lexp, op, rexp) {
-    return new BinaryExpression(lexp.ast(), op.sourceString, rexp.ast())
+    return new ast.BinaryExpression(lexp.ast(), op.sourceString, rexp.ast())
   },
   RelExp(addsub, op, multdiv) {
-    return new BinaryExpression(addsub.ast(), op.sourceString, multdiv.ast())
+    return new ast.BinaryExpression(addsub.ast(), op.sourceString, multdiv.ast())
   },
   AddSub(addsub, op, multdiv) {
-    return new BinaryExpression(addsub.ast(), op.sourceString, multdiv.ast())
+    return new ast.BinaryExpression(addsub.ast(), op.sourceString, multdiv.ast())
   },
   MultDiv(multdiv, op, expo) {
-    return new MultDiv(multdiv.ast(), op.sourceString, expo.ast())
+    return new ast.BinaryExpression(multdiv.ast(), op.sourceString, expo.ast())
   },
   Exponentiate(factor, op, expo) {
-    return new ast.Expo(factor.ast(), op.sourceString, expo.ast())
+    return new ast.BinaryExpression(factor.ast(), op.sourceString, expo.ast())
   },
   Factor_AddSub(_sp, addSub, _cp) {
-    return new ast.AddSub(addSub.ast())
+    return new ast.NestedExpression(addSub.ast())
   },
   Factor_Factor(sign, _sp, factor, _cp) {
     return new ast.Factor(sign.sourceString, factor.ast())
   },
-  Varname(id) {
-    return new ast.IdentifierExpression(this.sourceString)
-  },
   Param(type, Varname) {
     return new ast.Param(type.ast(), Varname.sourceString)
+  },
+  Varname(id) {
+    return new ast.IdentifierExpression(this.sourceString)
   },
   Type_Primitive(primitiveType) {
     return new ast.Type(primitiveType.ast())
