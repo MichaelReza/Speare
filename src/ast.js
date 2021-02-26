@@ -33,13 +33,6 @@ export class Corollary {
     Object.assign(this, { type, id, params, body });
   }
 }
-
-// export class Statement {
-//   constructor(relExp) {
-//     this.relExp = relExp
-//   }
-// }
-
 export class Param {
   constructor(type, varname) {
     Object.assign(this, { type, varname });
@@ -49,6 +42,42 @@ export class Param {
 export class ContFlow {
   constructor(target, source) {
     Object.assign(this, { target, source });
+  }
+}
+
+export class VariableInitialization {
+  constructor(type, name, initializer) {
+    Object.assign(this, { type, name, initializer });
+  }
+}
+
+export class VariableAssignment {
+  constructor(name, value) {
+    Object.assign(this, {name, value})
+  }
+}
+
+export class Print {
+  constructor(expression) {
+    this.expression = expression
+  }
+}
+
+export class Return {
+  constructor(expression) {
+    this.expression = expression
+  }
+}
+
+export class IncDecby {
+  constructor(name, op, expression) {
+    Object.assign(this, {name, op, expression})
+  }
+}
+
+export class IncDec {
+  constructor(name, op) {
+    Object.assign(this, {name, op})
   }
 }
 
