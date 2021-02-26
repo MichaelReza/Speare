@@ -39,12 +39,37 @@ export class Param {
   }
 }
 
-export class ContFlow {
-  constructor(target, source) {
-    Object.assign(this, { target, source });
+export class IfStatement {
+  constructor(_if, exp1, bd1, _elif, exp2, bd2, _else, exp3, bd3) {
+    Object.assign(this, {_if, exp1, bd1, _elif, exp2, bd2, _else, exp3, bd3})
   }
 }
 
+export class SwitchStatement {
+  constuctor(swtch, factor1, cse, factor2, body, brk) {
+    Object.assign(this, {swtch, factor1, cse, factor2, body, brk})
+  }
+}
+
+export class ForLoop {
+  constructor(_for, s1, s2, s3, body, brk) {
+    Object.assign(this, {_for, s1, s2, s3, body, brk})
+  }
+}
+
+export class ForIn {
+  constructor(_for, var1, _in, var2, body, brk) {
+    Object.assign(this, {_for, var1, _in, var2, body, brk})
+  }
+}
+
+export class DoWhile {
+  constructor(doo, body, brk, whle, logExp) {
+    Object.assign(this, {doo, body, brk, whle, logExp})
+  }
+}
+
+// Statement ------------------------------------------
 export class VariableInitialization {
   constructor(type, name, initializer) {
     Object.assign(this, { type, name, initializer });
@@ -80,6 +105,8 @@ export class IncDec {
     Object.assign(this, {name, op})
   }
 }
+// End Statement -------------------------------
+
 
 export class Factor {
   constructor(sign, factor) {
