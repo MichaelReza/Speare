@@ -1,10 +1,10 @@
 import fs from "fs"
 import ohm from "ohm-js"
-import { BinaryExpression } from "./ast"
+import * as ast from "./ast.js"
 
 const grammar = ohm.grammar(fs.readFileSync("./src/grammar.ohm"))
 
-const astBuilder = aelGrammar.createSemantics().addOperation("ast", {
+const astBuilder = grammar.createSemantics().addOperation("ast", {
   Program(works, statements) {
     return new ast.Program(works.ast(), statements.ast)
   },
@@ -15,31 +15,31 @@ const astBuilder = aelGrammar.createSemantics().addOperation("ast", {
     return new ast.Corollary(id.sourceString, type.sourceString, params.asIteration().ast(), body.ast())
   },
   Statement_Control(contFlow) {
-    return new ast.Statement(contFlow.ast())
+    return new ast.ContFlow(contFlow.ast())
   },
   Statement_Initializer(_allow ,type, id, _be, relExp) {
-    return new ast.Statement(id.sourceString, type.sourceString, relExp.ast())
+    return new ast.VariableInitialization(id.sourceString, type.sourceString, relExp.ast())
   },
   Statement_Assignment_RelExp(id, _be, relExp) {
-    return new ast.Statement(id.sourceString, relExp.ast())
+    return new ast.VariableAssignment(id.sourceString, relExp.ast())
   },
   Statement_Assignment_Statement(id, _be, statement) {
-    return new ast.Statement(id.sourceString, statement.ast())
+    return new ast.VariableAssignment(id.sourceString, statement.ast())
   },
   Statement_print(_print, relExp, _ep) {
-    return new ast.Statement(relExp.ast())
+    return new ast.Print(relExp.ast())
   },
   Statement_Return_Var(_return, id) {
-    return new ast.Statement(id.sourceString)
+    return new ast.Return(id.sourceString)
   },
   Statement_Return_RelExp(_return, relExp) {
-    return new ast.Statement(relExp.ast())
+    return new ast.Return(relExp.ast())
   },
   Statement_IncDecBy(id, op, relExp) {
-    return new ast.Statement(id.sourceString, op.sourceString, relExp.ast())
+    return new ast.IncDecby(id.sourceString, op.sourceString, relExp.ast())
   },
   Statement_IncDec(id, op) {
-    return new ast.Statement(id.sourceString, op.sourceString)
+    return new ast.IncDec(id.sourceString, op.sourceString)
   },
   ControlFlow_If(_if, _sp, le1, _ep, _sb, body, _eb,
                         _elif, _sp2, le2, _ep2, _sb2, body2, _eb2,
@@ -98,13 +98,13 @@ const astBuilder = aelGrammar.createSemantics().addOperation("ast", {
   }
 })
 
-export default function parse(sourceCode) {
-  const match = aelGrammar.match(sourceCode)
-  if (!match.succeeded()) {
-    throw new Error(match.message)
-  }
-  return astBuilder(match).ast()
-}
+// export default function parse(sourceCode) {
+//   const match = aelGrammar.match(sourceCode)
+//   if (!match.succeeded()) {
+//     throw new Error(match.message)
+//   }
+//   return astBuilder(match).ast()
+// }
 
 export default function parse(source) {
   const match = grammar.match(source)
