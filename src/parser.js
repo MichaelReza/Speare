@@ -6,7 +6,7 @@ const grammar = ohm.grammar(fs.readFileSync("./src/grammar.ohm"))
 
 const astBuilder = grammar.createSemantics().addOperation("ast", {
   Program(works, statements) {
-    return new ast.Program(works.ast(), statements.ast)
+    return new ast.Program(works.ast(), statements.ast())
   },
   Composition(_composition, id, _sb, compBody, _eb) {
     return new ast.Composition(id.sourceString, compBody.ast())
@@ -84,17 +84,20 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   Factor_Factor(sign, _sp, factor, _cp) {
     return new ast.Factor(sign.sourceString, factor.ast())
   },
-  Param(type, varname) {
-    return new ast.Param(type.ast(), varname.sourceString)
-  },
   Varname(id) {
     return new ast.IdentifierExpression(this.sourceString)
+  },
+  Param(type, Varname) {
+    return new ast.Param(type.ast(), Varname.sourceString)
   },
   Type_Primitive(primitiveType) {
     return new ast.Type(primitiveType.ast())
   },
-  Type_DS(dsType) {
-    return new ast.Type(dsType.ast())
+  Type_Arr(arrType) {
+    return new ast.ArrayType(arrType.ast)
+  },
+  Type_Dict(dictType) {
+    return new ast.DictType(dictType.ast)
   }
 })
 
