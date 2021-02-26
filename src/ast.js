@@ -39,6 +39,7 @@ export class Param {
   }
 }
 
+// ContFlow -----------------------------------------------------------------
 export class IfStatement {
   constructor(_if, exp1, bd1, _elif, exp2, bd2, _else, exp3, bd3) {
     Object.assign(this, {_if, exp1, bd1, _elif, exp2, bd2, _else, exp3, bd3})
@@ -68,6 +69,7 @@ export class DoWhile {
     Object.assign(this, {doo, body, brk, whle, logExp})
   }
 }
+// End ContFlow --------------------------------------------
 
 // Statement ------------------------------------------
 export class VariableInitialization {
@@ -107,34 +109,15 @@ export class IncDec {
 }
 // End Statement -------------------------------
 
-
-export class Factor {
-  constructor(sign, factor) {
-    Object.assign(this, { sign, factor });
-  }
-}
-
 export class BinaryExpression {
-  constructor(op, left, right) {
-    Object.assign(this, { op, left, right });
+  constructor(left, op, right) {
+    Object.assign(this, { left, op, right });
   }
 }
 
-export class MultDiv {
-  constructor(multdiv, op, expo) {
-    Object.assign(this, { multdiv, op, expo });
-  }
-}
-
-export class Expo {
-  constructor(factor, op, expo) {
-    Object.assign(this, { factor, op, expo });
-  }
-}
-
-export class AddSub {
-  constructor(addsub) {
-    this.addsub = addsub;
+export class UnaryExpression {
+  constructor(sign, value) {
+    Object.assign(this, {sign, value})
   }
 }
 
@@ -144,9 +127,21 @@ export class IdentifierExpression {
   }
 }
 
-export class Type {
+export class BasicType {
   constructor(name) {
     this.name = name;
+  }
+}
+
+export class ArrayType {
+  constructor(type, name) {
+    Object.assign(this, {type, name})
+  }
+}
+
+export class DictType {
+  constructor(keyType, valType, name) {
+    Object.assign(this, {keyType, valType, name})
   }
 }
 
