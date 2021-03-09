@@ -13,8 +13,7 @@
 import util from "util";
 
 export class Program {
-  constructor(works, statements) {
-    this.works = works;
+  constructor(statements) {
     this.statements = statements;
   }
   [util.inspect.custom]() {
@@ -38,44 +37,6 @@ export class Param {
     Object.assign(this, { type, varname });
   }
 }
-
-// Statement ------------------------------------------
-export class VariableInitialization {
-  constructor(type, name, initializer) {
-    Object.assign(this, { type, name, initializer });
-  }
-}
-
-export class VariableAssignment {
-  constructor(name, value) {
-    Object.assign(this, {name, value})
-  }
-}
-
-export class Print {
-  constructor(expression) {
-    this.expression = expression
-  }
-}
-
-export class Return {
-  constructor(expression) {
-    this.expression = expression
-  }
-}
-
-export class IncDecBy {
-  constructor(name, op, expression) {
-    Object.assign(this, {name, op, expression})
-  }
-}
-
-export class IncDec {
-  constructor(name, op) {
-    Object.assign(this, {name, op})
-  }
-}
-// End Statement -------------------------------
 
 // ContFlow -----------------------------------------------------------------
 export class IfStatement {
@@ -115,6 +76,44 @@ export class DoWhile {
 }
 // End ContFlow --------------------------------------------
 
+// Statement ------------------------------------------
+export class VariableInitialization {
+  constructor(type, name, initializer) {
+    Object.assign(this, { type, name, initializer });
+  }
+}
+
+export class VariableAssignment {
+  constructor(name, value) {
+    Object.assign(this, {name, value})
+  }
+}
+
+export class Print {
+  constructor(expression) {
+    this.expression = expression
+  }
+}
+
+export class Return {
+  constructor(expression) {
+    this.expression = expression
+  }
+}
+
+export class IncDecby {
+  constructor(name, op, expression) {
+    Object.assign(this, {name, op, expression})
+  }
+}
+
+export class IncDec {
+  constructor(name, op) {
+    Object.assign(this, {name, op})
+  }
+}
+// End Statement -------------------------------
+
 export class BinaryExpression {
   constructor(left, op, right) {
     Object.assign(this, { left, op, right });
@@ -133,9 +132,9 @@ export class IdentifierExpression {
   }
 }
 
-export class NestedExpression {
-  constructor(expression) {
-    this.expression = expression;
+export class StringValue {
+  constructor(value) {
+    this.value = value;
   }
 }
 
@@ -146,14 +145,20 @@ export class BasicType {
 }
 
 export class ArrayType {
-  constructor(type, name) {
-    Object.assign(this, {type, name})
+  constructor(type, values) {
+    Object.assign(this, {type, values})
+  }
+}
+
+export class Numeral {
+  constructor(whole, decimal, fract) {
+    Object.assign(this, {whole, decimal, fract})
   }
 }
 
 export class DictType {
-  constructor(keyType, valType, name) {
-    Object.assign(this, {keyType, valType, name})
+  constructor(keyType, valType) {
+    Object.assign(this, {keyType, valType})
   }
 }
 
