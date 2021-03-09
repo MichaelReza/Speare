@@ -40,13 +40,13 @@ export class Param {
 
 // ContFlow -----------------------------------------------------------------
 export class IfStatement {
-  constructor(_if, exp1, bd1, _elif, exp2, bd2, _else, exp3, bd3) {
-    Object.assign(this, {_if, exp1, bd1, _elif, exp2, bd2, _else, exp3, bd3})
+  constructor(_if, le1, body, _elif, le2, body2, _else, body3) {
+    Object.assign(this, {_if, le1, body, _elif, le2, body2, _else, body3})
   }
 }
 
 export class SwitchStatement {
-  constuctor(swtch, factor1, cse, factor2, body, brk) {
+  constructor(swtch, factor1, cse, factor2, body, brk) {
     Object.assign(this, {swtch, factor1, cse, factor2, body, brk})
   }
 }
@@ -145,8 +145,8 @@ export class BasicType {
 }
 
 export class ArrayType {
-  constructor(type, values) {
-    Object.assign(this, {type, values})
+  constructor(firstValue, values) {
+    Object.assign(this, {firstValue, values})
   }
 }
 
@@ -157,8 +157,8 @@ export class Numeral {
 }
 
 export class DictType {
-  constructor(keyType, valType) {
-    Object.assign(this, {keyType, valType})
+  constructor(keyType, valType, keys, values) {
+    Object.assign(this, {keyType, valType, keys, values})
   }
 }
 

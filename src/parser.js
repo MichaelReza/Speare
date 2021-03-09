@@ -12,7 +12,7 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
     return new ast.Composition(id.sourceString, compBody.ast())
   },
   Corollary_function(_enter, type, id, _sb, params,  _eb, _sbrace, body, _eBrace) {
-    return new ast.Corollary(id.sourceString, type.sourceString, params.asIteration().ast(), body.ast())
+    return new ast.Corollary(type.sourceString, id.sourceString, params.asIteration().ast(), body.ast())
   },
   Statement_variable(_allow ,type, id, _be, relExp) {
     return new ast.VariableInitialization(type.sourceString, id.sourceString, relExp.ast())
@@ -92,7 +92,7 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
     return new ast.ArrayType(value1.ast(), value2.ast())
   },
   concordance(_sb, key, _col, val, _comma, _key2, _col2, _val2, _eb) {
-    return new ast.DictType(key.ast(), val.ast())
+    return new ast.DictType(key.ast(), val.ast(), _key2.ast(), _val2.ast())
   },
   _terminal() {
     return null

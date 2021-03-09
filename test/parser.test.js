@@ -40,7 +40,7 @@ const source =
   whether (x nobler x) {
     speaketh(x)
   }
-  subsequently(x nobler x) {
+  subsequently( x nobler x ) {
     speaketh(x)
   }
   otherwise {
@@ -83,7 +83,7 @@ const source =
   }
   `
 
-const expectedAst = String.raw`   1 | Program statements=[#2,#4,#8,#10,#12,#19,#23,#27,#33,#39,#40,#42,#49,#82,#89,#101]
+const expectedAst = String.raw`   1 | Program statements=[#2,#4,#8,#10,#12,#19,#29,#33,#39,#45,#46,#48,#55,#97,#104,#116]
    2 | Print expression=#3
    3 | StringValue value='hello'
    4 | Print expression=#5
@@ -95,102 +95,127 @@ const expectedAst = String.raw`   1 | Program statements=[#2,#4,#8,#10,#12,#19,#
   10 | VariableInitialization type='Numeral' name='y' initializer=#11
   11 | Numeral whole='6' decimal='.33' fract='.33'
   12 | VariableInitialization type='Liste' name='z' initializer=#13
-  13 | ArrayType type=[#14] values=[#15]
+  13 | ArrayType firstValue=[#14] values=[#15]
   14 | Numeral whole='3' decimal='' fract=''
   15 | Array 0=#16 1=#17 2=#18
   16 | Numeral whole='5' decimal='' fract=''
   17 | Numeral whole='7' decimal='' fract=''
   18 | Numeral whole='9' decimal='' fract=''
   19 | VariableInitialization type='Concordance' name='a' initializer=#20
-  20 | DictType keyType=[#21] valType=[#22]
+  20 | DictType keyType=[#21] valType=[#22] keys=[#23] values=[#26]
   21 | Numeral whole='12' decimal='' fract=''
   22 | Numeral whole='6' decimal='' fract=''
-  23 | Print expression=#24
-  24 | BinaryExpression left=#25 op='accumulate' right=#26
-  25 | IdentifierExpression name='x'
-  26 | Numeral whole='5' decimal='' fract=''
-  27 | VariableAssignment name='x' value=#28
-  28 | BinaryExpression left=#29 op='without' right=#32
-  29 | BinaryExpression left=#30 op='with' right=#31
-  30 | IdentifierExpression name='x'
-  31 | Numeral whole='5' decimal='' fract=''
-  32 | Numeral whole='6' decimal='' fract=''
+  23 | Array 0=#24 1=#25
+  24 | Numeral whole='3' decimal='' fract=''
+  25 | Numeral whole='8' decimal='' fract=''
+  26 | Array 0=#27 1=#28
+  27 | Numeral whole='4' decimal='' fract=''
+  28 | Numeral whole='9' decimal='' fract=''
+  29 | Print expression=#30
+  30 | BinaryExpression left=#31 op='accumulate' right=#32
+  31 | IdentifierExpression name='x'
+  32 | Numeral whole='5' decimal='' fract=''
   33 | VariableAssignment name='x' value=#34
-  34 | BinaryExpression left=#35 op='sunder' right=#38
-  35 | BinaryExpression left=#36 op='accumulate' right=#37
+  34 | BinaryExpression left=#35 op='without' right=#38
+  35 | BinaryExpression left=#36 op='with' right=#37
   36 | IdentifierExpression name='x'
-  37 | Numeral whole='6' decimal='' fract=''
-  38 | Numeral whole='12' decimal='' fract=''
-  39 | IncDec name='x' op='increment'
-  40 | IncDecby name='x' op='incrementby' expression=#41
-  41 | Numeral whole='4' decimal='' fract=''
-  42 | Corollary type='foo' id='ToBeOrNotToBe' params=[#43] body=[#44,#48]
-  43 | Param type=null varname='f'
-  44 | Array 0=#45
-  45 | ForIn _for='in regards to' var1=#46 _in=#47 var2=[] body=undefined brk=undefined
-  46 | IdentifierExpression name='f'
-  47 | IdentifierExpression name='z'
-  48 | Return expression='f'
-  49 | Array 0=#50 1=#54 2=#65 3=#81
-  50 | WhileLoop whle='whilst' logicExp=[#51] body=[] brk=undefined
-  51 | BinaryExpression left=#52 op='nobler' right=#53
-  52 | IdentifierExpression name='x'
-  53 | Numeral whole='20' decimal='' fract=''
-  54 | DoWhile doo='execute' body=[#55] brk='' whle='whilst' logExp=[#62]
-  55 | Array 0=#56
-  56 | DoWhile doo='execute' body=[#57] brk='' whle='whilst' logExp=[#59]
-  57 | Print expression=#58
+  37 | Numeral whole='5' decimal='' fract=''
+  38 | Numeral whole='6' decimal='' fract=''
+  39 | VariableAssignment name='x' value=#40
+  40 | BinaryExpression left=#41 op='sunder' right=#44
+  41 | BinaryExpression left=#42 op='accumulate' right=#43
+  42 | IdentifierExpression name='x'
+  43 | Numeral whole='6' decimal='' fract=''
+  44 | Numeral whole='12' decimal='' fract=''
+  45 | IncDec name='x' op='increment'
+  46 | IncDecby name='x' op='incrementby' expression=#47
+  47 | Numeral whole='4' decimal='' fract=''
+  48 | Corollary type='ToBeOrNotToBe' id='foo' params=[#49] body=[#50,#54]
+  49 | Param type=null varname='f'
+  50 | Array 0=#51
+  51 | ForIn _for='in regards to' var1=#52 _in=#53 var2=[] body=undefined brk=undefined
+  52 | IdentifierExpression name='f'
+  53 | IdentifierExpression name='z'
+  54 | Return expression='f'
+  55 | Array 0=#56 1=#60 2=#71 3=#87
+  56 | WhileLoop whle='whilst' logicExp=[#57] body=[] brk=undefined
+  57 | BinaryExpression left=#58 op='nobler' right=#59
   58 | IdentifierExpression name='x'
-  59 | BinaryExpression left=#60 op='nobler' right=#61
-  60 | IdentifierExpression name='x'
-  61 | IdentifierExpression name='x'
-  62 | BinaryExpression left=#63 op='nobler' right=#64
-  63 | IdentifierExpression name='x'
+  59 | Numeral whole='20' decimal='' fract=''
+  60 | DoWhile doo='execute' body=[#61] brk='' whle='whilst' logExp=[#68]
+  61 | Array 0=#62
+  62 | DoWhile doo='execute' body=[#63] brk='' whle='whilst' logExp=[#65]
+  63 | Print expression=#64
   64 | IdentifierExpression name='x'
-  65 | IfStatement _if='whether' exp1=[#66] bd1=[#69] _elif='subsequently(x nobler x) {\n    speaketh(x)\n  }' exp2=[#71] bd2=[#75] _else='otherwise {\n    speaketh(x)\n  }' exp3=[#78] bd3=undefined
-  66 | BinaryExpression left=#67 op='nobler' right=#68
+  65 | BinaryExpression left=#66 op='nobler' right=#67
+  66 | IdentifierExpression name='x'
   67 | IdentifierExpression name='x'
-  68 | IdentifierExpression name='x'
-  69 | Print expression=#70
+  68 | BinaryExpression left=#69 op='nobler' right=#70
+  69 | IdentifierExpression name='x'
   70 | IdentifierExpression name='x'
-  71 | Array 0=#72
+  71 | IfStatement _if='whether' le1=[#72] body=[#75] _elif='subsequently( x nobler x ) {\n    speaketh(x)\n  }' le2=[#77] body2=[#81] _else='otherwise {\n    speaketh(x)\n  }' body3=[#84]
   72 | BinaryExpression left=#73 op='nobler' right=#74
   73 | IdentifierExpression name='x'
   74 | IdentifierExpression name='x'
-  75 | Array 0=#76
-  76 | Print expression=#77
-  77 | IdentifierExpression name='x'
-  78 | Array 0=#79
-  79 | Print expression=#80
+  75 | Print expression=#76
+  76 | IdentifierExpression name='x'
+  77 | Array 0=#78
+  78 | BinaryExpression left=#79 op='nobler' right=#80
+  79 | IdentifierExpression name='x'
   80 | IdentifierExpression name='x'
-  81 | SwitchStatement
-  82 | Corollary type='foo' id='ToBeOrNotToBe' params=[#83] body=[#84,#86]
-  83 | Param type=null varname='b'
-  84 | VariableInitialization type='Numeral' name='c' initializer=#85
-  85 | Numeral whole='1' decimal='' fract=''
-  86 | Corollary type='bar' id='ToBeOrNotToBe' params=[] body=[#87]
-  87 | Print expression=#88
-  88 | StringValue value='hello'
-  89 | Composition id='foo' compBody=[#90,#95,#96]
-  90 | Corollary type='foo' id='ToBeOrNotToBe' params=[#91] body=[#92,#94]
-  91 | Param type=null varname='b'
-  92 | VariableInitialization type='Numeral' name='c' initializer=#93
-  93 | Numeral whole='1' decimal='' fract=''
-  94 | Return expression='c'
-  95 | Composition id='bar' compBody=[]
-  96 | Corollary type='foo' id='ToBeOrNotToBe' params=[#97] body=[#98,#100]
-  97 | Param type=null varname='b'
-  98 | VariableInitialization type='Numeral' name='c' initializer=#99
-  99 | Numeral whole='1' decimal='' fract=''
- 100 | Return expression='c'
- 101 | Array 0=#102
- 102 | ForLoop _for='in regards to' s1=#103 s2=#105 s3=[#108] body=[] brk=undefined
- 103 | VariableInitialization type='Numeral' name='d' initializer=#104
- 104 | Numeral whole='0' decimal='' fract=''
- 105 | BinaryExpression left=#106 op='nobler' right=#107
- 106 | IdentifierExpression name='d'
- 107 | Numeral whole='20' decimal='' fract=''
- 108 | IncDec name='d' op='decrement'`
+  81 | Array 0=#82
+  82 | Print expression=#83
+  83 | IdentifierExpression name='x'
+  84 | Array 0=#85
+  85 | Print expression=#86
+  86 | IdentifierExpression name='x'
+  87 | SwitchStatement swtch='trigger' factor1=#88 cse='condition 0:\n' +
+  '      speaketh(x)\n' +
+  '      exit\n' +
+  '    condition 1:\n' +
+  '      speaketh(x)\n' +
+  '      exit' factor2=[#89,#90] body=[#91,#94] brk='condition 0:\n' +
+  '      speaketh(x)\n' +
+  '      exit\n' +
+  '    condition 1:\n' +
+  '      speaketh(x)\n' +
+  '      exit'
+  88 | IdentifierExpression name='x'
+  89 | Numeral whole='0' decimal='' fract=''
+  90 | Numeral whole='1' decimal='' fract=''
+  91 | Array 0=#92
+  92 | Print expression=#93
+  93 | IdentifierExpression name='x'
+  94 | Array 0=#95
+  95 | Print expression=#96
+  96 | IdentifierExpression name='x'
+  97 | Corollary type='ToBeOrNotToBe' id='foo' params=[#98] body=[#99,#101]
+  98 | Param type=null varname='b'
+  99 | VariableInitialization type='Numeral' name='c' initializer=#100
+ 100 | Numeral whole='1' decimal='' fract=''
+ 101 | Corollary type='ToBeOrNotToBe' id='bar' params=[] body=[#102]
+ 102 | Print expression=#103
+ 103 | StringValue value='hello'
+ 104 | Composition id='foo' compBody=[#105,#110,#111]
+ 105 | Corollary type='ToBeOrNotToBe' id='foo' params=[#106] body=[#107,#109]
+ 106 | Param type=null varname='b'
+ 107 | VariableInitialization type='Numeral' name='c' initializer=#108
+ 108 | Numeral whole='1' decimal='' fract=''
+ 109 | Return expression='c'
+ 110 | Composition id='bar' compBody=[]
+ 111 | Corollary type='ToBeOrNotToBe' id='foo' params=[#112] body=[#113,#115]
+ 112 | Param type=null varname='b'
+ 113 | VariableInitialization type='Numeral' name='c' initializer=#114
+ 114 | Numeral whole='1' decimal='' fract=''
+ 115 | Return expression='c'
+ 116 | Array 0=#117
+ 117 | ForLoop _for='in regards to' s1=#118 s2=#120 s3=[#123] body=[] brk=undefined
+ 118 | VariableInitialization type='Numeral' name='d' initializer=#119
+ 119 | Numeral whole='0' decimal='' fract=''
+ 120 | BinaryExpression left=#121 op='nobler' right=#122
+ 121 | IdentifierExpression name='d'
+ 122 | Numeral whole='20' decimal='' fract=''
+ 123 | IncDec name='d' op='decrement'`
 
 const goodPrograms = {
 
