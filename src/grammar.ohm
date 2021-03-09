@@ -1,20 +1,22 @@
 Speare {
-  Program       = Work* Statement*
+  Program       = (Work | Statement)*
   Work          = Corollary | Composition
-  Composition   = "Composition" varname "{" Work* "}"                           --class
-  Corollary     = enter type varname "(" ListOf<Param, ","> ")" "{" Body "}"    --function
+  Composition   = "Composition" Varname "{" Work* "}"                           --class
+  Corollary     = enter Type Varname "(" ListOf<Param, ","> ")" "{" Body "}"    --function
   Body          = (Statement | Work)*
   Statement     = ContFlow+
-                | alloweth type varname "be" RelExp                                  --variable
-                | varname "be" (Statement | RelExp)                             --assignment
-                | "speaketh(" RelExp ")"                                        --print
-                | "returneth" (varname | RelExp)                                --return
-                | varname (incrementby | decrementby) RelExp                    --incdecby
-                | varname (increment | decrement)                               --incdec
-  ContFlow      = if "(" LogicExp+ ") {" Body "}" (elif "(" LogicExp+ ") {" Body "}")* (else "{" Body "}")? --complexconditional
+                | alloweth Type Varname "be" RelExp                             --variable
+                | Varname "be" (RelExp)                                         --assignment
+                | "speaketh" "(" RelExp ")"                                     --print
+                | "returneth" (Varname | RelExp)                                --return
+                | Varname (incrementby | decrementby) RelExp                    --incdecby
+                | Varname (increment | decrement)                               --incdec
+  ContFlow      = if "(" LogicExp+ ")" "{" Body "}" ( elif "(" LogicExp+ ")" "{" Body "}" )* ( else "{" Body "}")? --complexconditional
+                | if "(" LogicExp+ ")" "{" Body "}" ( elif "(" LogicExp+ ")" "{" Body "}" )*                       --semicomplexconditional
+                | if "(" LogicExp+ ")" "{" Body "}"                                                            --simpleconditional
                 | switch Factor "{" (case Factor ":" Body break?)+ "}"          --switchcase
                 | for "(" Statement "," (Statement | RelExp) "," Statement? ") {" Body break? "}"      --forloop
-                | for "(" varname in varname ") {" Body break? "}"              --forin
+                | for "(" Varname in Varname ") {" Body break? "}"              --forin
                 | while "(" LogicExp+ ") {" Body break? "}"                     --while
                 | do "{" Body break? "}" while "(" LogicExp+ ")"                --dowhile
   LogicExp      = LogicExp logicalop RelExp                                       --logicalcombo
@@ -27,32 +29,33 @@ Speare {
                 | Exponentiate
   Exponentiate  = Factor (exponentiate) Exponentiate                            --raisepower
                 | Factor
-  Factor        = varname
-                | (numeral | indistinguishable | tobeornottobe | lexicographical | illused | liste | concordance) --types
+  Factor        = Varname
+                | (numeral | indistinguishable | tobeornottobe | lexicographical | illused | liste | concordance) --Types
                 | "(" AddSub ")"                                                --parens
                 | ("nay" | abs | sqrt)	"(" Factor ")"                          --unary
+                | string
   
   
   
   // Define ids for variables, params
-  varname             = ~keyword letter alnum*                                  --number
-                      | ~keyword "\"" letter* "\""                              --string
-  Param               = type varname
+  Varname             = id                             --string
+
+  Param               = Type Varname
   
   //Reserved keywords
   alloweth            = "alloweth" ~alnum
   enter               = "enter"
-  type                =	primativeType
-                      | dsType
 
-  //Non-DS types                              
-  primativeType	= "Indistinguishable"
+  Type	              = "Indistinguishable"
                       | "ToBeOrNotToBe"
                       | "Numeral"
                       | "Lexicographical"
                       | "IllUsed"
                       | "Ideogram"
                       | "Corollary"
+                      | "Liste"
+                      | "Concordance"
+
   structureType       = indistinguishable
                       | tobeornottobe
                       | numeral
@@ -65,7 +68,9 @@ Speare {
   dsType              = "Liste"
                       | "Concordance"
 
-  // Types                          
+  // Type
+  id                  = ~keyword letter alnum*            --name
+  string              = ~keyword "\"" letter* "\""        --string
   indistinguishable	  = "indistinguishable" ~alnum
   tobeornottobe	   	  =	"fallacious" | "faithful"                               --binary
   numeral             = digit+ ("." digit+)?
@@ -160,7 +165,6 @@ Speare {
    
    //Defining Reserved Words
    keyword            = ideogram ~alnum
-                      | type ~alnum
                       | alloweth ~alnum
                       | accommodation ~alnum
                       | composition ~alnum

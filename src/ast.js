@@ -13,8 +13,7 @@
 import util from "util";
 
 export class Program {
-  constructor(works, statements) {
-    this.works = works;
+  constructor(statements) {
     this.statements = statements;
   }
   [util.inspect.custom]() {
@@ -133,6 +132,12 @@ export class IdentifierExpression {
   }
 }
 
+export class StringValue {
+  constructor(value) {
+    this.value = value;
+  }
+}
+
 export class BasicType {
   constructor(name) {
     this.name = name;
@@ -140,14 +145,20 @@ export class BasicType {
 }
 
 export class ArrayType {
-  constructor(type, name) {
-    Object.assign(this, {type, name})
+  constructor(type, values) {
+    Object.assign(this, {type, values})
+  }
+}
+
+export class Numeral {
+  constructor(whole, decimal, fract) {
+    Object.assign(this, {whole, decimal, fract})
   }
 }
 
 export class DictType {
-  constructor(keyType, valType, name) {
-    Object.assign(this, {keyType, valType, name})
+  constructor(keyType, valType) {
+    Object.assign(this, {keyType, valType})
   }
 }
 
