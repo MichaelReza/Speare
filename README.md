@@ -72,7 +72,7 @@ function foo(bar, baz) {
 
 ```
 enter Numeral foo(Numeral bar, Numeral baz) {
-  alloweth x be 0
+  alloweth Numeral x be 0
   returneth x
 }
 ```
