@@ -1,6 +1,6 @@
 <img src="docs/logo.png">
 
-# Speare
+# [Speare](https://michaelreza.github.io/Speare/)
 
 ## 1 | Introduction to Speare
 
