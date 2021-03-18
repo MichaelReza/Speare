@@ -1,4 +1,4 @@
-<img src="Team Resources/Logo Ideas/speare_fancy.png">
+<img src="docs/logo.png">
 
 # Speare
 
