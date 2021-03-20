@@ -10,6 +10,7 @@
 // // entire AST. It even works well if you analyze the AST and turn it into a
 // // graph with cycles.
 
+import { namespace } from "ohm-js";
 import util from "util";
 
 export class Program {
@@ -18,6 +19,68 @@ export class Program {
   }
   [util.inspect.custom]() {
     return prettied(this);
+  }
+}
+
+export class Type {
+  constructor(name) {
+    this.name = name
+  }
+  static BOOLEAN = new Type("ToBeOrNotToBe")
+  static NUMERAL = new Type("Numeral")
+  static STRING = new Type("Lexicographical")
+  static VOID = new Type("Indistinguishable")
+  static NULL = new Type("Illused")
+  static TYPE = new Type("type")
+  // Equivalence: Iwhen are two types the same
+  tis(target) {
+    return this == target
+  }
+
+  tisAssignable(target) {
+    return this.isEquivalentTo(target)
+  }
+}
+
+export class ListeType extends Type {
+  // Example: [int]
+  constructor(baseType) {
+    super(`[${baseType.name}]`)
+    this.baseType = baseType
+  }
+  // [T] equivalent to [U] only when T is equivalent to U. Same for
+  // assignability: we do NOT want arrays to be covariant!
+  tis(target) {
+    return target.constructor === ListeType && this.baseType === target.baseType
+  }
+}
+
+export class ConcordanceType extends Type {
+  // Example: [int]
+  constructor(baseType) {
+    super(`[${baseType.name}]`)
+    this.baseType = baseType
+  }
+  // [T] equivalent to [U] only when T is equivalent to U. Same for
+  // assignability: we do NOT want arrays to be covariant!
+  tis(target) {
+    return target.constructor === ConcordanceType && this.baseType === target.baseType
+  }
+}
+
+export class CorollaryType extends Type {
+  // Example: (boolean,[string]?)->float
+  constructor(parameterTypes, returnType) {
+    super(`(${parameterTypes.map(t => t.name).join(",")})->${returnType.name}`)
+    Object.assign(this, { parameterTypes, returnType })
+  }
+  tisAssignable(target) {
+    return (
+      target.constructor === CorollaryType &&
+      this.returnType.tisAssignable(target.returnType) &&
+      this.parameterTypes.length === target.parameterTypes.length &&
+      this.parameterTypes.every((t, i) => target.parameterTypes[i].tisAssignable(t))
+    )
   }
 }
 
@@ -86,7 +149,7 @@ export class VariableInitialization {
 export class VariableAssignment {
   constructor(name, value) {
     Object.assign(this, {name, value})
-  }
+ }
 }
 
 export class Print {
@@ -138,30 +201,35 @@ export class StringValue {
   }
 }
 
-export class BasicType {
-  constructor(name) {
-    this.name = name;
-  }
-}
-
-export class ArrayType {
-  constructor(firstValue, values) {
-    Object.assign(this, {firstValue, values})
+export class Liste {
+  constructor(values) {
+    Object.assign(this, {values})
   }
 }
 
 export class Numeral {
-  constructor(whole, decimal, fract) {
-    Object.assign(this, {whole, decimal, fract})
+  constructor(whole, fract) {
+    Object.assign(this, {whole, fract})
   }
 }
 
-export class DictType {
-  constructor(keyType, valType, keys, values) {
-    Object.assign(this, {keyType, valType, keys, values})
+export class Concordance {
+  constructor(dictEntries) {
+    Object.assign(this, {dictEntries})
   }
 }
 
+export class DictItem {
+  constructor(key, val) {
+    Object.assign(this, {key, val})
+  }
+}
+
+export class NonEmptyList {
+  constructor(firstItem, RemainingItems) {
+    Object.assign(this, {firstItem, RemainingItems})
+  }
+}
 // Source:
 function prettied(node) {
   // Return a compact and pretty string representation of the node graph,

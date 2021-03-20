@@ -2,10 +2,10 @@ Speare {
   Program       = (Work | Statement)*
   Work          = Corollary | Composition
   Composition   = "Composition" Varname "{" Work* "}"                           --class
-  Corollary     = enter Type Varname "(" ListOf<Param, ","> ")" "{" Body "}"    --function
+  Corollary     = enter type Varname "(" ListOf<Param, ","> ")" "{" Body "}"    --function
   Body          = (Statement | Work)*
   Statement     = ContFlow+
-                | alloweth Type Varname "be" RelExp                             --variable
+                | alloweth type Varname "be" RelExp                             --variable
                 | Varname "be" (RelExp)                                         --assignment
                 | "speaketh" "(" RelExp ")"                                     --print
                 | "returneth" (Varname | RelExp)                                --return
@@ -30,39 +30,41 @@ Speare {
   Exponentiate  = Factor (exponentiate) Exponentiate                            --raisepower
                 | Factor
   Factor        = Varname
-                | (numeral | indistinguishable | tobeornottobe | lexicographical | illused | liste | concordance) --Types
+                | StructureType                                                 --Types
                 | "(" AddSub ")"                                                --parens
                 | ("nay" | abs | sqrt)	"(" Factor ")"                          --unary
-                | string
+                | String
+  DictItem      = AddSub colon AddSub                                           --dictionaryitem
   
   
   
   // Define ids for variables, params
   Varname             = id                             --string
 
-  Param               = Type Varname
+  Param               = type Varname
   
   //Reserved keywords
   alloweth            = "alloweth" ~alnum
   enter               = "enter"
+  colon               = ":"
 
-  Type	              = "Indistinguishable"
+  type	              = "Liste of " type ~alnum                                  --listdec
+                      | "Concordance of " type " and " type                        --dictdec
+                      | "Indistinguishable"
                       | "ToBeOrNotToBe"
                       | "Numeral"
                       | "Lexicographical"
-                      | "IllUsed"
+                      | "Illused"
                       | "Ideogram"
                       | "Corollary"
-                      | "Liste"
-                      | "Concordance"
 
-  structureType       = indistinguishable
-                      | tobeornottobe
-                      | numeral
-                      | lexicographical
-                      | illused
-                      | liste
-                      | concordance
+  StructureType       = Indistinguishable
+                      | Tobeornottobe
+                      | Numeral
+                      | Lexicographical
+                      | Illused
+                      | Liste
+                      | Concordance
 
   //Data Structures                                  
   dsType              = "Liste"
@@ -70,21 +72,15 @@ Speare {
 
   // Type
   id                  = ~keyword letter alnum*            --name
-  string              = ~keyword "\"" letter* "\""        --string
-  indistinguishable	  = "indistinguishable" ~alnum
-  tobeornottobe	   	  =	"fallacious" | "faithful"                               --binary
-  numeral             = digit+ ("." digit+)?
-  liste               = "[" ((indistinguishable) (", " indistinguishable)*)* "]"
-                      | "[" ((tobeornottobe) (", " tobeornottobe)*)* "]"
-                      | "[" ((numeral) (", " numeral)*)* "]"
-                      | "[" ((lexicographical) (", " lexicographical)*)* "]"
-                      | "[" ((illused) (", " illused)*)* "]"
-                      | "[" ((liste) (", " liste)*)* "]"
-                      | "[" ((concordance) (", " concordance)*)* "]"
-  concordance         = "{" ((structureType " : " structureType) (", " structureType " : " structureType)* )* "}"
+  String              = ~keyword "\"" letter* "\""        --string
+  Indistinguishable	  = "indistinguishable" ~alnum
+  Tobeornottobe	   	  =	"fallacious" | "faithful"                               --binary
+  Numeral             = digit+ ("." digit+)?
+  Liste               = "[" ListOf<AddSub, ","> "]"
+  Concordance         = "{" ListOf<DictItem, ","> "}"
 
-  lexicographical     = "\"" alnum "\""
-  illused             = "null"
+  Lexicographical     = "\"" alnum "\""
+  Illused             = "null"
 
   // Operations
   addition            = "with"
@@ -153,15 +149,7 @@ Speare {
                       | decrement
   
   // Defining Objects
-  accommodation	      = indistinguishable
-                      | tobeornottobe
-                      | numeral
-                      | lexicographical
-                      | ideogram
-                      | enter
-                      | illused
-                      | liste
-                      | concordance
+  accommodation	      = type
    
    //Defining Reserved Words
    keyword            = ideogram ~alnum

@@ -7,8 +7,8 @@ const source =
   speaketh(6 with 7)
   alloweth Numeral x be 6
   alloweth Numeral y be 6.33
-  alloweth Liste z be [3, 5, 7, 9]
-  alloweth Concordance a be {12 : 6, 3 : 4, 8 : 9}
+  alloweth Liste of Numeral z be [3, 5, 7, 9]
+  alloweth Concordance of Numeral and Numeral a be {12 : 6, 3 : 4, 8 : 9}
   speaketh(x accumulate 5)
   x be x with 5 without 6
   x be x accumulate 6 sunder 12
@@ -34,7 +34,7 @@ const source =
   execute { 
     execute { 
       speaketh(x) 
-    } whilst(x nobler x) 
+    } whilst(x nobler x)
   } whilst(x nobler x)
 
   whether (x nobler x) {
@@ -83,139 +83,141 @@ const source =
   }
   `
 
-const expectedAst = String.raw`   1 | Program statements=[#2,#4,#8,#10,#12,#19,#29,#33,#39,#45,#46,#48,#55,#97,#104,#116]
+const expectedAst = String.raw`   1 | Program statements=[#2,#4,#8,#10,#12,#19,#31,#35,#41,#47,#48,#50,#57,#99,#106,#118]
    2 | Print expression=#3
    3 | StringValue value='hello'
    4 | Print expression=#5
    5 | BinaryExpression left=#6 op='with' right=#7
-   6 | Numeral whole='6' decimal='' fract=''
-   7 | Numeral whole='7' decimal='' fract=''
+   6 | Numeral whole='6' fract=''
+   7 | Numeral whole='7' fract=''
    8 | VariableInitialization type='Numeral' name='x' initializer=#9
-   9 | Numeral whole='6' decimal='' fract=''
+   9 | Numeral whole='6' fract=''
   10 | VariableInitialization type='Numeral' name='y' initializer=#11
-  11 | Numeral whole='6' decimal='.33' fract='.33'
-  12 | VariableInitialization type='Liste' name='z' initializer=#13
-  13 | ArrayType firstValue=[#14] values=[#15]
-  14 | Numeral whole='3' decimal='' fract=''
-  15 | Array 0=#16 1=#17 2=#18
-  16 | Numeral whole='5' decimal='' fract=''
-  17 | Numeral whole='7' decimal='' fract=''
-  18 | Numeral whole='9' decimal='' fract=''
-  19 | VariableInitialization type='Concordance' name='a' initializer=#20
-  20 | DictType keyType=[#21] valType=[#22] keys=[#23] values=[#26]
-  21 | Numeral whole='12' decimal='' fract=''
-  22 | Numeral whole='6' decimal='' fract=''
-  23 | Array 0=#24 1=#25
-  24 | Numeral whole='3' decimal='' fract=''
-  25 | Numeral whole='8' decimal='' fract=''
-  26 | Array 0=#27 1=#28
-  27 | Numeral whole='4' decimal='' fract=''
-  28 | Numeral whole='9' decimal='' fract=''
-  29 | Print expression=#30
-  30 | BinaryExpression left=#31 op='accumulate' right=#32
-  31 | IdentifierExpression name='x'
-  32 | Numeral whole='5' decimal='' fract=''
-  33 | VariableAssignment name='x' value=#34
-  34 | BinaryExpression left=#35 op='without' right=#38
-  35 | BinaryExpression left=#36 op='with' right=#37
-  36 | IdentifierExpression name='x'
-  37 | Numeral whole='5' decimal='' fract=''
-  38 | Numeral whole='6' decimal='' fract=''
-  39 | VariableAssignment name='x' value=#40
-  40 | BinaryExpression left=#41 op='sunder' right=#44
-  41 | BinaryExpression left=#42 op='accumulate' right=#43
-  42 | IdentifierExpression name='x'
-  43 | Numeral whole='6' decimal='' fract=''
-  44 | Numeral whole='12' decimal='' fract=''
-  45 | IncDec name='x' op='increment'
-  46 | IncDecby name='x' op='incrementby' expression=#47
-  47 | Numeral whole='4' decimal='' fract=''
-  48 | Corollary type='ToBeOrNotToBe' id='foo' params=[#49] body=[#50,#54]
-  49 | Param type=null varname='f'
-  50 | Array 0=#51
-  51 | ForIn _for='in regards to' var1=#52 _in=#53 var2=[] body=undefined brk=undefined
-  52 | IdentifierExpression name='f'
-  53 | IdentifierExpression name='z'
-  54 | Return expression='f'
-  55 | Array 0=#56 1=#60 2=#71 3=#87
-  56 | WhileLoop whle='whilst' logicExp=[#57] body=[] brk=undefined
-  57 | BinaryExpression left=#58 op='nobler' right=#59
-  58 | IdentifierExpression name='x'
-  59 | Numeral whole='20' decimal='' fract=''
-  60 | DoWhile doo='execute' body=[#61] brk='' whle='whilst' logExp=[#68]
-  61 | Array 0=#62
-  62 | DoWhile doo='execute' body=[#63] brk='' whle='whilst' logExp=[#65]
-  63 | Print expression=#64
-  64 | IdentifierExpression name='x'
-  65 | BinaryExpression left=#66 op='nobler' right=#67
+  11 | Numeral whole='6' fract='.33'
+  12 | VariableInitialization type='Liste of Numeral' name='z' initializer=#13
+  13 | Liste values=#14
+  14 | NonEmptyList firstItem=#15 RemainingItems=[#16,#17,#18]
+  15 | Numeral whole='3' fract=''
+  16 | Numeral whole='5' fract=''
+  17 | Numeral whole='7' fract=''
+  18 | Numeral whole='9' fract=''
+  19 | VariableInitialization type='Concordance of Numeral and Numeral' name='a' initializer=#20
+  20 | Concordance dictEntries=#21
+  21 | NonEmptyList firstItem=#22 RemainingItems=[#25,#28]
+  22 | DictItem key=#23 val=#24
+  23 | Numeral whole='12' fract=''
+  24 | Numeral whole='6' fract=''
+  25 | DictItem key=#26 val=#27
+  26 | Numeral whole='3' fract=''
+  27 | Numeral whole='4' fract=''
+  28 | DictItem key=#29 val=#30
+  29 | Numeral whole='8' fract=''
+  30 | Numeral whole='9' fract=''
+  31 | Print expression=#32
+  32 | BinaryExpression left=#33 op='accumulate' right=#34
+  33 | IdentifierExpression name='x'
+  34 | Numeral whole='5' fract=''
+  35 | VariableAssignment name='x' value=#36
+  36 | BinaryExpression left=#37 op='without' right=#40
+  37 | BinaryExpression left=#38 op='with' right=#39
+  38 | IdentifierExpression name='x'
+  39 | Numeral whole='5' fract=''
+  40 | Numeral whole='6' fract=''
+  41 | VariableAssignment name='x' value=#42
+  42 | BinaryExpression left=#43 op='sunder' right=#46
+  43 | BinaryExpression left=#44 op='accumulate' right=#45
+  44 | IdentifierExpression name='x'
+  45 | Numeral whole='6' fract=''
+  46 | Numeral whole='12' fract=''
+  47 | IncDec name='x' op='increment'
+  48 | IncDecby name='x' op='incrementby' expression=#49
+  49 | Numeral whole='4' fract=''
+  50 | Corollary type='ToBeOrNotToBe' id='foo' params=[#51] body=[#52,#56]
+  51 | Param type=null varname='f'
+  52 | Array 0=#53
+  53 | ForIn _for='in regards to' var1=#54 _in=#55 var2=[] body=undefined brk=undefined
+  54 | IdentifierExpression name='f'
+  55 | IdentifierExpression name='z'
+  56 | Return expression='f'
+  57 | Array 0=#58 1=#62 2=#73 3=#89
+  58 | WhileLoop whle='whilst' logicExp=[#59] body=[] brk=undefined
+  59 | BinaryExpression left=#60 op='nobler' right=#61
+  60 | IdentifierExpression name='x'
+  61 | Numeral whole='20' fract=''
+  62 | DoWhile doo='execute' body=[#63] brk='' whle='whilst' logExp=[#70]
+  63 | Array 0=#64
+  64 | DoWhile doo='execute' body=[#65] brk='' whle='whilst' logExp=[#67]
+  65 | Print expression=#66
   66 | IdentifierExpression name='x'
-  67 | IdentifierExpression name='x'
-  68 | BinaryExpression left=#69 op='nobler' right=#70
+  67 | BinaryExpression left=#68 op='nobler' right=#69
+  68 | IdentifierExpression name='x'
   69 | IdentifierExpression name='x'
-  70 | IdentifierExpression name='x'
-  71 | IfStatement _if='whether' le1=[#72] body=[#75] _elif='subsequently( x nobler x ) {\n    speaketh(x)\n  }' le2=[#77] body2=[#81] _else='otherwise {\n    speaketh(x)\n  }' body3=[#84]
-  72 | BinaryExpression left=#73 op='nobler' right=#74
-  73 | IdentifierExpression name='x'
-  74 | IdentifierExpression name='x'
-  75 | Print expression=#76
+  70 | BinaryExpression left=#71 op='nobler' right=#72
+  71 | IdentifierExpression name='x'
+  72 | IdentifierExpression name='x'
+  73 | IfStatement _if='whether' le1=[#74] body=[#77] _elif='subsequently( x nobler x ) {\n    speaketh(x)\n  }' le2=[#79] body2=[#83] _else='otherwise {\n    speaketh(x)\n  }' body3=[#86]
+  74 | BinaryExpression left=#75 op='nobler' right=#76
+  75 | IdentifierExpression name='x'
   76 | IdentifierExpression name='x'
-  77 | Array 0=#78
-  78 | BinaryExpression left=#79 op='nobler' right=#80
-  79 | IdentifierExpression name='x'
-  80 | IdentifierExpression name='x'
-  81 | Array 0=#82
-  82 | Print expression=#83
-  83 | IdentifierExpression name='x'
-  84 | Array 0=#85
-  85 | Print expression=#86
-  86 | IdentifierExpression name='x'
-  87 | SwitchStatement swtch='trigger' factor1=#88 cse='condition 0:\n' +
+  77 | Print expression=#78
+  78 | IdentifierExpression name='x'
+  79 | Array 0=#80
+  80 | BinaryExpression left=#81 op='nobler' right=#82
+  81 | IdentifierExpression name='x'
+  82 | IdentifierExpression name='x'
+  83 | Array 0=#84
+  84 | Print expression=#85
+  85 | IdentifierExpression name='x'
+  86 | Array 0=#87
+  87 | Print expression=#88
+  88 | IdentifierExpression name='x'
+  89 | SwitchStatement swtch='trigger' factor1=#90 cse='condition 0:\n' +
   '      speaketh(x)\n' +
   '      exit\n' +
   '    condition 1:\n' +
   '      speaketh(x)\n' +
-  '      exit' factor2=[#89,#90] body=[#91,#94] brk='condition 0:\n' +
+  '      exit' factor2=[#91,#92] body=[#93,#96] brk='condition 0:\n' +
   '      speaketh(x)\n' +
   '      exit\n' +
   '    condition 1:\n' +
   '      speaketh(x)\n' +
   '      exit'
-  88 | IdentifierExpression name='x'
-  89 | Numeral whole='0' decimal='' fract=''
-  90 | Numeral whole='1' decimal='' fract=''
-  91 | Array 0=#92
-  92 | Print expression=#93
-  93 | IdentifierExpression name='x'
-  94 | Array 0=#95
-  95 | Print expression=#96
-  96 | IdentifierExpression name='x'
-  97 | Corollary type='ToBeOrNotToBe' id='foo' params=[#98] body=[#99,#101]
-  98 | Param type=null varname='b'
-  99 | VariableInitialization type='Numeral' name='c' initializer=#100
- 100 | Numeral whole='1' decimal='' fract=''
- 101 | Corollary type='ToBeOrNotToBe' id='bar' params=[] body=[#102]
- 102 | Print expression=#103
- 103 | StringValue value='hello'
- 104 | Composition id='foo' compBody=[#105,#110,#111]
- 105 | Corollary type='ToBeOrNotToBe' id='foo' params=[#106] body=[#107,#109]
- 106 | Param type=null varname='b'
- 107 | VariableInitialization type='Numeral' name='c' initializer=#108
- 108 | Numeral whole='1' decimal='' fract=''
- 109 | Return expression='c'
- 110 | Composition id='bar' compBody=[]
- 111 | Corollary type='ToBeOrNotToBe' id='foo' params=[#112] body=[#113,#115]
- 112 | Param type=null varname='b'
- 113 | VariableInitialization type='Numeral' name='c' initializer=#114
- 114 | Numeral whole='1' decimal='' fract=''
- 115 | Return expression='c'
- 116 | Array 0=#117
- 117 | ForLoop _for='in regards to' s1=#118 s2=#120 s3=[#123] body=[] brk=undefined
- 118 | VariableInitialization type='Numeral' name='d' initializer=#119
- 119 | Numeral whole='0' decimal='' fract=''
- 120 | BinaryExpression left=#121 op='nobler' right=#122
- 121 | IdentifierExpression name='d'
- 122 | Numeral whole='20' decimal='' fract=''
- 123 | IncDec name='d' op='decrement'`
+  90 | IdentifierExpression name='x'
+  91 | Numeral whole='0' fract=''
+  92 | Numeral whole='1' fract=''
+  93 | Array 0=#94
+  94 | Print expression=#95
+  95 | IdentifierExpression name='x'
+  96 | Array 0=#97
+  97 | Print expression=#98
+  98 | IdentifierExpression name='x'
+  99 | Corollary type='ToBeOrNotToBe' id='foo' params=[#100] body=[#101,#103]
+ 100 | Param type=null varname='b'
+ 101 | VariableInitialization type='Numeral' name='c' initializer=#102
+ 102 | Numeral whole='1' fract=''
+ 103 | Corollary type='ToBeOrNotToBe' id='bar' params=[] body=[#104]
+ 104 | Print expression=#105
+ 105 | StringValue value='hello'
+ 106 | Composition id='foo' compBody=[#107,#112,#113]
+ 107 | Corollary type='ToBeOrNotToBe' id='foo' params=[#108] body=[#109,#111]
+ 108 | Param type=null varname='b'
+ 109 | VariableInitialization type='Numeral' name='c' initializer=#110
+ 110 | Numeral whole='1' fract=''
+ 111 | Return expression='c'
+ 112 | Composition id='bar' compBody=[]
+ 113 | Corollary type='ToBeOrNotToBe' id='foo' params=[#114] body=[#115,#117]
+ 114 | Param type=null varname='b'
+ 115 | VariableInitialization type='Numeral' name='c' initializer=#116
+ 116 | Numeral whole='1' fract=''
+ 117 | Return expression='c'
+ 118 | Array 0=#119
+ 119 | ForLoop _for='in regards to' s1=#120 s2=#122 s3=[#125] body=[] brk=undefined
+ 120 | VariableInitialization type='Numeral' name='d' initializer=#121
+ 121 | Numeral whole='0' fract=''
+ 122 | BinaryExpression left=#123 op='nobler' right=#124
+ 123 | IdentifierExpression name='d'
+ 124 | Numeral whole='20' fract=''
+ 125 | IncDec name='d' op='decrement'`
 
 const goodPrograms = {
 
@@ -230,12 +232,12 @@ const goodPrograms = {
   "Recognizes declaration of Integer numerals" : "alloweth Numeral x be 6",
   "Recognizes declaration of floating point numerals" : "alloweth Numeral x be 6.3373685",
   "Recognizes declaration of strings" : "alloweth Lexicographical x be \"word\"",
-  "Recognizes declaration of null value" : "alloweth IllUsed x be null",
+  "Recognizes declaration of null value" : "alloweth Illused x be null",
   "Recognizes declaration of boolean truth" : "alloweth ToBeOrNotToBe x be faithful",
   "Recognizes declaration of boolean false" : "alloweth ToBeOrNotToBe x be fallacious",
   "Recognizes declaration of Nonetype" : "alloweth Indistinguishable x be indistinguishable",
-  "Recognizes declaration of Liste" : "alloweth Liste x be [3, 5, 7, 9]",
-  "Recognizes declaration of Concordance" : "alloweth Concordance x be {12 : 6, 3 : 4, 8 : 9}",
+  "Recognizes declaration of Liste" : "alloweth Liste of Numeral x be [3, 5, 7, 9]",
+  "Recognizes declaration of Concordance" : "alloweth Concordance of Numeral and Numeral x be {12 : 6, 3 : 4, 8 : 9}",
   // Arithmetic:
   "Recognizes a print statement" : "speaketh(x accumulate 5)",
   "Recognizes arithmetic +-" : "x be x with 5 without 6",
@@ -257,6 +259,7 @@ const goodPrograms = {
         } \
       returneth x \
       }",
+  "Recognizes creation of empty function" : "enter Numeral foo(Numeral x) {}",
   // Classes:
   "Recognizes empty class" : "Composition foo {}",
   "Recognizes classes" : "Composition foo { \
@@ -343,19 +346,18 @@ const badPrograms = [
   // Arithmetic:
 
   // Functions:
-  ["Disallows non-type function", "enter increment foo(Numeral increment) { returneth 0 }", /Line 1, col 7:/],
+  ["Disallows non-type function", "enter toal foo(Numeral increment) { returneth 0 }", /Line 1, col 7:/],
   ["Disallows delcaration of function with no type", "enter foo() { returneth 0}", /Line 1, col 7:/],
-  ["Disallows creation of empty function", "enter increment foo(Numeral increment) {}", /Line 1, col 7:/],
 
   // Classes:
   ["Disallows mismatched exits between classes", "Composition foo { Composition bar } { speaketh(\"bar\") }", /Line 1, col 35:/],
 
   // For loops:
-  ["Disallows inadequate statements in for-loop", "in regards to( Numeral x be 0) { speaketh(x) }",/Line 1, col 24:/],
+  ["Disallows inadequate statements in for-loop", "in regards to( Numeral x be 0) { speaketh(x) }",/Line 1, col 16:/],
   ["Disallows improper for-in loop", "in regards to( alloweth x be 12) {  speaketh(x) }",/Line 1, col 25:/],
 
   // While Loops:
-  ["Disallows improper while loop", "whilst( Numeral x be 0) { speaketh(x) }",/Line 1, col 19:/],
+  ["Disallows improper while loop", "whilst( Numeral x be 0) { speaketh(x) }",/Line 1, col 9:/],
 
   // Do-While Loops:
   ["Disallows do loop without while", "execute{alloweth x be 12}",/Line 1, col 18:/],

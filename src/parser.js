@@ -81,22 +81,28 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   Varname(id) {
     return new ast.IdentifierExpression(this.sourceString)
   },
-  string_string(_squote, str, _equote) {
+  String_string(_squote, str, _equote) {
     return new ast.StringValue(str.sourceString)
   },
-  numeral(whole, _dot, fractional) {
-    return new ast.Numeral(whole.sourceString, _dot.sourceString, fractional.sourceString)
+  Numeral(whole, _dot, fractional) {
+    return new ast.Numeral(whole.sourceString, fractional.sourceString)
   },
   // [ Numeral, 1 ]
-  liste(_sb, value1, _comma, value2, _eb) {
-    return new ast.ArrayType(value1.ast(), value2.ast())
+  Liste(_sb, values, _eb) {
+    return new ast.Liste(values.ast())
   },
-  concordance(_sb, key, _col, val, _comma, _key2, _col2, _val2, _eb) {
-    return new ast.DictType(key.ast(), val.ast(), _key2.ast(), _val2.ast())
+  Concordance(_sb, dictItems, _eb) {
+    return new ast.Concordance(dictItems.ast())
+  },
+  DictItem_dictionaryitem(key, _colon, val) {
+    return new ast.DictItem(key.ast(), val.ast())
   },
   _terminal() {
     return null
   },
+  NonemptyListOf(startVal, _sep, remainingVals) {
+    return new ast.NonEmptyList(startVal.ast(), remainingVals.ast())
+  }
 })
 
 export default function parse(sourceCode) {
