@@ -12,7 +12,7 @@
 }
 
 .home-container {
-  width: 100vw;
+  width: 100%;
 }
 
 .home-section {
@@ -66,6 +66,12 @@ p {
   overflow: hidden;
   display: flex;
   flex-direction: row;
+  transition: all 0.4s ease;
+}
+
+.dev-card:hover {
+  transform: scale(1.02);
+  transition: all 0.4s ease;
 }
 
 .dev-photo {
@@ -115,14 +121,13 @@ p {
 }
 
 .dev-links {
-  margin-top: 20px;
   width: auto;
 }
 
 .dev-links a {
   text-decoration: none;
   float: right;
-  margin-right: 1.5em;
+  margin: 0.9em 0.5em 0 1.5em;
   color: #4C21D7;
   font-weight: 700;
   font-size: 0.583em;
@@ -131,5 +136,7 @@ p {
 }
 
 .dev-links a:hover {
-  text-decoration: solid underline #4C21D7 3px;
+  color:#753580;
+  transition: all 0.5s ease;
+  text-decoration: underline;
 }
