@@ -1,0 +1,78 @@
+speaketh("hello")
+  speaketh(6 with 7)
+  alloweth Numeral x be 6
+  alloweth Numeral y be 6.33
+  alloweth Liste of Numeral z be [3, 5, 7, 9]
+  alloweth Concordance of Numeral and Numeral a be {12 : 6, 3 : 4, 8 : 9}
+  speaketh(x accumulate 5)
+  x be x with 5 without 6
+  x be x accumulate 6 sunder 12
+  x increment
+  x incrementby 4
+
+  enter ToBeOrNotToBe foo(Numeral f) { 
+    in regards to(f within z) { 
+      in regards to (g within z) { 
+        g be 6 
+      } 
+      f be 7
+    }
+    returneth f
+  }
+
+  whilst (x nobler 20) { 
+    whilst (x nobler 20) { 
+      speaketh("nested") 
+    } 
+  }
+
+  execute { 
+    execute { 
+      speaketh(x) 
+    } whilst(x nobler x)
+  } whilst(x nobler x)
+
+  whether (x nobler x) {
+    speaketh(x)
+  }
+  subsequently( x nobler x ) {
+    speaketh(x)
+  }
+  otherwise {
+    speaketh(x)
+  }
+
+  trigger x {
+    condition 0:
+      speaketh(x)
+      exit
+    condition 1:
+      speaketh(x)
+      exit
+  }
+
+  enter ToBeOrNotToBe foo(Numeral b) { 
+    alloweth Numeral c be 1 
+    enter ToBeOrNotToBe bar() { 
+      speaketh("hello") 
+    }
+  }
+
+  Composition foo { 
+      enter ToBeOrNotToBe foo(Numeral b) { 
+        alloweth Numeral c be 1 
+        returneth c 
+      } 
+      Composition bar { 
+      } 
+      enter ToBeOrNotToBe foo(Numeral b) { 
+        alloweth Numeral c be 1 
+        returneth c 
+      } 
+  }
+
+  in regards to (alloweth Numeral d be 0, d nobler 20, d decrement) { 
+    in regards to (alloweth Numeral e be 0, e nobler 20, e decrement) { 
+      speaketh("nested") 
+    } 
+  }

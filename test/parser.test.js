@@ -6,6 +6,7 @@ const source =
  `speaketh("hello")
   speaketh(6 with 7)
   alloweth Numeral x be 6
+  alloweth Numeral x be 6 exponentiate 2
   alloweth Numeral y be 6.33
   alloweth Liste of Numeral z be [3, 5, 7, 9]
   alloweth Concordance of Numeral and Numeral a be {12 : 6, 3 : 4, 8 : 9}

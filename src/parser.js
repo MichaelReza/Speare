@@ -89,19 +89,16 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   },
   // [ Numeral, 1 ]
   Liste(_sb, values, _eb) {
-    return new ast.Liste(values.ast())
+    return new ast.Liste(values.asIteration().ast())
   },
   Concordance(_sb, dictItems, _eb) {
-    return new ast.Concordance(dictItems.ast())
+    return new ast.Concordance(dictItems.asIteration().ast())
   },
   DictItem_dictionaryitem(key, _colon, val) {
     return new ast.DictItem(key.ast(), val.ast())
   },
   _terminal() {
     return null
-  },
-  NonemptyListOf(startVal, _sep, remainingVals) {
-    return new ast.NonEmptyList(startVal.ast(), remainingVals.ast())
   }
 })
 
