@@ -149,6 +149,12 @@ export class VariableAssignment {
  }
 }
 
+export class Variable {
+  constructor(name, readOnly) {
+    Object.assign(this, { name, readOnly })
+  }
+}
+
 export class Print {
   constructor(expression) {
     this.expression = expression
