@@ -1,0 +1,18 @@
+.landing {
+  background: var(--bg-gradient);
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  position: fixed;
+}
+
+.landing-photo {
+  width:100vw;
+  clip-path: polygon(100% 0, 100% 100vh, 20% 0);
+}
+
+.landing-photo-wrap {
+  filter: drop-shadow(-15px 8px 10px #110011);
+}

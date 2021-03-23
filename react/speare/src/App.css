@@ -1,3 +1,7 @@
+:root {
+  --bg-gradient: linear-gradient(90deg, rgb(8,23,50) 0%, rgb(43,13,54) 100%);
+}
+
 .App {
   text-align: center;
 }
