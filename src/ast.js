@@ -10,9 +10,6 @@
 // // entire AST. It even works well if you analyze the AST and turn it into a
 // // graph with cycles.
 
-import { namespace } from "ohm-js";
-import util from "util";
-
 export class Program {
   constructor(statements) {
     this.statements = statements;

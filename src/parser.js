@@ -67,13 +67,13 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
     return new ast.BinaryExpression(multdiv.ast(), op.sourceString, expo.ast())
   },
   Exponentiate_raisepower(factor, op, expo) {
-    return new ast.Expo(factor.ast(), op.sourceString, expo.ast())
+    return new ast.BinaryExpression(factor.ast(), op.sourceString, expo.ast())
   },
   Factor_parens(_sp, addSub, _cp) {
-    return new ast.AddSub(addSub.ast())
+    return new ast.BinaryExpression(addSub.ast())
   },
   Factor_unary(sign, _sp, factor, _cp) {
-    return new ast.Factor(sign.sourceString, factor.ast())
+    return new ast.UnaryExpression(sign.sourceString, factor.ast())
   },
   Param(type, varname) {
     return new ast.Param(type.ast(), varname.sourceString)
