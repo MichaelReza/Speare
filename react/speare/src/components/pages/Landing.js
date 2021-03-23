@@ -1,7 +1,7 @@
 import React from 'react'
 import '../../App.css'
-import './Landing.css'
-import landingphoto from '../../images/landing-photo.jpg'
+import './css/Landing.css'
+import landingphoto from '../../assets/images/landing-photo.jpg'
 
 function Landing() {
   return (
