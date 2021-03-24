@@ -56,8 +56,8 @@ function Home() {
                   all of the type space since it looks better that way.
                   </p>
                   <div className="dev-links">
-                    <a href="https://github.com/damianbrowne/" target="_blank" rel="noreferrer">Github</a>
-                    <a href="https://github.com/damianbrowne/" target="_blank" rel="noreferrer">LinkedIn</a>
+                    <a href="https://github.com/gouldcs" target="_blank" rel="noreferrer">GitHub</a>
+                    <a href="https://www.linkedin.com/in/cameron-gould/" target="_blank" rel="noreferrer">LinkedIn</a>
                   </div>
                 </div>
               </div>
@@ -74,7 +74,7 @@ function Home() {
                   all of the type space since it looks better that way.
                   </p>
                   <div className="dev-links">
-                    <a href="https://github.com/meganreyes" target="_blank" rel="noreferrer">Github</a>
+                    <a href="https://github.com/meganreyes" target="_blank" rel="noreferrer">GitHub</a>
                     <a href="https://www.linkedin.com/in/megan-reyes/" target="_blank" rel="noreferrer">LinkedIn</a>
                   </div>
                 </div>
@@ -94,8 +94,8 @@ function Home() {
                   all of the type space since it looks better that way.
                   </p>
                   <div className="dev-links">
-                    <a href="https://github.com/damianbrowne/" target="_blank" rel="noreferrer">Github</a>
-                    <a href="https://github.com/damianbrowne/" target="_blank" rel="noreferrer">LinkedIn</a>
+                    <a href="https://github.com/MichaelReza" target="_blank" rel="noreferrer">GitHub</a>
+                    <a href="https://www.linkedin.com/in/michael-reza-8359a0194/" target="_blank" rel="noreferrer">LinkedIn</a>
                   </div>
                 </div>
               </div>
@@ -112,8 +112,8 @@ function Home() {
                   all of the type space since it looks better that way.
                   </p>
                   <div className="dev-links">
-                    <a href="https://github.com/damianbrowne/" target="_blank" rel="noreferrer">Github</a>
-                    <a href="https://github.com/damianbrowne/" target="_blank" rel="noreferrer">LinkedIn</a>
+                    <a href="https://github.com/arossell111" target="_blank" rel="noreferrer">GitHub</a>
+                    <a href="https://www.linkedin.com/in/andrew-rossell-18094a193/" target="_blank" rel="noreferrer">LinkedIn</a>
                   </div>
                 </div>
               </div>
@@ -132,7 +132,7 @@ function Home() {
                   all of the type space since it looks better that way.
                   </p>
                   <div className="dev-links">
-                    <a href="https://github.com/caitlincolina" target="_blank" rel="noreferrer">Github</a>
+                    <a href="https://github.com/caitlincolina" target="_blank" rel="noreferrer">GitHub</a>
                     <a href="https://www.linkedin.com/in/caitlin-colina-740916194/" target="_blank" rel="noreferrer">LinkedIn</a>
                   </div>
                 </div>
@@ -150,7 +150,7 @@ function Home() {
                   all of the type space since it looks better that way.
                   </p>
                   <div className="dev-links">
-                    <a href="https://github.com/damianbrowne" target="_blank" rel="noreferrer">Github</a>
+                    <a href="https://github.com/damianbrowne" target="_blank" rel="noreferrer">GitHub</a>
                     <a href="https://www.linkedin.com/in/damianbrowne/" target="_blank" rel="noreferrer">LinkedIn</a>
                   </div>
                 </div>
