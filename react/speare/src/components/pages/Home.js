@@ -49,7 +49,7 @@ function Home() {
                 </div>
                 <div className="dev-info">
                   <h3>Cameron Gould</h3>
-                  <h4>Author, Website Designer</h4>
+                  <h4>Author, Web Designer</h4>
                   <p>
                   Something about me creating stuff for the website and
                   language because we need to be pretentious and fill
@@ -67,7 +67,7 @@ function Home() {
                 </div>
                 <div className="dev-info">
                   <h3>Megan Reyes</h3>
-                  <h4>Author, Website Designer</h4>
+                  <h4>Author, Web Designer</h4>
                   <p>
                   Something about me creating stuff for the website and
                   language because we need to be pretentious and fill

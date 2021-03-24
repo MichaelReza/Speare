@@ -70,22 +70,18 @@ p {
 }
 
 .dev-card:hover {
-  transform: scale(1.02);
-  transition: all 0.4s ease;
+  transform: scale(1.03);
 }
 
 .dev-photo {
-  width: 30%;
+  width: 200px;
   display: flex;
-  justify-content: center;
   align-items: center;
-  overflow: hidden;
-  float: left;
 }
 
 .dev-photo img {
-  min-width: 100%;
-  min-height: 100%;
+  width: 100%;
+  margin-top: 10px;
 }
 
 .dev-info {
