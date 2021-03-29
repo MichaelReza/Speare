@@ -1,4 +1,4 @@
-import {Print} from "./ast.js"
+import {Type} from "./ast.js"
 // Import classes that will be used in stdlib
 
 // function makeConstant(name, type, value) {
@@ -39,41 +39,41 @@ export const types = {
 // }
 
 
-``` 
-  [TODO]:
-    Pick classes to include in stdlib that will be imported into the analyzer
-    (types, constants, functions)
-```
-```
-- Type
-  - number
-  - boolean
-  - string
-  - null
-  - type  
-Program
-Composition 
-Corollary
-Param
-IfStatement  
-SwitchStatement
-ForLoop
-ForIn
-WhileLoop 
-DoWhile
-VariableInitialization 
-VariableAssignment
-Print
-Return
-IncDecby
-IncDec 
-BinaryExpression
-UnaryExpression
-IdentifierExpression
-StringValue
-BasicType 
-Liste
-Concordance 
-DictItem
-NonEmptyList
-```
+// ``` 
+//   [TODO]:
+//     Pick classes to include in stdlib that will be imported into the analyzer
+//     (types, constants, functions)
+// ```
+// ```
+// - Type
+//   - number
+//   - boolean
+//   - string
+//   - null
+//   - type  
+// Program
+// Composition 
+// Corollary
+// Param
+// IfStatement  
+// SwitchStatement
+// ForLoop
+// ForIn
+// WhileLoop 
+// DoWhile
+// VariableInitialization 
+// VariableAssignment
+// Print
+// Return
+// IncDecby
+// IncDec 
+// BinaryExpression
+// UnaryExpression
+// IdentifierExpression
+// StringValue
+// BasicType 
+// Liste
+// Concordance 
+// DictItem
+// NonEmptyList
+// ```

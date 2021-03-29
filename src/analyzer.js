@@ -4,8 +4,6 @@ import {
   CorollaryType,
   Corollary,
   ListeType,
-  ConcordanceType,
-  Corollary,
   Liste,
 } from "./ast.js"
 import * as stdlib from "./stdlib.js"
