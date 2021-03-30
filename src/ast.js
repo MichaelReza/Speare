@@ -194,6 +194,12 @@ export class UnaryExpression {
   }
 }
 
+export class UnaryAssignment {
+  constructor(value) {
+    this.value = value;
+  }
+}
+
 export class IdentifierExpression {
   constructor(name) {
     this.name = name;

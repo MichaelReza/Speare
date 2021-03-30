@@ -75,6 +75,9 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   Factor_unary(sign, _sp, factor, _cp) {
     return new ast.UnaryExpression(sign.sourceString, factor.ast())
   },
+  Factor_Types(type) {
+    return new ast.UnaryAssignment(type.ast())
+  },
   Param(type, varname) {
     return new ast.Param(type.ast(), varname.sourceString)
   },

@@ -5,6 +5,10 @@ import {
   Corollary,
   ListeType,
   Liste,
+  Tobeornottobe,
+  Concordance,
+  Numeral
+
 } from "./ast.js"
 import * as stdlib from "./stdlib.js"
 
