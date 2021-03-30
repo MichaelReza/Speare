@@ -7,10 +7,12 @@ import Michael from '../../assets/images/devs/michael.jpg';
 import Andrew from '../../assets/images/devs/andrew.jpg';
 import Caitlin from '../../assets/images/devs/caitlin.jpg';
 import Damian from '../../assets/images/devs/damian.jpg';
+import Navbar from '../Navbar';
 
 function Home() {
   return (
     <div className="home">
+      <Navbar/>
       <div className="home-container">
         <div className="home-section">
           <h1>about speare</h1>
@@ -155,6 +157,13 @@ function Home() {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+          <div className="home-butt-container">
+            <div className="home-butt">
+                <a href="https://github.com/MichaelReza/Speare" target="_blank" rel="noreferrer">
+                  explore our documentation
+                </a>
             </div>
           </div>
         </div>

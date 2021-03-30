@@ -218,6 +218,12 @@ export class Numeral {
   }
 }
 
+export class Tobeornottobe {
+  constructor(value) {
+    this.value = value;
+  }
+}
+
 export class Concordance {
   constructor(dictEntries) {
     Object.assign(this, {dictEntries})

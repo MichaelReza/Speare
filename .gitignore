@@ -111,3 +111,10 @@ dist
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
+test/analyzer.test.js
+src/parser.js
+src/grammar.ohm
+src/ast.js
+package.json
+package-lock.json
+src/analyzer.js

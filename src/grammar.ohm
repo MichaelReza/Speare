@@ -74,7 +74,7 @@ Speare {
   id                  = ~keyword letter alnum*            --name
   String              = ~keyword "\"" letter* "\""        --string
   Indistinguishable	  = "indistinguishable" ~alnum
-  Tobeornottobe	   	  =	"fallacious" | "faithful"                               --binary
+  Tobeornottobe	   	  =	"fallacious" | "faithful"         
   Numeral             = digit+ ("." digit+)?
   Liste               = "[" ListOf<AddSub, ","> "]"
   Concordance         = "{" ListOf<DictItem, ","> "}"

@@ -143,6 +143,8 @@ class Context {
     return new Context(this, configuration)
   }
   analyze(node) {
+    // console.log(node.constructor.name)
+    console.log(node)
     return this[node.constructor.name](node)
   }
   Program(p) {
@@ -162,7 +164,7 @@ class Context {
     t.baseType = this.analyze(t.baseType)
     return t
   }
-  VariableDeclaration(d) {
+  VariableInitialization(d) {
     // Declarations generate brand new variable objects
     d.initializer = this.analyze(d.initializer)
     d.variable = new Variable(d.name, d.readOnly)
@@ -408,10 +410,10 @@ class Context {
   Number(e) {
     return e
   }
-  BigInt(e) {
+  Numeral(e) {
     return e
   }
-  Boolean(e) {
+  Tobeornottobe(e) {
     return e
   }
   String(e) {
@@ -425,9 +427,9 @@ class Context {
 export default function analyze(node) {
   // Allow primitives to be automatically typed
   BigInt.prototype.type = Type.Numeral
-  Boolean.prototype.type = Type.BOOLEAN
+  Tobeornottobe.prototype.type = Type.BOOLEAN
   String.prototype.type = Type.STRING
-  Type.prototype.type = Type.TYPE
+  Type.prototype.type = Type.TYPE 
   const initialContext = new Context()
 
   // Add in all the predefined identifiers from the stdlib module

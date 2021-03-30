@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/MichaelReza/Speare#readme",
   "dependencies": {
-    "c8": "^7.5.0",
+    "c8": "^7.6.0",
     "ohm-js": "^15.4.1"
   },
   "devDependencies": {

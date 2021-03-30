@@ -42,3 +42,39 @@
     transform: rotate(360deg);
   }
 }
+
+p::selection {
+  color: #FF80AB;
+}
+
+h1::selection {
+  color: #FF80AB;
+}
+
+h2::selection {
+  color: #FF80AB;
+}
+
+h3::selection {
+  color: #FF80AB;
+}
+
+h4::selection {
+  color: #FF80AB;
+}
+
+h5::selection {
+  color: #FF80AB;
+}
+
+h6::selection {
+  color: #FF80AB;
+}
+
+a::selection {
+  color: #FF80AB;
+}
+
+Link::selection {
+  color: #FF80AB;
+}

@@ -84,6 +84,9 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   String_string(_squote, str, _equote) {
     return new ast.StringValue(str.sourceString)
   },
+  Tobeornottobe(value){
+    return new ast.Tobeornottobe(value)
+  },
   Numeral(whole, _dot, fractional) {
     return new ast.Numeral(whole.sourceString, fractional.sourceString)
   },
