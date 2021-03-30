@@ -3,7 +3,7 @@ import '../../App.css';
 import './css/Home.css';
 import Cameron from '../../assets/images/devs/cameron.png';
 import Megan from '../../assets/images/devs/megan.jpg';
-import Michael from '../../assets/images/devs/michael.jpg';
+import Michael from '../../assets/images/devs/michael.png';
 import Andrew from '../../assets/images/devs/andrew.jpg';
 import Caitlin from '../../assets/images/devs/caitlin.jpg';
 import Damian from '../../assets/images/devs/damian.jpg';
