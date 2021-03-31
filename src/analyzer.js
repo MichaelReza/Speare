@@ -7,8 +7,7 @@ import {
   Liste,
   Tobeornottobe,
   Concordance,
-  Numeral
-
+  Numeral,
 } from "./ast.js"
 import * as stdlib from "./stdlib.js"
 
@@ -18,7 +17,7 @@ function must(condition, errorMessage) {
   }
 }
 
-const check = self => ({
+const check = (self) => ({
   isNumeral() {
     must(
       [Type.NUMERAL].includes(self.type),
@@ -32,10 +31,16 @@ const check = self => ({
     )
   },
   isBoolean() {
-    must(self.type === Type.BOOLEAN, `Expected a boolean, found ${self.type.name}`)
+    must(
+      self.type === Type.BOOLEAN,
+      `Expected a boolean, found ${self.type.name}`
+    )
   },
   isInteger() {
-    must(self.type === Type.NUMERAL, `Expected a numeral, found ${self.type.name}`)
+    must(
+      self.type === Type.NUMERAL,
+      `Expected a numeral, found ${self.type.name}`
+    )
   },
   isAType() {
     must([Type, Corollary].includes(self.constructor), "Type expected")
@@ -47,11 +52,11 @@ const check = self => ({
     must(self.type.constructor === ListeType, "Liste expected")
   },
   hasSameTypeAs(other) {
-    must(self.type.isEquivalentTo(other.type), "Operands do not have the same type")
+    must(self.type === other.type, "Operands do not have the same type")
   },
   allHaveSameType() {
     must(
-      self.slice(1).every(e => e.type === self[0].type),
+      self.slice(1).every((e) => e.type === self[0].type),
       "Not all elements have the same type"
     )
   },
@@ -65,10 +70,13 @@ const check = self => ({
     must(!self.readOnly, `Cannot assign to constant ${self.name}`)
   },
   areAllDistinct() {
-    must(new Set(self.map(f => f.name)).size === self.length, "Fields must be distinct")
+    must(
+      new Set(self.map((f) => f.name)).size === self.length,
+      "Fields must be distinct"
+    )
   },
   isInTheObject(object) {
-    must(object.type.fields.map(f => f.name).includes(self), "No such field")
+    must(object.type.fields.map((f) => f.name).includes(self), "No such field")
   },
   isInsideALoop() {
     must(self.inLoop, "Break can only appear in a loop")
@@ -78,12 +86,16 @@ const check = self => ({
   },
   isCallable() {
     must(
-      self.constructor === Concordance || self.type.constructor == CorollaryType,
+      self.constructor === Concordance ||
+        self.type.constructor == CorollaryType,
       "Call of non-function or non-constructor"
     )
   },
   returnsNothing() {
-    must(self.type.returnType === Type.VOID, "Something should be returned here")
+    must(
+      self.type.returnType === Type.VOID,
+      "Something should be returned here"
+    )
   },
   returnsSomething() {
     must(self.type.returnType !== Type.VOID, "Cannot return a value here")
@@ -103,7 +115,7 @@ const check = self => ({
     check(self).match(calleeType.parameterTypes)
   },
   matchFieldsOf(corollaryType) {
-    check(self).match(structType.fields.map(f => f.type))
+    check(self).match(structType.fields.map((f) => f.type))
   },
 })
 
@@ -147,8 +159,8 @@ class Context {
     return new Context(this, configuration)
   }
   analyze(node) {
-    console.log(node.constructor.name)
-    console.log(node)
+    // console.log(node.constructor.name)
+    // console.log(node)
     return this[node.constructor.name](node)
   }
   Program(p) {
@@ -196,7 +208,7 @@ class Context {
     const childContext = this.newChild({ inLoop: false, forFunction: f })
     d.parameters = childContext.analyze(d.parameters)
     f.type = new CorollaryType(
-      d.parameters.map(p => p.type),
+      d.parameters.map((p) => p.type),
       d.returnType
     )
     // Add before analyzing the body to allow recursion
@@ -231,6 +243,10 @@ class Context {
   }
   BreakStatement(s) {
     check(this).isInsideALoop()
+    return s
+  }
+  Print(s) {
+    s.expression = this.analyze(s.expression)
     return s
   }
   ReturnStatement(s) {
@@ -313,13 +329,13 @@ class Context {
   }
   OrExpression(e) {
     e.disjuncts = this.analyze(e.disjuncts)
-    e.disjuncts.forEach(disjunct => check(disjunct).isBoolean())
+    e.disjuncts.forEach((disjunct) => check(disjunct).isBoolean())
     e.type = Type.BOOLEAN
     return e
   }
   AndExpression(e) {
     e.conjuncts = this.analyze(e.conjuncts)
-    e.conjuncts.forEach(conjunct => check(conjunct).isBoolean())
+    e.conjuncts.forEach((conjunct) => check(conjunct).isBoolean())
     e.type = Type.BOOLEAN
     return e
   }
@@ -334,11 +350,17 @@ class Context {
       check(e.left).isNumericOrString()
       check(e.left).hasSameTypeAs(e.right)
       e.type = e.left.type
-    } else if (["without", "accumulate", "sunder", "residue", "exponentiate"].includes(e.op)) {
+    } else if (
+      ["without", "accumulate", "sunder", "residue", "exponentiate"].includes(
+        e.op
+      )
+    ) {
       check(e.left).isNumeric()
       check(e.left).hasSameTypeAs(e.right)
       e.type = e.left.type
-    } else if (["lesser", "tis lesser", "nobler", "tis nobler"].includes(e.op)) {
+    } else if (
+      ["lesser", "tis lesser", "nobler", "tis nobler"].includes(e.op)
+    ) {
       check(e.left).isNumericOrString()
       check(e.left).hasSameTypeAs(e.right)
       e.type = Type.BOOLEAN
@@ -389,7 +411,7 @@ class Context {
   MemberExpression(e) {
     e.object = this.analyze(e.object)
     check(e.field).isInTheObject(e.object)
-    e.type = e.object.type.fields.find(f => f.name === e.field).type
+    e.type = e.object.type.fields.find((f) => f.name === e.field).type
     return e
   }
   Call(c) {
@@ -414,29 +436,29 @@ class Context {
     check(t).isAType()
     return t
   }
-  Number(e) {
-    return e
-  }
   Numeral(e) {
+    e.type = Type.NUMERAL
     return e
   }
   Tobeornottobe(e) {
+    e.type = Type.BOOLEAN
     return e
   }
-  String(e) {
+  StringValue(e) {
+    e.type = Type.STRING
     return e
   }
   Array(a) {
-    return a.map(item => this.analyze(item))
+    return a.map((item) => this.analyze(item))
   }
 }
 
 export default function analyze(node) {
   // Allow primitives to be automatically typed
-  BigInt.prototype.type = Type.Numeral
-  Tobeornottobe.prototype.type = Type.BOOLEAN
-  String.prototype.type = Type.STRING
-  Type.prototype.type = Type.TYPE 
+  // BigInt.prototype.type = Type.Numeral;
+  // Number.prototype.type = Type.BOOLEAN;
+  // String.prototype.type = Type.STRING;
+  // Type.prototype.type = Type.TYPE;
   const initialContext = new Context()
 
   // Add in all the predefined identifiers from the stdlib module

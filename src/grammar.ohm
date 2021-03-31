@@ -29,20 +29,20 @@ Speare {
                 | Exponentiate
   Exponentiate  = Factor (exponentiate) Exponentiate                            --raisepower
                 | Factor
-  Factor        = StructureType                                                 --Types
+  Factor        = StructureType
                 | Varname
                 | "(" AddSub ")"                                                --parens
                 | ("nay" | abs | sqrt)	"(" Factor ")"                          --unary
                 | String
   DictItem      = AddSub colon AddSub                                           --dictionaryitem
-  
-  
-  
+
+
+
   // Define ids for variables, params
   Varname             = id                             --string
 
   Param               = type Varname
-  
+
   //Reserved keywords
   alloweth            = "alloweth" ~alnum
   enter               = "enter"
@@ -66,7 +66,7 @@ Speare {
                       | Liste
                       | Concordance
 
-  //Data Structures                                  
+  //Data Structures
   dsType              = "Liste"
                       | "Concordance"
 
@@ -74,7 +74,7 @@ Speare {
   id                  = ~keyword letter alnum*            --name
   String              = ~keyword "\"" letter* "\""        --string
   Indistinguishable	  = "indistinguishable" ~alnum
-  Tobeornottobe	   	  =	"fallacious" | "faithful"         
+  Tobeornottobe	   	  =	"fallacious" | "faithful"
   Numeral             = digit+ ("." digit+)?
   Liste               = "[" ListOf<AddSub, ","> "]"
   Concordance         = "{" ListOf<DictItem, ","> "}"
@@ -92,7 +92,7 @@ Speare {
   abs                 = "absolutization" ~alnum
   sqrt                = "quadrangle" ~alnum
   composition         = "Composition" ~alnum
-  
+
   // Relational and Logical operations
   relop               = "tis nobler"
                       | "tis not"
@@ -103,14 +103,14 @@ Speare {
   logicalop           = "furthermore"
                       | "alternatively"
                       | "nay"
-  
+
   //Incrementing
   assignment		      = "be"
   increment           = "increment"
   incrementby         = "incrementby"
   decrement           = "decrement"
   decrementby         = "decrementby"
-  
+
   // Control Flow
   if                  = "whether"
   elif                = "subsequently"
@@ -122,7 +122,7 @@ Speare {
   do                  = "execute"
   for                 = "in regards to"
   in                  = "within"
-  
+
   controlflow         = elif
                       | for
                       | if
@@ -133,7 +133,7 @@ Speare {
                       | while
                       | do
                       | in
-  
+
   // Defining symbols
   ideogram            = addition
                       | subtraction
@@ -147,15 +147,15 @@ Speare {
                       | abs
                       | increment
                       | decrement
-  
+
   // Defining Objects
   accommodation	      = type
-   
+
    //Defining Reserved Words
    keyword            = ideogram ~alnum
                       | alloweth ~alnum
                       | accommodation ~alnum
                       | composition ~alnum
                       | controlflow ~alnum
-  	
+
 }
