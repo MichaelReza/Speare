@@ -1,4 +1,3 @@
-  
 import assert from "assert"
 import parse from "../src/parser.js"
 import analyze from "../src/analyzer.js"
@@ -6,21 +5,22 @@ import * as ast from "../src/ast.js"
 
 // Programs that are semantically correct
 const semanticChecks = [
-  ["variable declarations",
-  // 'alloweth Numeral x be 1 \
-   'alloweth ToBeOrNotToBe y be fallacious'
+  [
+    "variable declarations",
+    "alloweth Numeral x be 1",
+    "alloweth ToBeOrNotToBe y be fallacious",
   ],
   // ["complex array types",
   //   "alloweth Liste of Liste of Liste of Numeral x be [[[6, 3, 7, 3, 2], [6, 3, 7, 3, 2]], [[6, 3, 7, 3, 2]]]"
   // ],
-  // ["increment and decrement",
-  //   "alloweth Numeral x be x increment 2 \
-  //   x increment \
-  //   x incrementby 5"
-  // ],
-  // ["initialize with empty array",
-  // "alloweth Liste of Numeral n be []"
-  // ],
+  [
+    "increment and decrement",
+    "alloweth Numeral x be 1 \
+    x incrementby 2 \
+    x increment \
+    x incrementby 5",
+  ],
+  ["initialize with nonempty array", "alloweth Liste of Numeral n be [5, 8]"],
   // ["function declaration",
   // "enter ToBeOrNotToBe foo(Numeral f) {}"
   // ],

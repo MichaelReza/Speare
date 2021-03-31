@@ -221,14 +221,15 @@ class Context {
     this.add(p.name, p)
     return p
   }
-  Increment(s) {
-    s.variable = this.analyze(s.variable)
-    check(s.variable).isInteger()
+  IncDec(s) {
+    // Make sure s.name does not refer to readonly variable
+    // make sure s.name refers to a integer...
     return s
   }
-  Decrement(s) {
-    s.variable = this.analyze(s.variable)
-    check(s.variable).isInteger()
+  IncDecby(s) {
+    s.expression = this.analyze(s.expression)
+    //check your expression type, should be integer
+    //check s.name, make sure it is integer and not readonly
     return s
   }
   Assignment(s) {
@@ -397,10 +398,10 @@ class Context {
     check(e.index).isInteger()
     return e
   }
-  ArrayExpression(a) {
-    a.elements = this.analyze(a.elements)
-    check(a.elements).allHaveSameType()
-    a.type = new ListeType(a.elements[0].type)
+  Liste(a) {
+    a.values = this.analyze(a.values)
+    check(a.values).allHaveSameType()
+    a.type = new ListeType(a.values[0].type)
     return a
   }
   EmptyArray(e) {
