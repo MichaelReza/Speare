@@ -226,6 +226,13 @@ class Context {
     check(s.target).isNotReadOnly()
     return s
   }
+  UnaryAssignment(s) {
+    s.source = this.analyze(s.source)
+    s.target = this.analyze(s.target)
+    check(s.source).isAssignableTo(s.target.type)
+    check(s.target).isNotReadOnly()
+    return s
+  }
   BreakStatement(s) {
     check(this).isInsideALoop()
     return s
