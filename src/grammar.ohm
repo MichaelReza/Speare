@@ -29,8 +29,8 @@ Speare {
                 | Exponentiate
   Exponentiate  = Factor (exponentiate) Exponentiate                            --raisepower
                 | Factor
-  Factor        = Varname
-                | StructureType                                                 --Types
+  Factor        = StructureType                                                 --Types
+                | Varname
                 | "(" AddSub ")"                                                --parens
                 | ("nay" | abs | sqrt)	"(" Factor ")"                          --unary
                 | String

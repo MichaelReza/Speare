@@ -7,8 +7,8 @@ import * as ast from "../src/ast.js"
 // Programs that are semantically correct
 const semanticChecks = [
   ["variable declarations",
-  'alloweth Numeral x be 1 \
-   alloweth ToBeOrNotToBe y be fallacious'
+  // 'alloweth Numeral x be 1 \
+   'alloweth ToBeOrNotToBe y be fallacious'
   ],
   // ["complex array types",
   //   "alloweth Liste of Liste of Liste of Numeral x be [[[6, 3, 7, 3, 2], [6, 3, 7, 3, 2]], [[6, 3, 7, 3, 2]]]"

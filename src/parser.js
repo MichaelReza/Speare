@@ -82,7 +82,7 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
     return new ast.Param(type.ast(), varname.sourceString)
   },
   Varname(id) {
-    return new ast.IdentifierExpression(this.sourceString)
+    return new ast.IdentifierExpression(id.sourceString)
   },
   String_string(_squote, str, _equote) {
     return new ast.StringValue(str.sourceString)

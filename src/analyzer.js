@@ -147,7 +147,7 @@ class Context {
     return new Context(this, configuration)
   }
   analyze(node) {
-    // console.log(node.constructor.name)
+    console.log(node.constructor.name)
     console.log(node)
     return this[node.constructor.name](node)
   }
@@ -227,11 +227,7 @@ class Context {
     return s
   }
   UnaryAssignment(s) {
-    s.source = this.analyze(s.source)
-    s.target = this.analyze(s.target)
-    check(s.source).isAssignableTo(s.target.type)
-    check(s.target).isNotReadOnly()
-    return s
+    return this.lookup(s.value)
   }
   BreakStatement(s) {
     check(this).isInsideALoop()
