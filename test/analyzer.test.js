@@ -35,9 +35,10 @@ const semanticChecks = [
   // ["long return",
   // "enter ToBeOrNotToBe foo(Numeral f) { returneth faithful }"
   // ],
-  // ["return in nested if",
-  //  "enter ToBeOrNotToBe foo(Numeral f) { whether faithful { returneth } }"
-  // ],
+  //////////////////////////////////////
+  ["return in nested if",
+   "enter ToBeOrNotToBe foo(Numeral f) { whether faithful { returneth } }"
+  ],
   // ["break in nested if",
   // "whilst fallacious { whether faithful { exit } }"
   // ],
@@ -47,6 +48,7 @@ const semanticChecks = [
   // ["else if",
   // "whether faithful { speaketh(1)} subsequently faithful { speaketh(0) } otherwise {speaketh(3) }"
   // ],
+  ///////////////////////////////////////
   // ["for over collection",
   // "in regards to(x within y) { speaketh(x) }"
   // ],
