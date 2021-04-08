@@ -1,1 +1,9 @@
-enter ToBeOrNotToBe foo(Numeral f) { whether (faithful) { returneth } }
+alloweth Numeral x be 1 
+alloweth Numeral y be 1 
+alloweth Numeral z be 1 
+x incrementby 2 
+y incrementby 2 
+z incrementby 2 
+x increment 
+y increment 
+z increment

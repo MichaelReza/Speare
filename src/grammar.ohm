@@ -19,7 +19,7 @@ Speare {
                 | for "(" Varname in Varname ") {" Body break? "}"              --forin
                 | while "(" LogicExp+ ") {" Body break? "}"                     --while
                 | do "{" Body break? "}" while "(" LogicExp+ ")"                --dowhile
-  LogicExp      = LogicExp logicalop RelExp                                       --logicalcombo
+  LogicExp      = LogicExp logicalop RelExp                                     --logicalcombo
                 | RelExp
   RelExp        = AddSub relop AddSub                                           --equality
                 | AddSub                                                        --defer

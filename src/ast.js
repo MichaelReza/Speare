@@ -178,13 +178,18 @@ export class Return {
 
 export class IncDecby {
   constructor(name, op, expression) {
-    Object.assign(this, { name, op, expression })
+    //Object.assign(this, { name, op, expression })
+    this.name = name
+    this.op = op
+    this.expression = expression
   }
 }
 
 export class IncDec {
   constructor(name, op) {
-    Object.assign(this, { name, op })
+    //Object.assign(this, { name, op })
+    this.name = name
+    this.op = op
   }
 }
 // End Statement -------------------------------

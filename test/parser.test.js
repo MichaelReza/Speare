@@ -150,7 +150,7 @@ const expectedAst = String.raw`   1 | Program statements=[#2,#4,#8,#10,#15,#18,#
   62 | IncDecby name='x' op='incrementby' expression=#63
   63 | Numeral value=4
   64 | Corollary type='ToBeOrNotToBe' id='foo' params=[#65] body=[#66,#70]
-  65 | Param type=null varname='f'
+  65 | Param type='Numeral' varname='f'
   66 | Array 0=#67
   67 | ForIn _for='in regards to' var1=#68 _in=#69 var2=[] body=undefined brk=undefined
   68 | IdentifierExpression name='f'
@@ -209,7 +209,7 @@ const expectedAst = String.raw`   1 | Program statements=[#2,#4,#8,#10,#15,#18,#
  111 | Print expression=#112
  112 | IdentifierExpression name='x'
  113 | Corollary type='ToBeOrNotToBe' id='foo' params=[#114] body=[#115,#117]
- 114 | Param type=null varname='b'
+ 114 | Param type='Numeral' varname='b'
  115 | VariableInitialization type='Numeral' name='c' initializer=#116
  116 | Numeral value=1
  117 | Corollary type='ToBeOrNotToBe' id='bar' params=[] body=[#118]
@@ -217,13 +217,13 @@ const expectedAst = String.raw`   1 | Program statements=[#2,#4,#8,#10,#15,#18,#
  119 | StringValue value='hello'
  120 | Composition id='foo' compBody=[#121,#126,#127]
  121 | Corollary type='ToBeOrNotToBe' id='foo' params=[#122] body=[#123,#125]
- 122 | Param type=null varname='b'
+ 122 | Param type='Numeral' varname='b'
  123 | VariableInitialization type='Numeral' name='c' initializer=#124
  124 | Numeral value=1
  125 | Return expression='c'
  126 | Composition id='bar' compBody=[]
  127 | Corollary type='ToBeOrNotToBe' id='foo' params=[#128] body=[#129,#131]
- 128 | Param type=null varname='b'
+ 128 | Param type='Numeral' varname='b'
  129 | VariableInitialization type='Numeral' name='c' initializer=#130
  130 | Numeral value=1
  131 | Return expression='c'

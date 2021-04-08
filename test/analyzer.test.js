@@ -16,11 +16,19 @@ const semanticChecks = [
   [
     "increment and decrement",
     "alloweth Numeral x be 1 \
-    x incrementby 2 \
-    x increment \
-    x incrementby 5",
+     alloweth Numeral y be 1 \
+     alloweth Numeral z be 1 \
+     x incrementby 2 \
+     y incrementby 2 \
+     z incrementby 2 \
+     x increment \
+     y increment \
+     z increment",
   ],
-  ["initialize with nonempty array", "alloweth Liste of Numeral n be [5, 8]"],
+  [
+    "initialize with nonempty array", 
+    "alloweth Liste of Numeral n be [5, 8]"
+  ],
   // ["function declaration",
   // "enter ToBeOrNotToBe foo(Numeral f) {}"
   // ],
@@ -35,12 +43,12 @@ const semanticChecks = [
   // ["long return",
   // "enter ToBeOrNotToBe foo(Numeral f) { returneth faithful }"
   // ],
-  //////////////////////////////////////
-  ["return in nested if",
-   "enter ToBeOrNotToBe foo(Numeral f) { whether faithful { returneth } }"
-  ],
+  // Michael's tests   /////////////////////////////////////////////////
+  // ["return in nested if",
+  //  "enter ToBeOrNotToBe foo(Numeral f) { whether faithful { returneth } }"
+  // ],
   // ["break in nested if",
-  // "whilst fallacious { whether faithful { exit } }"
+  // "whilst (fallacious) { whether faithful { exit } }"
   // ],
   // ["long if",
   // "whether faithful { speaketh(1)} otherwise {speaketh(3) }"
@@ -48,7 +56,7 @@ const semanticChecks = [
   // ["else if",
   // "whether faithful { speaketh(1)} subsequently faithful { speaketh(0) } otherwise {speaketh(3) }"
   // ],
-  ///////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////
   // ["for over collection",
   // "in regards to(x within y) { speaketh(x) }"
   // ],

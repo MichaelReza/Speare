@@ -84,12 +84,16 @@ const check = self => ({
   returnsNothing() {
     must(self.type.returnType === Type.VOID, "Something should be returned here")
   },
+  isInitialized() {
+    must(self.lookup(self.name), "You need to initialize the variable first")
+  },
   returnsSomething() {
     must(self.type.returnType !== Type.VOID, "Cannot return a value here")
   },
   isReturnableFrom(f) {
     check(self).isAssignableTo(f.type.returnType)
   },
+  
   match(targetTypes) {
     // self is the array of arguments
     must(
@@ -201,19 +205,19 @@ class Context {
     d.body = childContext.analyze(d.body)
     return d
   }
-  Parameter(p) {
+  Param(p) {
     p.type = this.analyze(p.type)
     this.add(p.name, p)
     return p
   }
-  Increment(s) {
-    s.variable = this.analyze(s.variable)
-    check(s.variable).isInteger()
+  IncDec(s) {
+    s.name = this.analyze(s.name)
+    //s.name = this.analyze(this.lookup(s.name))
     return s
   }
-  Decrement(s) {
-    s.variable = this.analyze(s.variable)
-    check(s.variable).isInteger()
+  IncDecby(s) {
+    //check(s.name).isInitialized()
+
     return s
   }
   Assignment(s) {
@@ -431,7 +435,7 @@ class Context {
 export default function analyze(node) {
   // Allow primitives to be automatically typed
   BigInt.prototype.type = Type.Numeral
-  Type.BOOLEAN.prototype.type = Type.BOOLEAN
+  Tobeornottobe.prototype.type = Type.BOOLEAN
   String.prototype.type = Type.STRING
   Type.prototype.type = Type.TYPE 
   const initialContext = new Context()
