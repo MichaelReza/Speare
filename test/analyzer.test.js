@@ -21,38 +21,39 @@ const semanticChecks = [
     x incrementby 5",
   ],
   ["initialize with nonempty array", "alloweth Liste of Numeral n be [5, 8]"],
-  // ["function declaration",
-  // "enter ToBeOrNotToBe foo(Numeral f) {}"
-  // ],
+  // ["initialize with empyu array", "alloweth Liste of Numeral n be []"], // WE DONT HAVE TO MAKE THIS WORK YET
+  ["function declaration",
+  "enter ToBeOrNotToBe foo(Numeral f) {}"
+  ],
   // ["assign arrays",
   // "alloweth Liste of Numeral be [6, 4, 5, 4, 3] \
   //  alloweth Liste of ToBeOrNotToBe be [fallacious, fallacious, faithful] \
   //  alloweth Liste of Numeral be [xcontext, y without z]"
   // ],
-  // ["short return",
-  // "enter ToBeOrNotToBe foo(Numeral f) { returneth }"
-  // ],
-  // ["long return",
-  // "enter ToBeOrNotToBe foo(Numeral f) { returneth faithful }"
-  // ],
-  // ["return in nested if",
-  //  "enter ToBeOrNotToBe foo(Numeral f) { whether faithful { returneth } }"
-  // ],
-  // ["break in nested if",
-  // "whilst fallacious { whether faithful { exit } }"
-  // ],
-  // ["long if",
-  // "whether faithful { speaketh(1)} otherwise {speaketh(3) }"
-  // ],
-  // ["else if",
-  // "whether faithful { speaketh(1)} subsequently faithful { speaketh(0) } otherwise {speaketh(3) }"
-  // ],
-  // ["for over collection",
-  // "in regards to(x within y) { speaketh(x) }"
-  // ],
-  // ["for in range",
-  // "in regards to (Numeral x be 0, x lesser 15, x increment) { speaketh(x) }"
-  // ],
+  ["short return",
+  "enter ToBeOrNotToBe foo(Numeral f) { returneth }"
+  ],
+  ["long return",
+  "enter ToBeOrNotToBe foo(Numeral f) { returneth faithful }"
+  ],
+  ["return in nested if",
+   "enter ToBeOrNotToBe foo(Numeral f) { whether faithful { returneth } }"
+  ],
+  ["break in nested if",
+  "whilst fallacious { whether (faithful) { exit } }"
+  ],
+  ["long if",
+  "whether (faithful) { speaketh(1) } otherwise {speaketh(3) }"
+  ],
+  ["else if",
+  "whether (faithful) { speaketh(1)} subsequently (faithful) { speaketh(0) } otherwise {speaketh(3) }"
+  ],
+  ["for over collection",
+  "in regards to(x within y) { speaketh(x) }"
+  ],
+  ["for in range",
+  "in regards to (alloweth Numeral x be 0, x lesser 15, x increment) { speaketh(x) }"
+  ],
   // ["conditionals with ints",
   // "speaketh(whether(true) { speaketh(5) } otherwise {speaketh(6) } )"
   // ],

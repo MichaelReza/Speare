@@ -8,7 +8,7 @@ Speare {
                 | alloweth type Varname "be" LogicExp                           --variable
                 | Varname "be" (RelExp)                                         --assignment
                 | "speaketh" "(" LogicExp ")"                                   --print
-                | "returneth" (Varname | RelExp)                                --return
+                | "returneth" (Varname | RelExp)?                                --return
                 | Varname (incrementby | decrementby) RelExp                    --incdecby
                 | Varname (increment | decrement)                               --incdec
   ContFlow      = if "(" LogicExp+ ")" "{" Body "}" ( elif "(" LogicExp+ ")" "{" Body "}" )* ( else "{" Body "}")? --complexconditional
