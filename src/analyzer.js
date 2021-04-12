@@ -52,7 +52,7 @@ const check = (self) => ({
     must(self.type.constructor === ListeType, "Liste expected")
   },
   hasSameTypeAs(other) {
-    must(self.type === other.type, "Operands do not have the same type")
+    must(self.type.constructor === other.type.constructor, "Operands do not have the same type")
   },
   allHaveSameType() {
     must(
@@ -274,10 +274,9 @@ class Context {
     }
     return s
   }
-  WhileStatement(s) {
-    s.test = this.analyze(s.test)
-    check(s.test).isBoolean()
-
+  WhileLoop(s) {
+    s.logicExp = this.analyze(s.logicExp)
+    check(s.logicExp).isBoolean()
     s.body = this.newChild({ inLoop: true }).analyze(s.body)
     return s
   }
@@ -287,21 +286,23 @@ class Context {
     s.body = this.newChild({ inLoop: true }).analyze(s.body)
     return s
   }
-  ForInStatement(s) {
-    s.var1 = this.analyze(s.var1)
-    check(s.var1).
-    s.high = this.analyze(s.high)
-    check(s.high).isInteger()
+  ForLoop(s) {
+    s.s1 = this.analyze(s.s1)
+    s.s2 = this.analyze(s.s2)
+    if (s.s3) {
+      s.s3 = this.analyze(s.s3)
+    }
     s.iterator = new Variable(s.iterator, true)
-    s.iterator.type = Type.INT
+    s.iterator.type = s.collection.type.baseType
     s.body = this.newChild({ inLoop: true }).analyze(s.body)
     return s
   }
-  ForStatement(s) {
-    s.collection = this.analyze(s.collection)
-    check(s.collection).isAnArray()
+  ForIn(s) {
+    s.var1 = this.analyze(s.var1)
+    s.var2 = this.analyze(s.var2)
+    check(s.var1.hasSameTypeAs(s.var2))
     s.iterator = new Variable(s.iterator, true)
-    s.iterator.type = s.collection.type.baseType
+    s.iterator.type = s.var1.type
     s.body = this.newChild({ inLoop: true }).analyze(s.body)
     return s
   }
@@ -329,9 +330,9 @@ class Context {
     e.left = this.analyze(e.left)
     e.right = this.analyze(e.right)
     if (["furthermore", "alternatively"].includes(e.op)) {
-      check(e.left).isInteger()
-      check(e.right).isInteger()
-      e.type = Type.INT
+      //check(e.left).isInteger()
+      //check(e.right).isInteger()
+      //e.type = Type.INT
     } else if (["with"].includes(e.op)) {
       check(e.left).isNumericOrString()
       check(e.left).hasSameTypeAs(e.right)
@@ -357,16 +358,14 @@ class Context {
     return e
   }
   UnaryExpression(e) {
-    // console.log(e.sign)
     e.value = this.analyze(e.value)
     if (e.sign === "nay") {
-      console.log(e.sign)
     } else if (e.sign === "abs") {
       check(e.value).isNumeral()
     } else if (e.sign === "sqrt") {
       check(e.value).isNumeral()
     } else {
-      
+
     }
     return e
   }

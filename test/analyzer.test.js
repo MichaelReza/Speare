@@ -25,8 +25,7 @@ const semanticChecks = [
   ],
   // [5] DONE
   ["assign arrays",
-  " \
-   alloweth Numeral xcontext be 0 \
+  "alloweth Numeral xcontext be 0 \
    alloweth Numeral y be 2 \
    alloweth Numeral z be 1 \
    alloweth Liste of Numeral w be [6, 4, 5, 4, 3] \
@@ -53,7 +52,7 @@ const semanticChecks = [
   ["long if",
   "whether (faithful) { speaketh(1) } otherwise {speaketh(3) }"
   ],
-  // [11] TODO
+  // [11] DONE
   ["else if",
   "whether (faithful) { speaketh(1)} subsequently (faithful) { speaketh(0) } otherwise {speaketh(3) }"
   ],
@@ -81,19 +80,19 @@ const semanticChecks = [
   ["OR",
   "speaketh(faithful alternatively 1 lesser 2 alternatively fallacious alternatively faithful)"
   ],
-  // [18] TODO
+  // [18] DONE
   ["AND",
-  "speaketh(faithful furthermore 1 furthermore 2 furthermore fallacious furthermore tis not true)"
+  "speaketh(faithful furthermore 1 furthermore 2 furthermore fallacious tis not faithful)"
   ],
   // [19] TODO
   ["relations",
   'speaketh(1 tis lesser 2 furthermore "x" nobler "y" furthermore 3.5 tis lesser 1.2)'
   ],
-  // [20] TODO
+  // [20] DONE
   ["ok to == arrays",
   "speaketh([1] tis [5,8])"
   ],
-  // [21] TODO
+  // [21] DONE
   ["ok to != arrays",
   "speaketh([1] tis not [5,8])"
   ],

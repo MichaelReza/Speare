@@ -13,8 +13,6 @@ Speare {
                 | Varname (increment | decrement)                               --incdec
                 | break
   ContFlow      = if "(" LogicExp+ ")" "{" Body "}" ( elif "(" LogicExp+ ")" "{" Body "}" )* ( else "{" Body "}")? --complexconditional
-                | if "(" LogicExp+ ")" "{" Body "}" ( elif "(" LogicExp+ ")" "{" Body "}" )*                       --semicomplexconditional
-                | if "(" LogicExp+ ")" "{" Body "}"                                                            --simpleconditional
                 | switch Factor "{" (case Factor ":" Body )+ "}"                                 --switchcase
                 | for "(" Statement "," (Statement | RelExp) "," Statement ")" "{" Body "}"      --forloop
                 | for "(" Varname in Varname ")" "{" Body "}"              --forin
