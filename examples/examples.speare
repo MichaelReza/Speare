@@ -1,1 +1,1 @@
-whether (faithful) { speaketh(1) } otherwise {speaketh(3) }
+speaketh(whether(true) { speaketh(5) } otherwise {speaketh(6) } )
