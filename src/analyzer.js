@@ -159,26 +159,17 @@ class Context {
     return new Context(this, configuration)
   }
   analyze(node) {
-    console.log(node.constructor.name)
     return this[node.constructor.name](node)
   }
   Program(p) {
     p.statements = this.analyze(p.statements)
     return p
   }
-  ArrayType(t) {
-    t.baseType = this.analyze(t.baseType)
-    return t
-  }
   FunctionType(t) {
     if (t.parameterTypes != undefined) {
       t.parameterTypes = this.analyze(t.parameterTypes)
     }
     t.returnType = this.analyze(t.returnType)
-    return t
-  }
-  OptionalType(t) {
-    t.baseType = this.analyze(t.baseType)
     return t
   }
   VariableInitialization(d) {
@@ -264,22 +255,14 @@ class Context {
     return s
   }
   IfStatement(s) {
-    s.test = this.analyze(s.test)
-    check(s.test).isBoolean()
-    s.consequent = this.newChild().analyze(s.consequent)
-    if (s.alternate.constructor === Liste) {
-      // It's a block of statements, make a new context
-      s.alternate = this.newChild().analyze(s.alternate)
-    } else if (s.alternate) {
-      // It's a trailing if-statement, so same context
-      s.alternate = this.analyze(s.alternate)
+    s.le1 = this.analyze(s.le1)
+    check(s.le1[0]).isBoolean()
+    if (s.le2) {
+      s.le2 = this.newChild().analyze(s.le2)
     }
-    return s
-  }
-  ShortIfStatement(s) {
-    s.test = this.analyze(s.test)
-    check(s.test).isBoolean()
-    s.consequent = this.newChild().analyze(s.consequent)
+    if (s._else) {
+      s.body3 = this.analyze(s.body3)
+    }
     return s
   }
   WhileLoop(s) {
@@ -289,25 +272,21 @@ class Context {
     s.body = this.newChild({ inLoop: true }).analyze(s.body)
     return s
   }
-  RepeatStatement(s) {
-    s.count = this.analyze(s.count)
-    check(s.count).isInteger()
-    s.body = this.newChild({ inLoop: true }).analyze(s.body)
-    return s
-  }
-  ForRangeStatement(s) {
-    s.low = this.analyze(s.low)
-    check(s.low).isInteger()
-    s.high = this.analyze(s.high)
-    check(s.high).isInteger()
+  ForIn(s) {
+    s.var1 = this.analyze(s.var1)
+    s.var2 = this.analyze(s.var2)
+    check(s.var1.hasSameTypeAs(s.var2))
     s.iterator = new Variable(s.iterator, true)
-    s.iterator.type = Type.INT
+    s.iterator.type = s.var1.type
     s.body = this.newChild({ inLoop: true }).analyze(s.body)
     return s
   }
-  ForStatement(s) {
-    s.collection = this.analyze(s.collection)
-    check(s.collection).isAnArray()
+  ForLoop(s) {
+    s.s1 = this.analyze(s.s1)
+    s.s2 = this.analyze(s.s2)
+    if (s.s3) {
+      s.s3 = this.analyze(s.s3)
+    }
     s.iterator = new Variable(s.iterator, true)
     s.iterator.type = s.collection.type.baseType
     s.body = this.newChild({ inLoop: true }).analyze(s.body)
@@ -346,9 +325,9 @@ class Context {
     e.left = this.analyze(e.left)
     e.right = this.analyze(e.right)
     if (["furthermore", "alternatively"].includes(e.op)) {
-      check(e.left).isInteger()
-      check(e.right).isInteger()
-      e.type = Type.INT
+      // check(e.left).isInteger()
+      // check(e.right).isInteger()
+      // e.type = Type.INT
     } else if (["with"].includes(e.op)) {
       check(e.left).isNumericOrString()
       check(e.left).hasSameTypeAs(e.right)
