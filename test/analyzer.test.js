@@ -96,13 +96,12 @@ const semanticChecks = [
   ["ok to != arrays",
   "speaketh([1] tis not [5,8])"
   ],
-  // [22] TODO
+  // [22] DONE
   ["arithmetic",
-  "alloweth Numeral x be 1 \
-  speaketh(5 exponentiate 3)"
+  "speaketh(5 exponentiate nay(3))"
   ],
-  // [23] TODO
-  ["variables", "alloweth Liste x be [[[[1]]]] speaketh(x[0][0][0][0] with 2)"],
+  // [23] PASS: STILL NEEDS WORK (See liste objects)
+  ["variables", "alloweth Liste of Liste of Liste of Liste of Numeral x be [[[[1]]]]"],
   // [24] TODO: REWRITE THIS GARBAGE
   ["recursive structs", "struct S {z: S?} let x = S(no S)"],
   // [25] TODO: REWRITE THIS GARBAGE

@@ -8,6 +8,7 @@ import {
   Tobeornottobe,
   Concordance,
   Numeral,
+  UnaryExpression
 } from "./ast.js"
 import * as stdlib from "./stdlib.js"
 
@@ -56,7 +57,7 @@ const check = (self) => ({
   },
   allHaveSameType() {
     must(
-      self.slice(1).every((e) => e.type === self[0].type),
+      self.slice(1).every(e => e.type.constructor.name === self[0].type.constructor.name),
       "Not all elements have the same type"
     )
   },
@@ -65,6 +66,11 @@ const check = (self) => ({
       type === Type.ANY || self.type.isAssignableTo(type),
       `Cannot assign a ${self.type.name} to a ${type.name}`
     )
+  },
+  isCompatibleWith(other) {
+    must(
+      [Numeral, UnaryExpression].includes(self.constructor) && [Numeral, UnaryExpression].includes(other.constructor)),
+      `${self.constructor} and ${other.constructor} are incompatible types`
   },
   isNotReadOnly() {
     must(!self.readOnly, `Cannot assign to constant ${self.name}`)
@@ -343,7 +349,7 @@ class Context {
       )
     ) {
       check(e.left).isNumeral()
-      check(e.left).hasSameTypeAs(e.right)
+      check(e.left).isCompatibleWith(e.right)
       e.type = e.left.type
     } else if (
       ["lesser", "tis lesser", "nobler", "tis nobler"].includes(e.op)
