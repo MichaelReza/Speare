@@ -99,7 +99,7 @@ const semanticChecks = [
   // [22] TODO
   ["arithmetic",
   "alloweth Numeral x be 1 \
-  speaketh(5 exponentiate nay(3))"
+  speaketh(5 exponentiate 3)"
   ],
   // [23] TODO
   ["variables", "alloweth Liste x be [[[[1]]]] speaketh(x[0][0][0][0] with 2)"],
