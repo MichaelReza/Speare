@@ -159,7 +159,7 @@ class Context {
     return new Context(this, configuration)
   }
   analyze(node) {
-    // console.log(node)
+    console.log(node.constructor.name)
     return this[node.constructor.name](node)
   }
   Program(p) {
@@ -282,9 +282,10 @@ class Context {
     s.consequent = this.newChild().analyze(s.consequent)
     return s
   }
-  WhileStatement(s) {
-    s.test = this.analyze(s.test)
-    check(s.test).isBoolean()
+  WhileLoop(s) {
+    console.log(s.body)
+    s.logicExp = this.analyze(s.logicExp)
+    check(s.logicExp).isBoolean()
     s.body = this.newChild({ inLoop: true }).analyze(s.body)
     return s
   }

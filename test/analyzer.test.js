@@ -5,43 +5,43 @@ import * as ast from "../src/ast.js"
 
 // Programs that are semantically correct
 const semanticChecks = [
-  [
-    "variable declarations",
-    "alloweth Numeral x be 1",
-    "alloweth ToBeOrNotToBe y be fallacious",
-  ],
-  [
-    "increment and decrement",
-    "alloweth Numeral x be 1 \
-    x incrementby 2 \
-    x increment \
-    x incrementby 5",
-  ],
-  ["initialize with nonempty array", "alloweth Liste of Numeral n be [5, 8]"],
-  ["function declaration",
-  "enter ToBeOrNotToBe foo( Numeral f ) {}"
-  ],
-  ["assign arrays",
-  " \
-   alloweth Numeral xcontext be 0 \
-   alloweth Numeral y be 2 \
-   alloweth Numeral z be 1 \
-   alloweth Liste of Numeral w be [6, 4, 5, 4, 3] \
-   alloweth Liste of ToBeOrNotToBe a be [fallacious, fallacious, faithful] \
-   alloweth Liste of Numeral x be [xcontext, y without z]"
-  ],
-  ["short return",
-  "enter ToBeOrNotToBe foo(Numeral f) { returneth }"
-  ],
-  ["long return",
-  "enter ToBeOrNotToBe foo(Numeral f) { returneth faithful }"
-  ],
-  ["return in nested if",
-   "enter ToBeOrNotToBe foo(Numeral f) { whether (faithful) { returneth } }"
-  ],
-  // ["break in nested if",
-  // "whilst(fallacious) { whether (faithful) { exit } }"
+  // [
+  //   "variable declarations",
+  //   "alloweth Numeral x be 1",
+  //   "alloweth ToBeOrNotToBe y be fallacious",
   // ],
+  // [
+  //   "increment and decrement",
+  //   "alloweth Numeral x be 1 \
+  //   x incrementby 2 \
+  //   x increment \
+  //   x incrementby 5",
+  // ],
+  // ["initialize with nonempty array", "alloweth Liste of Numeral n be [5, 8]"],
+  // ["function declaration",
+  // "enter ToBeOrNotToBe foo( Numeral f ) {}"
+  // ],
+  // ["assign arrays",
+  // " \
+  //  alloweth Numeral xcontext be 0 \
+  //  alloweth Numeral y be 2 \
+  //  alloweth Numeral z be 1 \
+  //  alloweth Liste of Numeral w be [6, 4, 5, 4, 3] \
+  //  alloweth Liste of ToBeOrNotToBe a be [fallacious, fallacious, faithful] \
+  //  alloweth Liste of Numeral x be [xcontext, y without z]"
+  // ],
+  // ["short return",
+  // "enter ToBeOrNotToBe foo(Numeral f) { returneth }"
+  // ],
+  // ["long return",
+  // "enter ToBeOrNotToBe foo(Numeral f) { returneth faithful }"
+  // ],
+  // ["return in nested if",
+  //  "enter ToBeOrNotToBe foo(Numeral f) { whether (faithful) { returneth } }"
+  // ],
+  ["break in nested if",
+  "whilst(fallacious) { whether (faithful) { exit } }"
+  ],
   // ["long if",
   // "whether (faithful) { speaketh(1) } otherwise {speaketh(3) }"
   // ],

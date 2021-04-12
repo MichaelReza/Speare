@@ -3,7 +3,7 @@ Speare {
   Work          = Corollary | Composition
   Composition   = "Composition" Varname "{" Work* "}"                           --class
   Corollary     = enter type Varname "(" ListOf<Param, ","> ")" "{" Body "}"    --function
-  Body          = (Statement | Work)*
+  Body          = (Statement | Work | break)*
   Statement     = ContFlow+
                 | alloweth type Varname "be" LogicExp                           --variable
                 | Varname "be" (RelExp)                                         --assignment
@@ -11,9 +11,9 @@ Speare {
                 | "returneth" (Varname | RelExp)?                                --return
                 | Varname (incrementby | decrementby) RelExp                    --incdecby
                 | Varname (increment | decrement)                               --incdec
-  ContFlow      = if "(" LogicExp+ ")" "{" Body "}" ( elif "(" LogicExp+ ")" "{" Body "}" )* ( else "{" Body "}")? --complexconditional
-                | if "(" LogicExp+ ")" "{" Body "}" ( elif "(" LogicExp+ ")" "{" Body "}" )*                       --semicomplexconditional
-                | if "(" LogicExp+ ")" "{" Body "}"                                                            --simpleconditional
+  ContFlow      = if "(" LogicExp+ ")" "{" Body? "}" ( elif "(" LogicExp+ ")" "{" Body? "}" )* ( else "{" Body? "}")? --complexconditional
+                | if "(" LogicExp+ ")" "{" Body? "}" ( elif "(" LogicExp+ ")" "{" Body? "}" )*                       --semicomplexconditional
+                | if "(" LogicExp+ ")" "{" Body? "}"                                                            --simpleconditional
                 | switch Factor "{" (case Factor ":" Body break?)+ "}"          --switchcase
                 | for "(" Statement "," (Statement | RelExp) "," Statement? ") {" Body break? "}"      --forloop
                 | for "(" Varname in Varname ") {" Body break? "}"              --forin
