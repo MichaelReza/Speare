@@ -53,7 +53,7 @@ const check = (self) => ({
     must(self.type.constructor === ListeType, "Liste expected")
   },
   hasSameTypeAs(other) {
-    must(self.type.constructor === other.type.constructor, "Operands do not have the same type")
+    must(self.type.name === other.type.name, "Operands do not have the same type")
   },
   allHaveSameType() {
     must(
@@ -66,11 +66,6 @@ const check = (self) => ({
       type === Type.ANY || self.type.isAssignableTo(type),
       `Cannot assign a ${self.type.name} to a ${type.name}`
     )
-  },
-  isCompatibleWith(other) {
-    must(
-      [Numeral, UnaryExpression].includes(self.constructor) && [Numeral, UnaryExpression].includes(other.constructor)),
-      `${self.constructor} and ${other.constructor} are incompatible types`
   },
   isNotReadOnly() {
     must(!self.readOnly, `Cannot assign to constant ${self.name}`)
@@ -349,7 +344,7 @@ class Context {
       )
     ) {
       check(e.left).isNumeral()
-      check(e.left).isCompatibleWith(e.right)
+      check(e.left).hasSameTypeAs(e.right)
       e.type = e.left.type
     } else if (
       ["lesser", "tis lesser", "nobler", "tis nobler"].includes(e.op)
@@ -365,6 +360,7 @@ class Context {
   }
   UnaryExpression(e) {
     e.value = this.analyze(e.value)
+    e.type = e.value.type
     if (e.sign === "nay") {
     } else if (e.sign === "abs") {
       check(e.value).isNumeral()
