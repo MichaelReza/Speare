@@ -5,22 +5,25 @@ import * as ast from "../src/ast.js"
 
 // Programs that are semantically correct
 const semanticChecks = [
-  [
+  [ // [1] DONE
     "variable declarations",
     "alloweth Numeral x be 1",
     "alloweth ToBeOrNotToBe y be fallacious",
   ],
-  [
+  [ // [2] DONE
     "increment and decrement",
     "alloweth Numeral x be 1 \
     x incrementby 2 \
     x increment \
     x incrementby 5",
   ],
+  // [3] DONE
   ["initialize with nonempty array", "alloweth Liste of Numeral n be [5, 8]"],
+  // [4] DONE
   ["function declaration",
   "enter ToBeOrNotToBe foo( Numeral f ) {}"
   ],
+  // [5] DONE
   ["assign arrays",
   " \
    alloweth Numeral xcontext be 0 \
@@ -30,88 +33,120 @@ const semanticChecks = [
    alloweth Liste of ToBeOrNotToBe a be [fallacious, fallacious, faithful] \
    alloweth Liste of Numeral x be [xcontext, y without z]"
   ],
+  // [6] DONE
   ["short return",
   "enter ToBeOrNotToBe foo(Numeral f) { returneth }"
   ],
+  // [7] DONE
   ["long return",
   "enter ToBeOrNotToBe foo(Numeral f) { returneth faithful }"
   ],
+  // [8] DONE
   ["return in nested if",
    "enter ToBeOrNotToBe foo(Numeral f) { whether (faithful) { returneth } }"
   ],
-  // ["break in nested if",
-  // "whilst(fallacious) { whether (faithful) { exit } }"
-  // ],
-  // ["long if",
-  // "whether (faithful) { speaketh(1) } otherwise {speaketh(3) }"
-  // ],
-  // ["else if",
-  // "whether faithful { speaketh(1)} subsequently faithful { speaketh(0) } otherwise {speaketh(3) }"
-  // ],
-  // ["for over collection",
-  // "in regards to(x within y) { speaketh(x) }"
-  // ],
-  // ["for in range",
-  // "in regards to (Numeral x be 0, x lesser 15, x increment) { speaketh(x) }"
-  // ],
-  // ["conditionals with ints",
-  // "speaketh(whether(true) { speaketh(5) } otherwise {speaketh(6) } )"
-  // ],
-  // ["conditionals with floats",
-  // "speaketh(whether(1.2 lesser 1.6) { speaketh(5.6) } otherwise {speaketh(6.1) } )"
-  // ],
-  // ["conditionals with strings",
-  // "speaketh(whether(1 lesser 6) { speaketh(\"hello\") } otherwise {speaketh(\"Goodbye\") } )"
-  // ],
-  // ["OR",
-  // "speaketh(faithful alternatively 1 lesser 2 alternatively fallacious alternatively tis not true)"
-  // ],
-  // ["AND",
-  // "speaketh(faithful furthermore 1 furthermore 2 furthermore fallacious furthermore tis not true)"
-  // ],
-  // ["relations",
-  // 'speaketh(1 tis lesser 2 furthermore "x" nobler "y" furthermore 3.5 tis lesser 1.2)'
-  // ],
-  // ["ok to == arrays",
-  // "speaketh([1] tis [5,8])"
-  // ],
-  // ["ok to != arrays",
-  // "speaketh([1] tis not [5,8])"
-  // ],
-  // ["arithmetic",
-  // "alloweth Numeral x be 1 \
-  // speaketh(2 accumulate 3 with 5 exponentiate nay(3) sunder 2 without 5 residue 8)"
-  // ],
-  // ["variables", "alloweth Liste x be [[[[1]]]] speaketh(x[0][0][0][0] with 2)"],
-  // // ["recursive structs", "struct S {z: S?} let x = S(no S)"],
-  // // ["nested structs", "struct T{y:int} struct S{z: T} let x=S(T(1)) speaketh(x.z.y)"],
-  // // ["member exp", "struct S {x: int} let y = S(1)speaketh(y.x)"],
-  // // ["subscript exp", "let a=[1,2]speaketh(a[0])"],
-  // // ["array of struct", "struct S{} let x=[S(), S()]"],
-  // // ["struct of arrays and opts", "struct S{x: [int] y: string??}"],
-  // // ["assigned functions", "function f() {}\nlet g = fg = f"],
-  // ["call of assigned functions", "enter Numeral f(Numeral x) {}\nalloweth Numeral g be f g(1)"],
-  // [
-  //   "call of assigned function in expression",
-  //   `enter Indistinguishable f(Numeral x, ToBeOrNotToBe y) {}
-  //   alloweth Enter g be f
-  //   speaketh(g(1, true))
-  //   f be g // Type check here`,
-  // ],
-  // [
-  //   "pass a function to a function",
-  //   `enter Numeral f(Numeral x, ToBeOrNotToBe y) { returneth 1 }
-  //    enter Indistinguishable g(ToBeOrNotToBe z) {}
-  //    f(2, g)`,
-  // ],
-  // [
-  //   "function return types",
-  //   `enter Numeral square(Numeral x) { returneth x accumulate x }
-  //    enter Numeral compose() { returneth square }`,
-  // ],
-  // //["struct parameters", "struct S {} function f(x: S) {}"],
-  // // ["array parameters", "enter Indistinguishable f(Numeral? x) {}"],
-  // // ["optional parameters", "enter Indistinguishable f(Numeral x, Lexicographical? y) {}"],
+  // [9] TODO
+  ["break in nested if",
+  "whilst(fallacious) { whether (faithful) { exit } }"
+  ],
+  // [10] DONE
+  ["long if",
+  "whether (faithful) { speaketh(1) } otherwise {speaketh(3) }"
+  ],
+  // [11] TODO
+  ["else if",
+  "whether (faithful) { speaketh(1)} subsequently (faithful) { speaketh(0) } otherwise {speaketh(3) }"
+  ],
+  // [12] TODO
+  ["for over collection",
+  "in regards to(x within y) { speaketh(x) }"
+  ],
+  // [13] TODO
+  ["for in range",
+  "in regards to (Numeral x be 0, x lesser 15, x increment) { speaketh(x) }"
+  ],
+  // [14] TODO
+  ["conditionals with ints",
+  "speaketh(whether(true) { speaketh(5) } otherwise {speaketh(6) } )"
+  ],
+  // [15] TODO
+  ["conditionals with floats",
+  "speaketh(whether(1.2 lesser 1.6) { speaketh(5.6) } otherwise {speaketh(6.1) } )"
+  ],
+  // [16] DONE
+  ["conditionals with strings",
+  "whether(1 lesser 6) { speaketh(\"hello\") } otherwise {speaketh(\"Goodbye\") }"
+  ],
+  // [17] DONE
+  ["OR",
+  "speaketh(faithful alternatively 1 lesser 2 alternatively fallacious alternatively faithful)"
+  ],
+  // [18] TODO
+  ["AND",
+  "speaketh(faithful furthermore 1 furthermore 2 furthermore fallacious furthermore tis not true)"
+  ],
+  // [19] TODO
+  ["relations",
+  'speaketh(1 tis lesser 2 furthermore "x" nobler "y" furthermore 3.5 tis lesser 1.2)'
+  ],
+  // [20] TODO
+  ["ok to == arrays",
+  "speaketh([1] tis [5,8])"
+  ],
+  // [21] TODO
+  ["ok to != arrays",
+  "speaketh([1] tis not [5,8])"
+  ],
+  // [22] TODO
+  ["arithmetic",
+  "alloweth Numeral x be 1 \
+  speaketh(5 exponentiate nay(3))"
+  ],
+  // [23] TODO
+  ["variables", "alloweth Liste x be [[[[1]]]] speaketh(x[0][0][0][0] with 2)"],
+  // [24] TODO: REWRITE THIS GARBAGE
+  ["recursive structs", "struct S {z: S?} let x = S(no S)"],
+  // [25] TODO: REWRITE THIS GARBAGE
+  ["nested structs", "struct T{y:int} struct S{z: T} let x=S(T(1)) speaketh(x.z.y)"],
+  // [26] TODO: REWRITE THIS GARBAGE
+  ["member exp", "struct S {x: int} let y = S(1)speaketh(y.x)"],
+  // [27] TODO: REWRITE THIS GARBAGE
+  ["subscript exp", "let a=[1,2]speaketh(a[0])"],
+  // [28] TODO: REWRITE THIS GARBAGE
+  ["array of struct", "struct S{} let x=[S(), S()]"],
+  // [29] TODO: REWRITE THIS GARBAGE
+  ["struct of arrays and opts", "struct S{x: [int] y: string??}"],
+  // [30] TODO: REWRITE THIG GARBAGE
+  ["assigned functions", "function f() {}\nlet g = fg = f"],
+  // [31] TODO
+  ["call of assigned functions", "enter Numeral f(Numeral x) {}\nalloweth Numeral g be f g(1)"],
+  // [32] TODO
+  [
+    "call of assigned function in expression",
+    `enter Indistinguishable f(Numeral x, ToBeOrNotToBe y) {}
+    alloweth Enter g be f
+    speaketh(g(1, true))
+    f be g // Type check here`,
+  ],
+  // [33] TODO
+  [
+    "pass a function to a function",
+    `enter Numeral f(Numeral x, ToBeOrNotToBe y) { returneth 1 }
+     enter Indistinguishable g(ToBeOrNotToBe z) {}
+     f(2, g)`,
+  ],
+  // [34] TODO
+  [
+    "function return types",
+    `enter Numeral square(Numeral x) { returneth x accumulate x }
+     enter Numeral compose() { returneth square }`,
+  ],
+  // [35] TODO
+  ["struct parameters", "struct S {} function f(x: S) {}"],
+  // [36] TODO
+  ["array parameters", "enter Indistinguishable f(Numeral? x) {}"],
+  // [37] TODO
+  ["optional parameters", "enter Indistinguishable f(Numeral x, Lexicographical? y) {}"],
 ]
 
 // Programs that are syntactically correct but have semantic errors

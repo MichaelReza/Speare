@@ -115,32 +115,32 @@ export class IfStatement {
 }
 
 export class SwitchStatement {
-  constructor(swtch, factor1, cse, factor2, body, brk) {
-    Object.assign(this, { swtch, factor1, cse, factor2, body, brk })
+  constructor(swtch, factor1, cse, factor2, body) {
+    Object.assign(this, { swtch, factor1, cse, factor2, body })
   }
 }
 
 export class ForLoop {
-  constructor(_for, s1, s2, s3, body, brk) {
-    Object.assign(this, { _for, s1, s2, s3, body, brk })
+  constructor(_for, s1, s2, s3, body) {
+    Object.assign(this, { _for, s1, s2, s3, body})
   }
 }
 
 export class ForIn {
-  constructor(_for, var1, _in, var2, body, brk) {
-    Object.assign(this, { _for, var1, _in, var2, body, brk })
+  constructor(_for, var1, _in, var2, body) {
+    Object.assign(this, { _for, var1, _in, var2, body})
   }
 }
 
 export class WhileLoop {
-  constructor(whle, logicExp, body, brk) {
-    Object.assign(this, { whle, logicExp, body, brk })
+  constructor(whle, logicExp, body) {
+    Object.assign(this, { whle, logicExp, body})
   }
 }
 
 export class DoWhile {
-  constructor(doo, body, brk, whle, logExp) {
-    Object.assign(this, { doo, body, brk, whle, logExp })
+  constructor(doo, body, whle, logExp) {
+    Object.assign(this, { doo, body, whle, logExp })
   }
 }
 // End ContFlow --------------------------------------------

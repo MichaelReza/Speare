@@ -86,7 +86,7 @@ const source = `speaketh("hello")
   }
   `
 
-const expectedAst = String.raw`   1 | Program statements=[#2,#4,#8,#10,#15,#18,#22,#26,#28,#34,#45,#49,#55,#61,#62,#64,#71,#113,#120,#132]
+const expectedAst = String.raw`   1 | Program statements=[#2,#4,#8,#10,#15,#18,#22,#26,#28,#34,#45,#49,#55,#61,#62,#64,#79,#128,#135,#147]
    2 | Print expression=#3
    3 | StringValue value='hello'
    4 | Print expression=#5
@@ -149,92 +149,112 @@ const expectedAst = String.raw`   1 | Program statements=[#2,#4,#8,#10,#15,#18,#
   61 | IncDec name='x' op='increment'
   62 | IncDecby name='x' op='incrementby' expression=#63
   63 | Numeral value=4
-  64 | Corollary type='ToBeOrNotToBe' id='foo' params=[#65] body=[#66,#70]
+  64 | Corollary type='ToBeOrNotToBe' id='foo' params=[#65] body=[#66,#78]
   65 | Param type=null varname='f'
   66 | Array 0=#67
-  67 | ForIn _for='in regards to' var1=#68 _in=#69 var2=[] body=undefined brk=undefined
+  67 | ForIn _for='in regards to' var1=#68 _in='within' var2=#69 body=[#70,#76]
   68 | IdentifierExpression name='f'
   69 | IdentifierExpression name='z'
-  70 | Return expression='f'
-  71 | Array 0=#72 1=#76 2=#87 3=#103
-  72 | WhileLoop whle='whilst' logicExp=[#73] body=[] brk=undefined
-  73 | BinaryExpression left=#74 op='nobler' right=#75
-  74 | IdentifierExpression name='x'
-  75 | Numeral value=20
-  76 | DoWhile doo='execute' body=[#77] brk='' whle='whilst' logExp=[#84]
-  77 | Array 0=#78
-  78 | DoWhile doo='execute' body=[#79] brk='' whle='whilst' logExp=[#81]
-  79 | Print expression=#80
-  80 | IdentifierExpression name='x'
+  70 | Array 0=#71
+  71 | ForIn _for='in regards to' var1=#72 _in='within' var2=#73 body=[#74]
+  72 | IdentifierExpression name='g'
+  73 | IdentifierExpression name='z'
+  74 | VariableAssignment name='g' value=#75
+  75 | Numeral value=6
+  76 | VariableAssignment name='f' value=#77
+  77 | Numeral value=7
+  78 | Return expression='f'
+  79 | Array 0=#80 1=#91 2=#102 3=#118
+  80 | WhileLoop whle='whilst' logicExp=[#81] body=[#84]
   81 | BinaryExpression left=#82 op='nobler' right=#83
   82 | IdentifierExpression name='x'
-  83 | IdentifierExpression name='x'
-  84 | BinaryExpression left=#85 op='nobler' right=#86
-  85 | IdentifierExpression name='x'
-  86 | IdentifierExpression name='x'
-  87 | IfStatement _if='whether' le1=[#88] body=[#91] _elif='subsequently( x nobler x ) {\n    speaketh(x)\n  }' le2=[#93] body2=[#97] _else='otherwise {\n    speaketh(x)\n  }' body3=[#100]
-  88 | BinaryExpression left=#89 op='nobler' right=#90
-  89 | IdentifierExpression name='x'
-  90 | IdentifierExpression name='x'
-  91 | Print expression=#92
-  92 | IdentifierExpression name='x'
-  93 | Array 0=#94
-  94 | BinaryExpression left=#95 op='nobler' right=#96
+  83 | Numeral value=20
+  84 | Array 0=#85
+  85 | WhileLoop whle='whilst' logicExp=[#86] body=[#89]
+  86 | BinaryExpression left=#87 op='nobler' right=#88
+  87 | IdentifierExpression name='x'
+  88 | Numeral value=20
+  89 | Print expression=#90
+  90 | StringValue value='nested'
+  91 | DoWhile doo='execute' body=[#92] whle='whilst' logExp=[#99]
+  92 | Array 0=#93
+  93 | DoWhile doo='execute' body=[#94] whle='whilst' logExp=[#96]
+  94 | Print expression=#95
   95 | IdentifierExpression name='x'
-  96 | IdentifierExpression name='x'
-  97 | Array 0=#98
-  98 | Print expression=#99
-  99 | IdentifierExpression name='x'
- 100 | Array 0=#101
- 101 | Print expression=#102
- 102 | IdentifierExpression name='x'
- 103 | SwitchStatement swtch='trigger' factor1=#104 cse='condition 0:\n' +
-  '      speaketh(x)\n' +
-  '      exit\n' +
-  '    condition 1:\n' +
-  '      speaketh(x)\n' +
-  '      exit' factor2=[#105,#106] body=[#107,#110] brk='condition 0:\n' +
-  '      speaketh(x)\n' +
-  '      exit\n' +
-  '    condition 1:\n' +
-  '      speaketh(x)\n' +
-  '      exit'
+  96 | BinaryExpression left=#97 op='nobler' right=#98
+  97 | IdentifierExpression name='x'
+  98 | IdentifierExpression name='x'
+  99 | BinaryExpression left=#100 op='nobler' right=#101
+ 100 | IdentifierExpression name='x'
+ 101 | IdentifierExpression name='x'
+ 102 | IfStatement _if='whether' le1=[#103] body=[#106] _elif='subsequently( x nobler x ) {\n    speaketh(x)\n  }' le2=[#108] body2=[#112] _else='otherwise {\n    speaketh(x)\n  }' body3=[#115]
+ 103 | BinaryExpression left=#104 op='nobler' right=#105
  104 | IdentifierExpression name='x'
- 105 | Numeral value=0
- 106 | Numeral value=1
- 107 | Array 0=#108
- 108 | Print expression=#109
- 109 | IdentifierExpression name='x'
- 110 | Array 0=#111
- 111 | Print expression=#112
- 112 | IdentifierExpression name='x'
- 113 | Corollary type='ToBeOrNotToBe' id='foo' params=[#114] body=[#115,#117]
- 114 | Param type=null varname='b'
- 115 | VariableInitialization type='Numeral' name='c' initializer=#116
- 116 | Numeral value=1
- 117 | Corollary type='ToBeOrNotToBe' id='bar' params=[] body=[#118]
- 118 | Print expression=#119
- 119 | StringValue value='hello'
- 120 | Composition id='foo' compBody=[#121,#126,#127]
- 121 | Corollary type='ToBeOrNotToBe' id='foo' params=[#122] body=[#123,#125]
- 122 | Param type=null varname='b'
- 123 | VariableInitialization type='Numeral' name='c' initializer=#124
- 124 | Numeral value=1
- 125 | Return expression='c'
- 126 | Composition id='bar' compBody=[]
- 127 | Corollary type='ToBeOrNotToBe' id='foo' params=[#128] body=[#129,#131]
- 128 | Param type=null varname='b'
- 129 | VariableInitialization type='Numeral' name='c' initializer=#130
- 130 | Numeral value=1
- 131 | Return expression='c'
- 132 | Array 0=#133
- 133 | ForLoop _for='in regards to' s1=#134 s2=#136 s3=[#139] body=[] brk=undefined
- 134 | VariableInitialization type='Numeral' name='d' initializer=#135
- 135 | Numeral value=0
- 136 | BinaryExpression left=#137 op='nobler' right=#138
- 137 | IdentifierExpression name='d'
- 138 | Numeral value=20
- 139 | IncDec name='d' op='decrement'`
+ 105 | IdentifierExpression name='x'
+ 106 | Print expression=#107
+ 107 | IdentifierExpression name='x'
+ 108 | Array 0=#109
+ 109 | BinaryExpression left=#110 op='nobler' right=#111
+ 110 | IdentifierExpression name='x'
+ 111 | IdentifierExpression name='x'
+ 112 | Array 0=#113
+ 113 | Print expression=#114
+ 114 | IdentifierExpression name='x'
+ 115 | Array 0=#116
+ 116 | Print expression=#117
+ 117 | IdentifierExpression name='x'
+ 118 | SwitchStatement swtch='trigger' factor1=#119 cse='condition 0:\n' +
+  '      speaketh(x)\n' +
+  '      exit\n' +
+  '    condition 1:\n' +
+  '      speaketh(x)\n' +
+  '      exit' factor2=[#120,#121] body=[#122,#125]
+ 119 | IdentifierExpression name='x'
+ 120 | Numeral value=0
+ 121 | Numeral value=1
+ 122 | Array 0=#123 1=null
+ 123 | Print expression=#124
+ 124 | IdentifierExpression name='x'
+ 125 | Array 0=#126 1=null
+ 126 | Print expression=#127
+ 127 | IdentifierExpression name='x'
+ 128 | Corollary type='ToBeOrNotToBe' id='foo' params=[#129] body=[#130,#132]
+ 129 | Param type=null varname='b'
+ 130 | VariableInitialization type='Numeral' name='c' initializer=#131
+ 131 | Numeral value=1
+ 132 | Corollary type='ToBeOrNotToBe' id='bar' params=[] body=[#133]
+ 133 | Print expression=#134
+ 134 | StringValue value='hello'
+ 135 | Composition id='foo' compBody=[#136,#141,#142]
+ 136 | Corollary type='ToBeOrNotToBe' id='foo' params=[#137] body=[#138,#140]
+ 137 | Param type=null varname='b'
+ 138 | VariableInitialization type='Numeral' name='c' initializer=#139
+ 139 | Numeral value=1
+ 140 | Return expression='c'
+ 141 | Composition id='bar' compBody=[]
+ 142 | Corollary type='ToBeOrNotToBe' id='foo' params=[#143] body=[#144,#146]
+ 143 | Param type=null varname='b'
+ 144 | VariableInitialization type='Numeral' name='c' initializer=#145
+ 145 | Numeral value=1
+ 146 | Return expression='c'
+ 147 | Array 0=#148
+ 148 | ForLoop _for='in regards to' s1=#149 s2=#151 s3=#154 body=[#155]
+ 149 | VariableInitialization type='Numeral' name='d' initializer=#150
+ 150 | Numeral value=0
+ 151 | BinaryExpression left=#152 op='nobler' right=#153
+ 152 | IdentifierExpression name='d'
+ 153 | Numeral value=20
+ 154 | IncDec name='d' op='decrement'
+ 155 | Array 0=#156
+ 156 | ForLoop _for='in regards to' s1=#157 s2=#159 s3=#162 body=[#163]
+ 157 | VariableInitialization type='Numeral' name='e' initializer=#158
+ 158 | Numeral value=0
+ 159 | BinaryExpression left=#160 op='nobler' right=#161
+ 160 | IdentifierExpression name='e'
+ 161 | Numeral value=20
+ 162 | IncDec name='e' op='decrement'
+ 163 | Print expression=#164
+ 164 | StringValue value='nested'`
 
 const goodPrograms = {
   // Empty Program:
@@ -278,11 +298,11 @@ const goodPrograms = {
   "Recognizes nested functions":
     'enter ToBeOrNotToBe foo(Numeral x) { \
       alloweth Numeral x be 1 \
-        enter ToBeOrNotToBe bar() { \
-          speaketh("hello") \
-        } \
+      enter ToBeOrNotToBe bar() { \
+        speaketh("hello") \
+      } \
       returneth x \
-      }',
+    }',
   "Recognizes creation of empty function": "enter Numeral foo(Numeral x) {}",
   // Classes:
   "Recognizes empty class": "Composition foo {}",

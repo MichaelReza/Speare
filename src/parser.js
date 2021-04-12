@@ -82,14 +82,13 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
       body3.ast()
     )
   },
-  ContFlow_switchcase(swtch, factor, _sb, cse, factor2, _col, body, brk, _eb) {
+  ContFlow_switchcase(swtch, factor, _sb, cse, factor2, _col, body, _eb) {
     return new ast.SwitchStatement(
       swtch.sourceString,
       factor.ast(),
       cse.sourceString,
       factor2.ast(),
-      body.ast(),
-      brk.sourceString
+      body.ast()
     )
   },
   ContFlow_forloop(
@@ -114,16 +113,15 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
     )
   },
   ContFlow_forin(_for, _sp, var1, _in, var2, _ep, _sb, body, _eb) {
-    return new ast.ForIn(_for.sourceString, var1.ast(), var2.ast(), body.ast())
+    return new ast.ForIn(_for.sourceString, var1.ast(), _in.sourceString, var2.ast(), body.ast())
   },
   ContFlow_while(whle, _sp, logicExp, _ep, _sb, body, _eb) {
     return new ast.WhileLoop(whle.sourceString, logicExp.ast(), body.ast())
   },
-  ContFlow_dowhile(doo, _sb, body, brk, _eb, whle, _sp, logExp, _ep) {
+  ContFlow_dowhile(doo, _sb, body, _eb, whle, _sp, logExp, _ep) {
     return new ast.DoWhile(
       doo.sourceString,
       body.ast(),
-      brk.sourceString,
       whle.sourceString,
       logExp.ast()
     )

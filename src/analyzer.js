@@ -32,7 +32,7 @@ const check = (self) => ({
   },
   isBoolean() {
     must(
-      self.type === Type.BOOLEAN,
+      self.type.name === Type.BOOLEAN.name,
       `Expected a boolean, found ${self.type.name}`
     )
   },
@@ -264,27 +264,20 @@ class Context {
     return s
   }
   IfStatement(s) {
-    s.test = this.analyze(s.test)
-    check(s.test).isBoolean()
-    s.consequent = this.newChild().analyze(s.consequent)
-    if (s.alternate.constructor === Liste) {
-      // It's a block of statements, make a new context
-      s.alternate = this.newChild().analyze(s.alternate)
-    } else if (s.alternate) {
-      // It's a trailing if-statement, so same context
-      s.alternate = this.analyze(s.alternate)
+    s.le1 = this.analyze(s.le1)
+    check(s.le1[0]).isBoolean()
+    if (s.le2) {
+      s.le2 = this.newChild().analyze(s.le2)
     }
-    return s
-  }
-  ShortIfStatement(s) {
-    s.test = this.analyze(s.test)
-    check(s.test).isBoolean()
-    s.consequent = this.newChild().analyze(s.consequent)
+    if (s._else) {
+      s.body3 = this.analyze(s.body3)
+    }
     return s
   }
   WhileStatement(s) {
     s.test = this.analyze(s.test)
     check(s.test).isBoolean()
+
     s.body = this.newChild({ inLoop: true }).analyze(s.body)
     return s
   }
@@ -294,9 +287,9 @@ class Context {
     s.body = this.newChild({ inLoop: true }).analyze(s.body)
     return s
   }
-  ForRangeStatement(s) {
-    s.low = this.analyze(s.low)
-    check(s.low).isInteger()
+  ForInStatement(s) {
+    s.var1 = this.analyze(s.var1)
+    check(s.var1).
     s.high = this.analyze(s.high)
     check(s.high).isInteger()
     s.iterator = new Variable(s.iterator, true)
@@ -311,15 +304,6 @@ class Context {
     s.iterator.type = s.collection.type.baseType
     s.body = this.newChild({ inLoop: true }).analyze(s.body)
     return s
-  }
-  Conditional(e) {
-    e.test = this.analyze(e.test)
-    check(e.test).isBoolean()
-    e.consequent = this.analyze(e.consequent)
-    e.alternate = this.analyze(e.alternate)
-    check(e.consequent).hasSameTypeAs(e.alternate)
-    e.type = e.consequent.type
-    return e
   }
   UnwrapElse(e) {
     e.optional = this.analyze(e.optional)
@@ -373,22 +357,16 @@ class Context {
     return e
   }
   UnaryExpression(e) {
-    e.operand = this.analyze(e.operand)
-    if (e.op === "abs") {
-      check(e.operand).isNumeral()
-      e.type = Type.INT
-    } else if (e.op === "sqrt") {
-      check(e.operand).isNumeral()
-      e.type = e.operand.type
-    } else if (e.op === "nay") {
-      check(e.operand).isNumeral()
-      e.type = e.operand.type
-    } else if (e.op === "tis not") {
-      check(e.operand).isBoolean()
-      e.type = Type.BOOLEAN
+    // console.log(e.sign)
+    e.value = this.analyze(e.value)
+    if (e.sign === "nay") {
+      console.log(e.sign)
+    } else if (e.sign === "abs") {
+      check(e.value).isNumeral()
+    } else if (e.sign === "sqrt") {
+      check(e.value).isNumeral()
     } else {
-      // Operator is "some"
-      e.type = new Numeral(e.operand.type)
+      
     }
     return e
   }
