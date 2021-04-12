@@ -52,7 +52,7 @@ const check = (self) => ({
     must(self.type.constructor === ListeType, "Liste expected")
   },
   hasSameTypeAs(other) {
-    must(self.type === other.type, "Operands do not have the same type")
+    must(self.type.constructor === other.type, "Operands do not have the same type")
   },
   allHaveSameType() {
     must(

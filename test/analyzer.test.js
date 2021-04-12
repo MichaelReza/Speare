@@ -86,11 +86,11 @@ const semanticChecks = [
   ["OR",
   "speaketh(faithful alternatively 1 lesser 2 alternatively fallacious alternatively faithful)"
   ],
-
-  // [18] TODO
+  // [18] DONE
   ["AND",
-  "speaketh(faithful furthermore 1 furthermore 2 furthermore fallacious furthermore tis not true)"
+  "speaketh(faithful furthermore 1 furthermore 2 furthermore fallacious tis not faithful)"
   ],
+
   // [19] TODO
   ["relations",
   'speaketh(1 tis lesser 2 furthermore "x" nobler "y" furthermore 3.5 tis lesser 1.2)'
@@ -221,63 +221,57 @@ const semanticErrors = [
  // [61] DONE
   ["bad types for !=", "speaketh(fallacious tis 1) ", /Operands do not have the same type/],
   
-  // [63] TODO
+  // [62] TODO
   ["bad types for +", "speaketh(fallacious with 1) ", /number or string, found boolean/],
-  // [64] TODO
+  // [63] TODO
   ["bad types for -", "speaketh(fallacious without 1) ", /a number, found boolean/],
-  // [65] TODO
+  // [64] TODO
   ["bad types for *", "speaketh(fallacious accumulate 1) ", /a number, found boolean/],
-  // [66] TODO
+  // [65] TODO
   ["bad types for /", "speaketh(fallacious sunder 1) ", /a number, found boolean/],
-  // [67] TODO
+  // [66] TODO
   ["bad types for **", "speaketh(fallacious exponentiate 1) ", /a number, found boolean/],
-  // [68] TODO
+  // [67] TODO
   ["bad types for <", "speaketh(fallacious lesser 1) ", /number or string, found boolean/],
-  // [69] TODO, NICELY
+  // [68] TODO
   ["bad types for <=", "speaketh(fallacious tis lesser 1) ", /number or string, found bool/],
-  // [70] TODO
+  // [69] TODO, NICELY
   ["bad types for >", "speaketh(fallacious nobler 1) ", /number or string, found bool/],
-  // [71] TODO
-  ["bad types for >=", "speaketh(fallacious tis nobler 1) ", /number or string, found bool/],
   // [70] TODO
-  ["bad types for ==", "speaketh(2 tis 2.0) ", /not have the same type/],
-  
-  // [71] DONE
-  ["bad types for !=", "speaketh(fallacious tis not 1) ", /not have the same type/],
-  
-  // [72] TODO
-  ["bad types for negation", "speaketh(nay(faithful)) ", /a number, found boolean/],
+  ["bad types for >=", "speaketh(fallacious tis nobler 1) ", /number or string, found bool/],
   // [73] TODO
-  ["bad types for length", "speaketh(#fallacious)", /Array expected/],
+  ["bad types for negation", "speaketh(nay(faithful)) ", /a number, found boolean/],
   // [74] TODO
-  ["bad types for not", 'speaketh(nay("hello"))', /a boolean, found string/],
+  ["bad types for length", "speaketh(#fallacious)", /Array expected/],
   // [75] TODO
-  ["non-integer index", "alloweth a be [1] speaketh(a[fallacious])", /integer, found boolean/],
+  ["bad types for not", 'speaketh(nay("hello"))', /a boolean, found string/],
   // [76] TODO
-  ["diff type array elements", "speaketh([3,3.0])", /Not all elements have the same type/],
+  ["non-integer index", "alloweth a be [1] speaketh(a[fallacious])", /integer, found boolean/],
   // [77] TODO
-  ["shadowing", "alloweth x be 1\nwhilest (faithful) {alloweth x be 1}", /Identifier x already declared/],
+  ["diff type array elements", "speaketh([3,3.0])", /Not all elements have the same type/],
   // [78] TODO
-  ["call of uncallable", "alloweth x be 1\nspeaketh(x())", /Call of non-function/],
+  ["shadowing", "alloweth x be 1\nwhilest (faithful) {alloweth x be 1}", /Identifier x already declared/],
   // [79] TODO
+  ["call of uncallable", "alloweth x be 1\nspeaketh(x())", /Call of non-function/],
+  // [80] TODO
   [
     "Too many args",
     "enter Indistinguishable f(Numeral x) {}\nf(1,2)",
     /1 argument\(s\) required but 2 passed/,
   ],
-  // [80] TODO
+  // [81] TODO
   [
     "Too few args",
     "enter Indistinguishable f(Numeral x) {}\nf()",
     /1 argument\(s\) required but 0 passed/,
   ],
-  // [81] TODO
+  // [82] TODO
   [
     "Parameter type mismatch",
     "enter f(Numeral x) {}\nf(fallacious)",
     /Cannot assign a boolean to a int/,
   ],
-  // [82] TODO
+  // [83] TODO
   [
     "function type mismatch",
     `enter f( Numeral x, y: (boolean)->void): int { return 1 }
@@ -285,11 +279,11 @@ const semanticErrors = [
      f(2, g)`,
     /Cannot assign a \(boolean\)->int to a \(boolean\)->void/,
   ],
-  // [83] TODO
-  ["Non-type in param", "alloweth Numeral x be 1 enter Indistinguishable f(x y){}", /Type expected/],
   // [84] TODO
-  ["Non-type in return type", "alloweth Numeral x be 1 enter x f(){returneth 1}", /Type expected/],
+  ["Non-type in param", "alloweth Numeral x be 1 enter Indistinguishable f(x y){}", /Type expected/],
   // [85] TODO
+  ["Non-type in return type", "alloweth Numeral x be 1 enter x f(){returneth 1}", /Type expected/],
+  // [86] TODO
   ["Non-type in field type", "alloweth Numeral x be 1struct S {y:x}", /Type expected/],
 ]
 
@@ -332,12 +326,12 @@ describe("The analyzer", () => {
       assert.ok(analyze(parse(source)))
     })
   }
-  // console.log(semanticChecks.length + semanticErrors.length)
-  // for (const [scenario, source, errorMessagePattern] of semanticErrors) {
-  //   it(`throws on ${scenario}`, () => {
-  //     assert.throws(() => analyze(parse(source)), errorMessagePattern)
-  //   })
-  // }
+  console.log(semanticChecks.length + semanticErrors.length)
+  for (const [scenario, source, errorMessagePattern] of semanticErrors) {
+    it(`throws on ${scenario}`, () => {
+      assert.throws(() => analyze(parse(source)), errorMessagePattern)
+    })
+  }
   // for (const [scenario, source, graph] of graphChecks) {
   //   it(`properly rewrites the AST for ${scenario}`, () => {
   //     assert.deepStrictEqual(analyze(parse(source)), new ast.Program(graph))
