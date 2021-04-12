@@ -159,7 +159,6 @@ class Context {
     return new Context(this, configuration)
   }
   analyze(node) {
-    // console.log(node.constructor.name)
     // console.log(node)
     return this[node.constructor.name](node)
   }
@@ -172,7 +171,9 @@ class Context {
     return t
   }
   FunctionType(t) {
-    t.parameterTypes = this.analyze(t.parameterTypes)
+    if (t.parameterTypes != undefined) {
+      t.parameterTypes = this.analyze(t.parameterTypes)
+    }
     t.returnType = this.analyze(t.returnType)
     return t
   }
@@ -356,7 +357,7 @@ class Context {
         e.op
       )
     ) {
-      check(e.left).isNumeric()
+      check(e.left).isNumeral()
       check(e.left).hasSameTypeAs(e.right)
       e.type = e.left.type
     } else if (
@@ -374,13 +375,13 @@ class Context {
   UnaryExpression(e) {
     e.operand = this.analyze(e.operand)
     if (e.op === "abs") {
-      check(e.operand).isNumeric()
+      check(e.operand).isNumeral()
       e.type = Type.INT
     } else if (e.op === "sqrt") {
-      check(e.operand).isNumeric()
+      check(e.operand).isNumeral()
       e.type = e.operand.type
     } else if (e.op === "nay") {
-      check(e.operand).isNumeric()
+      check(e.operand).isNumeral()
       e.type = e.operand.type
     } else if (e.op === "tis not") {
       check(e.operand).isBoolean()
@@ -451,6 +452,10 @@ class Context {
   }
   Array(a) {
     return a.map((item) => this.analyze(item))
+  }
+  Corollary(t) {
+    t = CorollaryType
+    return t
   }
 }
 
