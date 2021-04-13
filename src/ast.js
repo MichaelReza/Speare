@@ -102,8 +102,8 @@ export class Corollary {
   }
 }
 export class Param {
-  constructor(type, varname) {
-    Object.assign(this, { type, varname })
+  constructor(type, varname, optional) {
+    Object.assign(this, { type, varname, optional })
   }
 }
 

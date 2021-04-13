@@ -158,8 +158,9 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   // Factor_Types(type) {
   //   return new ast.UnaryAssignment(type.ast())
   // },
-  Param(type, varname) {
-    return new ast.Param(type.ast(), varname.sourceString)
+
+  Param(type, varname, optional) {
+    return new ast.Param(type.ast(), varname.sourceString, optional.sourceString)
   },
   Varname(id) {
     return new ast.IdentifierExpression(id.sourceString)

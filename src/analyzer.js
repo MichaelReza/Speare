@@ -219,6 +219,7 @@ class Context {
     return d
   }
   Parameter(p) {
+    console.log(p.type)
     p.type = this.analyze(p.type)
     this.add(p.name, p)
     return p
@@ -433,7 +434,8 @@ class Context {
     return a.map((item) => this.analyze(item))
   }
   Corollary(t) {
-    t = CorollaryType
+    t.type = Type.VOID
+    this.add(t.id, t)
     return t
   }
 }

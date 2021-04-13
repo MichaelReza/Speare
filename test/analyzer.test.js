@@ -120,7 +120,7 @@ const semanticChecks = [
   ["array of corollary", "struct S{} let x=[S(), S()]"],
   // [29] TODO: REWRITE THIS GARBAGE
   ["corollary of Listes", "struct S{x: [int] y: string??}"],
-  // [30] TODO: REWRITE THIG GARBAGE
+  // [30] DONE:
   ["assigned functions", "enter ToBeOrNotToBe x() {} \
                           alloweth Corollary b be x"],
   // [31] TODO
@@ -142,18 +142,21 @@ const semanticChecks = [
   ],
   // [34] TODO
   [
-    "function return types",
-    `enter Numeral compose( ) { 
-      enter Numeral square(Numeral x) { returneth x accumulate x }
-      returneth square
-    }`,
+  "function return types",
+  `enter Numeral compose( ) { 
+    enter Numeral square(Numeral x) { returneth x accumulate x }
+    returneth square
+  }`,
   ],
   // [35] TODO
   ["struct parameters", "struct S {} function f(x: S) {}"],
   // [36] TODO
-  ["array parameters", "enter Indistinguishable f(Numeral? x) {}"],
+  ["array parameters", 
+  "enter Indistinguishable f(Numeral? x) {}"
+  ],
   // [37] TODO
-  ["optional parameters", "enter Indistinguishable f(Numeral x, Lexicographical? y) {}"],
+  ["optional parameters", 
+  "enter Indistinguishable f(Numeral x, Lexicographical? y) {}"],
 ]
 
 // Programs that are syntactically correct but have semantic errors

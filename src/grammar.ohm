@@ -40,7 +40,8 @@ Speare {
   // Define ids for variables, params
   Varname             = id                             --string
 
-  Param               = type Varname
+  Param               = type Varname "?"?           
+              
 
   //Reserved keywords
   alloweth            = "alloweth" ~alnum
