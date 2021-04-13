@@ -72,16 +72,16 @@ export class ConcordanceType extends Type {
 
 export class CorollaryType extends Type {
   // Example: (boolean,[string]?)->float
-  constructor(parameterTypes, returnType) {
+  constructor(name, parameterTypes, type) {
     super(
-      `(${parameterTypes.map((t) => t.name).join(",")})->${returnType.name}`
+      `(${parameterTypes.map((t) => t.name).join(",")})->${type.name}`
     )
-    Object.assign(this, { parameterTypes, returnType })
+    Object.assign(this, { name, parameterTypes, type })
   }
   tisAssignable(target) {
     return (
       target.constructor === CorollaryType &&
-      this.returnType.tisAssignable(target.returnType) &&
+      this.type.tisAssignable(target.type) &&
       this.parameterTypes.length === target.parameterTypes.length &&
       this.parameterTypes.every((t, i) =>
         target.parameterTypes[i].tisAssignable(t)

@@ -121,7 +121,8 @@ const semanticChecks = [
   // [29] TODO: REWRITE THIS GARBAGE
   ["corollary of Listes", "struct S{x: [int] y: string??}"],
   // [30] TODO: REWRITE THIG GARBAGE
-  ["assigned functions", "function f() {}\nlet g = fg = f"],
+  ["assigned functions", "enter ToBeOrNotToBe x() {} \
+                          alloweth Corollary b be x"],
   // [31] TODO
   ["call of assigned functions", "enter Numeral f(Numeral x) {}\nalloweth Numeral g be f g(1)"],
   // [32] TODO

@@ -94,15 +94,15 @@ const check = (self) => ({
   },
   returnsNothing() {
     must(
-      self.type.returnType === Type.VOID,
+      self.type.type === Type.VOID,
       "Something should be returned here"
     )
   },
   returnsSomething() {
-    must(self.type.returnType !== Type.VOID, "Cannot return a value here")
+    must(self.type.type !== Type.VOID, "Cannot return a value here")
   },
   isReturnableFrom(f) {
-    check(self).isAssignableTo(f.type.returnType)
+    check(self).isAssignableTo(f.type.type)
   },
   match(targetTypes) {
     // self is the array of arguments
@@ -175,7 +175,7 @@ class Context {
     if (t.parameterTypes != undefined) {
       t.parameterTypes = this.analyze(t.parameterTypes)
     }
-    t.returnType = this.analyze(t.returnType)
+    t.type = this.analyze(t.type)
     return t
   }
   OptionalType(t) {
@@ -202,7 +202,7 @@ class Context {
     return f
   }
   FunctionDeclaration(d) {
-    d.returnType = d.returnType ? this.analyze(d.returnType) : Type.VOID
+    d.type = d.type ? this.analyze(d.type) : Type.VOID
     // Declarations generate brand new function objects
     const f = (d.function = new Corollary(d.name))
     // When entering a function body, we must reset the inLoop setting,
@@ -211,7 +211,7 @@ class Context {
     d.parameters = childContext.analyze(d.parameters)
     f.type = new CorollaryType(
       d.parameters.map((p) => p.type),
-      d.returnType
+      d.type
     )
     // Add before analyzing the body to allow recursion
     this.add(f.name, f)
@@ -235,10 +235,10 @@ class Context {
     return s
   }
   Assignment(s) {
-    s.source = this.analyze(s.source)
-    s.target = this.analyze(s.target)
-    check(s.source).isAssignableTo(s.target.type)
-    check(s.target).isNotReadOnly()
+    s.name = this.analyze(s.name)
+    s.value = this.analyze(s.value)
+    check(s.name).isAssignableTo(s.value.type)
+    check(s.value).isNotReadOnly()
     return s
   }
   UnaryAssignment(s) {
@@ -404,7 +404,7 @@ class Context {
       c.type = c.callee // weird but seems ok for now
     } else {
       check(c.args).matchParametersOf(c.callee.type)
-      c.type = c.callee.type.returnType
+      c.type = c.callee.type.type
     }
     return c
   }
