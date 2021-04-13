@@ -173,6 +173,9 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   Numeral(_whole, _dot, _fractional) {
     return new ast.Numeral(Number(this.sourceString))
   },
+  Lexicographical(_squote, str, _equote) {
+    return new ast.StringValue(str.sourceString)
+  },
   // [ Numeral, 1 ]
   Liste(_sb, values, _eb) {
     return new ast.Liste(values.asIteration().ast())

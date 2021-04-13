@@ -84,7 +84,7 @@ const semanticChecks = [
   ["AND",
   "speaketh(faithful furthermore 1 furthermore 2 furthermore fallacious tis not faithful)"
   ],
-  // [19] TODO
+  // [19] DONE ? -- had to add lexicographical into parser
   ["relations",
   'speaketh(1 tis lesser 2 furthermore "x" nobler "y" furthermore 3.5 tis lesser 1.2)'
   ],
@@ -102,10 +102,16 @@ const semanticChecks = [
   ],
   // [23] PASSES: STILL NEEDS WORK (See liste objects)
   ["variables", "alloweth Liste of Liste of Liste of Liste of Numeral x be [[[[1]]]]"],
-  // [24] TODO: REWRITE THIS GARBAGE
+  // [24] ----: We don't support recursive structures
   ["recursive structs", "struct S {z: S?} let x = S(no S)"],
-  // [25] TODO: REWRITE THIS GARBAGE
-  ["nested structs", "struct T{y:int} struct S{z: T} let x=S(T(1)) speaketh(x.z.y)"],
+  // [25] TODO: REWRITE THIS GARBAGE -- we don't have a way of reading values from a dict so this doesnt work at all -_-
+  // also not really sure if we want to support the third line of what's going on here... it seems to be using values
+  // for lookup instead of keys
+  ["nested structs",
+  "alloweth Concordance T be {y: 1}\
+  alloweth Concordance S be {z: T}\
+  alloweth Numeral x be S(T(1))\
+  speaketh(x.z.y)"],
   // [26] TODO: REWRITE THIS GARBAGE
   ["member exp", "struct S {x: int} let y = S(1)speaketh(y.x)"],
   // [27] TODO: REWRITE THIS GARBAGE

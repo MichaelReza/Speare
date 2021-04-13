@@ -1,1 +1,4 @@
-speaketh(5 exponentiate nay(3))
+alloweth Concordance T be {y: 1}
+alloweth Concordance S be {z: T}
+alloweth Numeral x be S(T(1))
+speaketh(x.z.y)
