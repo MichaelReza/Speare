@@ -115,15 +115,6 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
       body.ast()
     )
   },
-  ContFlow_forin(_for, _sp, var1, _in, var2, _ep, _sb, body, _eb) {
-    return new ast.ForIn(
-      _for.sourceString,
-      var1.ast(),
-      _in.sourceString,
-      var2.ast(),
-      body.ast()
-    )
-  },
   ContFlow_while(whle, _sp, logicExp, _ep, _sb, body, _eb) {
     return new ast.WhileLoop(whle.sourceString, logicExp.ast(), body.ast())
   },

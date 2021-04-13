@@ -128,12 +128,6 @@ export class ForLoop {
   }
 }
 
-export class ForIn {
-  constructor(_for, var1, _in, var2, body) {
-    Object.assign(this, { _for, var1, _in, var2, body})
-  }
-}
-
 export class WhileLoop {
   constructor(whle, logicExp, body) {
     Object.assign(this, { whle, logicExp, body})

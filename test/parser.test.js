@@ -18,16 +18,6 @@ const source = `speaketh("hello")
   x increment
   x incrementby 4
 
-  enter ToBeOrNotToBe foo(Numeral f) {
-    in regards to(f within z) {
-      in regards to (g within z) {
-        g be 6
-      }
-      f be 7
-    }
-    returneth f
-  }
-
   whilst (x nobler 20) {
     whilst (x nobler 20) {
       speaketh("nested")
@@ -295,7 +285,7 @@ const goodPrograms = {
     "enter ToBeOrNotToBe foo(Numeral x) { \
         alloweth Numeral x be 1 \
         returneth x \
-        }",
+    }",
   "Recognizes nested functions":
     'enter ToBeOrNotToBe foo(Numeral x) { \
       alloweth Numeral x be 1 \
@@ -344,14 +334,6 @@ const goodPrograms = {
         speaketh("nested") \
       } \
     }',
-  "Recognizes for-in loops": "in regards to(x within y) { x be foo }",
-  "Recognizes nested for-in loops":
-    "in regards to(x within y) { \
-        in regards to (y within z) { \
-          y be bar \
-        } \
-      x be foo }",
-
   // While Loops:
   "Recognizes basic while loop":
     "whilst (x nobler 20) { \

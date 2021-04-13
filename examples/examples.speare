@@ -1,1 +1,2 @@
-in regards to (alloweth Numeral x be 0, x lesser 15, x increment) { speaketh(x) }
+alloweth Liste of Numeral y be [1, 2] 
+in regards to(x within y) { speaketh(x) }

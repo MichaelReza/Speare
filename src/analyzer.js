@@ -299,25 +299,6 @@ class Context {
     s.body = this.newChild({ inLoop: true }).analyze(s.body)
     return s
   }
-  ForIn(s) {
-    //console.log(this.sees(s.var2.name))
-    check(this.sees(s.var2.name))
-    s.var2 = this.lookup(s.var2.name)
-    //console.log(s.var2)
-    // console.log(this.lookup(s.var2.name))
-    // s.var1 = this.analyze(new VariableAssignment(s.var1, s.var2.values))
-    // s.var2 = this.analyze(s.var2)
-    //s.iterator = new VariableAssignment(s.var1, s.var2.values)
-    s.body = this.newChild({ inLoop: true }).analyze(s.body)
-    return s
-    // s.var1 = this.analyze(s.var1)
-    // s.var2 = this.analyze(s.var2)
-    // check(s.var1).hasSameTypeAs(s.var2)
-    // s.iterator = new Variable(s.iterator, true)
-    // s.iterator.type = s.var1.type
-    // s.body = this.newChild({ inLoop: true }).analyze(s.body)
-    // return s
-  }
   UnwrapElse(e) {
     e.optional = this.analyze(e.optional)
     e.alternate = this.analyze(e.alternate)
