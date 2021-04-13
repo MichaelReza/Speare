@@ -57,13 +57,14 @@ const semanticChecks = [
   "whether (faithful) { speaketh(1)} subsequently (faithful) { speaketh(0) } otherwise {speaketh(3) }"
   ],
   // [12] TODO
-  // ["for over collection",
-  // "in regards to(x within y) { speaketh(x) }"
-  // ],
-  // [13] TODO
-  // ["for in range",
-  // "in regards to (alloweth Numeral x be 0, x lesser 15, x increment) { speaketh(x) }"
-  // ],
+  ["for over collection",
+  "alloweth Liste of Numeral y be [1, 2] \
+   in regards to(x within y) { speaketh(x) }"
+  ],
+  // [13] DONE
+  ["for in range",
+  "in regards to (alloweth Numeral x be 0, x lesser 15, x increment) { speaketh(x) }"
+  ],
   // [14] TODO
 
   // ["conditionals with ints",
