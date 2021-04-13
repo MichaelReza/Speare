@@ -85,7 +85,7 @@ const source = `speaketh("hello")
   }
   `
 
-const expectedAst = String.raw`   1 | Program statements=[#2,#4,#8,#10,#15,#18,#22,#26,#28,#34,#45,#49,#55,#61,#62,#64,#79,#128,#135,#147]
+const expectedAst = String.raw`   1 | Program statements=[#2,#4,#8,#10,#15,#18,#22,#26,#28,#34,#45,#49,#55,#61,#62,#64,#79,#130,#137,#149]
    2 | Print expression=#3
    3 | StringValue value='hello'
    4 | Print expression=#5
@@ -207,53 +207,55 @@ const expectedAst = String.raw`   1 | Program statements=[#2,#4,#8,#10,#15,#18,#
   '      exit\n' +
   '    condition 1:\n' +
   '      speaketh(x)\n' +
-  '      exit' factor2=[#120,#121] body=[#122,#125]
+  '      exit' factor2=[#120,#121] body=[#122,#126]
  119 | IdentifierExpression name='x'
  120 | Numeral value=0
  121 | Numeral value=1
- 122 | Array 0=#123 1=null
+ 122 | Array 0=#123 1=#125
  123 | Print expression=#124
  124 | IdentifierExpression name='x'
- 125 | Array 0=#126 1=null
- 126 | Print expression=#127
- 127 | IdentifierExpression name='x'
- 128 | Corollary type='ToBeOrNotToBe' id='foo' params=[#129] body=[#130,#132]
- 129 | Param type=null varname='b' optional=''
- 130 | VariableInitialization type='Numeral' name='c' initializer=#131
- 131 | Numeral value=1
- 132 | Corollary type='ToBeOrNotToBe' id='bar' params=[] body=[#133]
- 133 | Print expression=#134
- 134 | StringValue value='hello'
- 135 | Composition id='foo' compBody=[#136,#141,#142]
- 136 | Corollary type='ToBeOrNotToBe' id='foo' params=[#137] body=[#138,#140]
- 137 | Param type=null varname='b' optional=''
- 138 | VariableInitialization type='Numeral' name='c' initializer=#139
- 139 | Numeral value=1
- 140 | Return expression='c'
- 141 | Composition id='bar' compBody=[]
- 142 | Corollary type='ToBeOrNotToBe' id='foo' params=[#143] body=[#144,#146]
- 143 | Param type=null varname='b' optional=''
- 144 | VariableInitialization type='Numeral' name='c' initializer=#145
- 145 | Numeral value=1
- 146 | Return expression='c'
- 147 | Array 0=#148
- 148 | ForLoop _for='in regards to' s1=#149 s2=#151 s3=#154 body=[#155]
- 149 | VariableInitialization type='Numeral' name='d' initializer=#150
- 150 | Numeral value=0
- 151 | BinaryExpression left=#152 op='nobler' right=#153
- 152 | IdentifierExpression name='d'
- 153 | Numeral value=20
- 154 | IncDec name='d' op='decrement'
- 155 | Array 0=#156
- 156 | ForLoop _for='in regards to' s1=#157 s2=#159 s3=#162 body=[#163]
- 157 | VariableInitialization type='Numeral' name='e' initializer=#158
- 158 | Numeral value=0
- 159 | BinaryExpression left=#160 op='nobler' right=#161
- 160 | IdentifierExpression name='e'
- 161 | Numeral value=20
- 162 | IncDec name='e' op='decrement'
- 163 | Print expression=#164
- 164 | StringValue value='nested'`
+ 125 | Break
+ 126 | Array 0=#127 1=#129
+ 127 | Print expression=#128
+ 128 | IdentifierExpression name='x'
+ 129 | Break
+ 130 | Corollary type='ToBeOrNotToBe' id='foo' params=[#131] body=[#132,#134]
+ 131 | Param type=null varname='b' optional=''
+ 132 | VariableInitialization type='Numeral' name='c' initializer=#133
+ 133 | Numeral value=1
+ 134 | Corollary type='ToBeOrNotToBe' id='bar' params=[] body=[#135]
+ 135 | Print expression=#136
+ 136 | StringValue value='hello'
+ 137 | Composition id='foo' compBody=[#138,#143,#144]
+ 138 | Corollary type='ToBeOrNotToBe' id='foo' params=[#139] body=[#140,#142]
+ 139 | Param type=null varname='b' optional=''
+ 140 | VariableInitialization type='Numeral' name='c' initializer=#141
+ 141 | Numeral value=1
+ 142 | Return expression='c'
+ 143 | Composition id='bar' compBody=[]
+ 144 | Corollary type='ToBeOrNotToBe' id='foo' params=[#145] body=[#146,#148]
+ 145 | Param type=null varname='b' optional=''
+ 146 | VariableInitialization type='Numeral' name='c' initializer=#147
+ 147 | Numeral value=1
+ 148 | Return expression='c'
+ 149 | Array 0=#150
+ 150 | ForLoop _for='in regards to' s1=#151 s2=#153 s3=#156 body=[#157]
+ 151 | VariableInitialization type='Numeral' name='d' initializer=#152
+ 152 | Numeral value=0
+ 153 | BinaryExpression left=#154 op='nobler' right=#155
+ 154 | IdentifierExpression name='d'
+ 155 | Numeral value=20
+ 156 | IncDec name='d' op='decrement'
+ 157 | Array 0=#158
+ 158 | ForLoop _for='in regards to' s1=#159 s2=#161 s3=#164 body=[#165]
+ 159 | VariableInitialization type='Numeral' name='e' initializer=#160
+ 160 | Numeral value=0
+ 161 | BinaryExpression left=#162 op='nobler' right=#163
+ 162 | IdentifierExpression name='e'
+ 163 | Numeral value=20
+ 164 | IncDec name='e' op='decrement'
+ 165 | Print expression=#166
+ 166 | StringValue value='nested'`
 
 const goodPrograms = {
   // Empty Program:
