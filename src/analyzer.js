@@ -55,6 +55,9 @@ const check = (self) => ({
   hasSameTypeAs(other) {
     must(self.type.name === other.type.name, "Operands do not have the same type")
   },
+  isSameTypeAs(other) {
+    must((self.name ?? self) === (other.name ?? other), "Variable initializer is not the same as declared type")
+  },
   allHaveSameType() {
     must(
       self.slice(1).every(e => e.type.constructor.name === self[0].type.constructor.name),
@@ -186,18 +189,19 @@ class Context {
     // Declarations generate brand new variable objects
     d.initializer = this.analyze(d.initializer)
     d.variable = new Variable(d.name, d.readOnly)
-    d.variable.type = d.initializer.type
+    // d.variable.type = d.initializer.type
+    check(d.type).isSameTypeAs(d.initializer.type)
     this.add(d.variable.name, d.variable)
     return d
   }
   // maybe we dont need this
-  StructDeclaration(d) {
-    // Add early to allow recursion
-    this.add(d.name, d) // TODO is this ok?
-    d.fields = this.analyze(d.fields)
-    check(d.fields).areAllDistinct()
-    return d
-  }
+  // StructDeclaration(d) {
+  //   // Add early to allow recursion
+  //   this.add(d.name, d) // TODO is this ok?
+  //   d.fields = this.analyze(d.fields)
+  //   check(d.fields).areAllDistinct()
+  //   return d
+  // }
   Field(f) {
     f.type = this.analyze(f.type)
     return f

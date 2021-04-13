@@ -44,7 +44,7 @@ export class Type {
 export class ListeType extends Type {
   // Example: [int]
   constructor(baseType) {
-    super(`[${baseType.name}]`)
+    super(`[${baseType.name ?? baseType}]`)
     this.baseType = baseType
   }
   // [T] equivalent to [U] only when T is equivalent to U. Same for
@@ -56,16 +56,18 @@ export class ListeType extends Type {
 
 export class ConcordanceType extends Type {
   // Example: [int]
-  constructor(baseType) {
-    super(`[${baseType.name}]`)
-    this.baseType = baseType
+  constructor(keyType, valType) {
+    super(`[${keyType.name}:${valType.name}]`)
+    this.keyType = keyType
+    this.valType = valType
   }
   // [T] equivalent to [U] only when T is equivalent to U. Same for
   // assignability: we do NOT want arrays to be covariant!
   tis(target) {
     return (
       target.constructor === ConcordanceType &&
-      this.baseType === target.baseType
+      this.keyType === target.keyType &&
+      this.valType === target.valType
     )
   }
 }
@@ -243,6 +245,7 @@ export class DictLookup {
 export class Numeral {
   constructor(value) {
     Object.assign(this, { value })
+    this.name = "Numeral"
   }
 }
 

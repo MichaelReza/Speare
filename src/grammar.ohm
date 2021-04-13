@@ -46,7 +46,7 @@ Speare {
   // Define ids for variables, params
   Varname             = id                             --string
 
-  Param               = type Varname "?"?           
+  Param               = type Varname
               
 
   //Reserved keywords
@@ -54,7 +54,7 @@ Speare {
   enter               = "enter"
   colon               = ":"
 
-  type	              = "Liste of " type ~alnum                                  --listdec
+  type	              = "Liste of " type                                          --listdec
                       | "Concordance of " type " and " type                        --dictdec
                       | "Indistinguishable"
                       | "ToBeOrNotToBe"
@@ -63,6 +63,7 @@ Speare {
                       | "Illused"
                       | "Ideogram"
                       | "Corollary"
+
 
   StructureType       = Indistinguishable
                       | Tobeornottobe

@@ -31,7 +31,7 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   },
   Statement_variable(_allow, type, id, _be, relExp) {
     return new ast.VariableInitialization(
-      type.sourceString,
+      type.ast(),
       id.sourceString,
       relExp.ast()
     )
@@ -168,12 +168,8 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   //   return new ast.UnaryAssignment(type.ast())
   // },
 
-  Param(type, varname, optional) {
-    return new ast.Param(
-      type.ast(),
-      varname.sourceString,
-      optional.sourceString
-    )
+  Param(type, varname) {
+    return new ast.Param(type.ast(), varname.sourceString)
   },
   Varname(id) {
     return new ast.IdentifierExpression(id.sourceString)
@@ -206,8 +202,14 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   DictEntry_dictionaryentry(key, _colon, val) {
     return new ast.DictEntry(key.ast(), val.ast())
   },
+  type_listdec(_listof, type){
+    return new ast.ListeType(type.ast())
+  },
+  type_dictdec(_concof, keytype, _of, valuetype) {
+    return new ast.ConcordanceType(keytype.ast(), valuetype.ast())
+  },
   _terminal() {
-    return null
+    return this.sourceString
   },
 })
 
