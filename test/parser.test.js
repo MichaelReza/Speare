@@ -67,16 +67,15 @@ const source = `speaketh("hello")
   }
 
   Composition foo {
-      enter ToBeOrNotToBe foo(Numeral b) {
-        alloweth Numeral c be 1
-        returneth c
-      }
-      Composition bar {
-      }
-      enter ToBeOrNotToBe foo(Numeral b) {
-        alloweth Numeral c be 1
-        returneth c
-      }
+    enter ToBeOrNotToBe foo(Numeral b) {
+      alloweth Numeral c be 1
+      returneth c
+    }
+    Composition bar {}
+    enter ToBeOrNotToBe foo(Numeral b) {
+      alloweth Numeral c be 1
+      returneth c
+    }
   }
 
   in regards to (alloweth Numeral d be 0, d nobler 20, d decrement) {
@@ -121,13 +120,13 @@ const expectedAst = String.raw`   1 | Program statements=[#2,#4,#8,#10,#15,#18,#
   33 | Numeral value=9
   34 | VariableInitialization type='Concordance of Numeral and Numeral' name='a' initializer=#35
   35 | Concordance dictEntries=[#36,#39,#42]
-  36 | DictItem key=#37 val=#38
+  36 | DictEntry key=#37 val=#38
   37 | Numeral value=12
   38 | Numeral value=6
-  39 | DictItem key=#40 val=#41
+  39 | DictEntry key=#40 val=#41
   40 | Numeral value=3
   41 | Numeral value=4
-  42 | DictItem key=#43 val=#44
+  42 | DictEntry key=#43 val=#44
   43 | Numeral value=8
   44 | Numeral value=9
   45 | Print expression=#46

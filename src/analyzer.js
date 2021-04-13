@@ -160,7 +160,7 @@ class Context {
     return new Context(this, configuration)
   }
   analyze(node) {
-    // console.log(node)
+    console.log(node)
     return this[node.constructor.name](node)
   }
   Program(p) {
@@ -190,6 +190,7 @@ class Context {
     this.add(d.variable.name, d.variable)
     return d
   }
+  // maybe we dont need this
   StructDeclaration(d) {
     // Add early to allow recursion
     this.add(d.name, d) // TODO is this ok?
@@ -382,7 +383,7 @@ class Context {
     a.valType = a.dictEntries[0].val.type
     return a
   }
-  DictItem(a) {
+  DictEntry(a) {
     a.key = this.analyze(a.key)
     a.val = this.analyze(a.val)
     return a
@@ -390,12 +391,6 @@ class Context {
   EmptyArray(e) {
     e.baseType = this.analyze(e.baseType)
     e.type = new ListeType(e.baseType)
-    return e
-  }
-  MemberExpression(e) {
-    e.object = this.analyze(e.object)
-    check(e.field).isInTheObject(e.object)
-    e.type = e.object.type.fields.find((f) => f.name === e.field).type
     return e
   }
   Call(c) {
@@ -436,7 +431,6 @@ class Context {
     return a.map((item) => this.analyze(item))
   }
   ArrayLookup(e) {
-    console.log(e)
     e.array = this.analyze(e.array)
     e.type = e.array.type.baseType
     e.index = this.analyze(e.index)
@@ -446,6 +440,19 @@ class Context {
   Corollary(t) {
     t = CorollaryType
     return t
+  }
+  DictLookup(e) {
+    console.log(e)
+    e.dict = this.analyze(e.dict)
+    check(e.key).isInTheObject(e.dict)
+    e.type = e.dict.type.fields.find((f) => f.name === e.key).type
+    return e
+  }
+  MemberExpression(e) {
+    e.object = this.analyze(e.object)
+    check(e.field).isInTheObject(e.object)
+    e.type = e.object.type.fields.find((f) => f.name === e.field).type
+    return e
   }
 }
 

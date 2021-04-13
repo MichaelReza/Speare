@@ -234,9 +234,9 @@ export class ArrayLookup {
   }
 }
 
-export class DictLookUp {
-  constructor(varibale, exp) {
-    Object.assign(this, { varibale, exp })
+export class DictLookup {
+  constructor(dict, key) {
+    Object.assign(this, { dict, key })
   }
 }
 

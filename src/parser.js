@@ -181,8 +181,8 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   ArrayLookup(array, _sb, index, _eb) {
       return new ast.ArrayLookup(array.ast(), index.ast())
   },
-  Factor_dictlookup(varname, _sb, addsub, _eb) {
-    return new ast.DictLookUp(varname.sourceString, addsub.ast())
+  DictLookup(dict, _dot, key) {
+    return new ast.DictLookup(dict.ast(), key.ast())
   },
   String_string(_squote, str, _equote) {
     return new ast.StringValue(str.sourceString)
