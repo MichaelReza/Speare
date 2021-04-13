@@ -34,14 +34,8 @@ const check = (self) => ({
   },
   isBoolean() {
     must(
-      self.type.name === Type.BOOLEAN.name,
+      ([Type.BOOLEAN].includes(self.type)),
       `Expected a boolean, found ${self.type.name}`
-    )
-  },
-  isInteger() {
-    must(
-      self.type === Type.NUMERAL,
-      `Expected a numeral, found ${self.type.name}`
     )
   },
   isAType() {
@@ -243,7 +237,7 @@ class Context {
   UnaryAssignment(s) {
     return this.lookup(s.value)
   }
-  BreakStatement(s) {
+  Break(s) {
     check(this).isInsideALoop()
     return s
   }
@@ -265,9 +259,16 @@ class Context {
   }
   IfStatement(s) {
     s.le1 = this.analyze(s.le1)
-    check(s.le1[0]).isBoolean()
+    s.le1.forEach(function checkBoolean(exp) {
+      check(exp).isBoolean()
+    })
     if (s.le2) {
       s.le2 = this.newChild().analyze(s.le2)
+      s.le2.forEach(function loopElifs(elifs) {
+        elifs.forEach(function checkBoolean(exp) {
+          check(exp).isBoolean()
+        })
+      })
     }
     if (s._else) {
       s.body3 = this.analyze(s.body3)
@@ -276,7 +277,9 @@ class Context {
   }
   WhileLoop(s) {
     s.logicExp = this.analyze(s.logicExp)
-    check(s.logicExp).isBoolean()
+    s.logicExp.forEach(function checkBoolean(exp) {
+      check(exp).isBoolean()
+    })
     s.body = this.newChild({ inLoop: true }).analyze(s.body)
     return s
   }
@@ -287,7 +290,6 @@ class Context {
     return s
   }
   ForLoop(s) {
-    //console.log()
     s.init = this.analyze(s.init)
     s.condition = this.analyze(s.condition)
     //s.s2 = this.analyze(s.s2)
