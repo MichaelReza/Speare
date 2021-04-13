@@ -228,9 +228,9 @@ export class Liste {
   }
 }
 
-export class ArrLookUp {
-  constructor(varibale, exp) {
-    Object.assign(this, { varibale, exp })
+export class ArrayLookup {
+  constructor(array, index) {
+    Object.assign(this, { array, index })
   }
 }
 

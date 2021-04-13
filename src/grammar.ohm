@@ -29,13 +29,16 @@ Speare {
   Exponentiate  = Factor (exponentiate) Exponentiate                            --raisepower
                 | Factor
   Factor        = StructureType
+                | ArrayLookup
+                | Varname "{" AddSub "}"                                        --dictlookup 
                 | Varname
                 | "(" AddSub ")"                                                --parens
                 | ("nay" | abs | sqrt)	"(" Factor ")"                          --unary
                 | String
   DictEntry     = Varname colon AddSub                                           --dictionaryentry
-  ArrayItem     = Varname "[" AddSub "]"                                         --arrayitem
-                | ArrayItem "[" AddSub "]"
+  ArrayLookup     = Varname "[" AddSub "]"
+                | ArrayLookup "[" AddSub "]"
+  
 
 
 
