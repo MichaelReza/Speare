@@ -14,7 +14,7 @@ Speare {
                 | break                                                         --break
   ContFlow      = if "(" LogicExp+ ")" "{" Body "}" ( elif "(" LogicExp+ ")" "{" Body "}" )* ( else "{" Body "}")? --complexconditional
                 | switch Factor "{" (case Factor ":" Body )+ "}"                                 --switchcase
-                | for "(" Statement "," (Statement | RelExp) "," Statement ")" "{" Body "}"      --forloop
+                | for "(" Statement "," LogicExp "," Statement ")" "{" Body "}"      --forloop
                 | for "(" Varname in Varname ")" "{" Body "}"              --forin
                 | while "(" LogicExp+ ")" "{" Body  "}"                     --while
                 | do "{" Body "}" while "(" LogicExp+ ")"                --dowhile

@@ -1,5 +1,6 @@
 import {
   Variable,
+  VariableAssignment,
   Type,
   CorollaryType,
   Corollary,
@@ -163,7 +164,6 @@ class Context {
     return new Context(this, configuration)
   }
   analyze(node) {
-    console.log(node)
     return this[node.constructor.name](node)
   }
   Program(p) {
@@ -188,20 +188,14 @@ class Context {
   VariableInitialization(d) {
     // Declarations generate brand new variable objects
     d.initializer = this.analyze(d.initializer)
-    d.variable = new Variable(d.name, d.readOnly)
+    // d.variable = new Variable(d.name, d.readOnly)
     // d.variable.type = d.initializer.type
+    // console.log(d.type)
+    // console.log(d.initializer)
     check(d.type).isSameTypeAs(d.initializer.type)
-    this.add(d.variable.name, d.variable)
+    this.add(d.name, d.initializer)
     return d
   }
-  // maybe we dont need this
-  // StructDeclaration(d) {
-  //   // Add early to allow recursion
-  //   this.add(d.name, d) // TODO is this ok?
-  //   d.fields = this.analyze(d.fields)
-  //   check(d.fields).areAllDistinct()
-  //   return d
-  // }
   Field(f) {
     f.type = this.analyze(f.type)
     return f
@@ -293,24 +287,36 @@ class Context {
     return s
   }
   ForLoop(s) {
-    s.s1 = this.analyze(s.s1)
-    s.s2 = this.analyze(s.s2)
-    if (s.s3) {
-      s.s3 = this.analyze(s.s3)
+    //console.log()
+    s.init = this.analyze(s.init)
+    s.condition = this.analyze(s.condition)
+    //s.s2 = this.analyze(s.s2)
+    if (s.action) {
+      s.action = this.analyze(s.action)
     }
-    s.iterator = new Variable(s.iterator, true)
-    s.iterator.type = s.collection.type.baseType
+    // s.iterator = new Variable(s.iterator, true)
+    // s.iterator.type = s.collection.type.baseType
     s.body = this.newChild({ inLoop: true }).analyze(s.body)
     return s
   }
   ForIn(s) {
-    s.var1 = this.analyze(s.var1)
-    s.var2 = this.analyze(s.var2)
-    check(s.var1.hasSameTypeAs(s.var2))
-    s.iterator = new Variable(s.iterator, true)
-    s.iterator.type = s.var1.type
+    //console.log(this.sees(s.var2.name))
+    check(this.sees(s.var2.name))
+    s.var2 = this.lookup(s.var2.name)
+    //console.log(s.var2)
+    // console.log(this.lookup(s.var2.name))
+    // s.var1 = this.analyze(new VariableAssignment(s.var1, s.var2.values))
+    // s.var2 = this.analyze(s.var2)
+    //s.iterator = new VariableAssignment(s.var1, s.var2.values)
     s.body = this.newChild({ inLoop: true }).analyze(s.body)
     return s
+    // s.var1 = this.analyze(s.var1)
+    // s.var2 = this.analyze(s.var2)
+    // check(s.var1).hasSameTypeAs(s.var2)
+    // s.iterator = new Variable(s.iterator, true)
+    // s.iterator.type = s.var1.type
+    // s.body = this.newChild({ inLoop: true }).analyze(s.body)
+    // return s
   }
   UnwrapElse(e) {
     e.optional = this.analyze(e.optional)
@@ -354,6 +360,8 @@ class Context {
     } else if (
       ["lesser", "tis lesser", "nobler", "tis nobler"].includes(e.op)
     ) {
+      // console.log(e.left)
+      // console.log(e.right)
       check(e.left).isNumericOrString()
       check(e.left).hasSameTypeAs(e.right)
       e.type = Type.BOOLEAN
@@ -446,7 +454,6 @@ class Context {
     return t
   }
   DictLookup(e) {
-    console.log(e)
     e.dict = this.analyze(e.dict)
     check(e.key).isInTheObject(e.dict)
     e.type = e.dict.type.fields.find((f) => f.name === e.key).type

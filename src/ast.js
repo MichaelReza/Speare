@@ -123,8 +123,8 @@ export class SwitchStatement {
 }
 
 export class ForLoop {
-  constructor(_for, s1, s2, s3, body) {
-    Object.assign(this, { _for, s1, s2, s3, body})
+  constructor(_for, init, condition, action, body) {
+    Object.assign(this, { _for, init, condition, action, body})
   }
 }
 

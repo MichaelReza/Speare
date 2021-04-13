@@ -8,7 +8,7 @@ const semanticChecks = [
   [ // [1] DONE
     "variable declarations",
     "alloweth Numeral x be 1\
-    alloweth ToBeOrNotToBe y be fallacious",
+     alloweth ToBeOrNotToBe y be fallacious",
   ],
   // [ // [2] DONE
   //   "increment and decrement",
@@ -58,12 +58,13 @@ const semanticChecks = [
   ],
   // [12] TODO
   // ["for over collection",
-  // "in regards to(x within y) { speaketh(x) }"
+  // "alloweth Liste of Numeral y be [1, 2] \
+  //  in regards to(x within y) { speaketh(x) }"
   // ],
   // [13] TODO
-  // ["for in range",
-  // "in regards to (alloweth Numeral x be 0, x lesser 15, x increment) { speaketh(x) }"
-  // ],
+  ["for in range",
+  "in regards to (alloweth Numeral x be 0, x lesser 15, x increment) { speaketh(x) }"
+  ],
   // [14] TODO
 
   // ["conditionals with ints",

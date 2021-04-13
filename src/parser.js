@@ -97,11 +97,11 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   ContFlow_forloop(
     _for,
     _sp,
-    s1,
+    init,
     _comma,
-    s2,
+    condition,
     _comma2,
-    s3,
+    action,
     _ep,
     _sb,
     body,
@@ -109,9 +109,9 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   ) {
     return new ast.ForLoop(
       _for.sourceString,
-      s1.ast(),
-      s2.ast(),
-      s3.ast(),
+      init.ast(),
+      condition.ast(),
+      action.ast(),
       body.ast()
     )
   },
