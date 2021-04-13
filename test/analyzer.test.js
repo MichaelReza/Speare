@@ -8,15 +8,15 @@ const semanticChecks = [
   [ // [1] DONE
     "variable declarations",
     "alloweth Numeral x be 1\
-     alloweth ToBeOrNotToBe y be fallacious",
+    alloweth ToBeOrNotToBe y be fallacious",
   ],
-  // [ // [2] DONE
-  //   "increment and decrement",
-  //   "alloweth Numeral x be 1 \
-  //   x incrementby 2 \
-  //   x increment \
-  //   x incrementby 5",
-  // ],
+  // [2] DONE
+  ["increment and decrement",
+    "alloweth Numeral x be 1 \
+    x incrementby 2 \
+    x increment \
+    x incrementby 5",
+  ],
   // [3] DONE
   ["initialize with nonempty array", "alloweth Liste of Numeral n be [5, 8]"],
   // [4] DONE
@@ -24,14 +24,14 @@ const semanticChecks = [
   "enter ToBeOrNotToBe foo( Numeral f ) {}"
   ],
   // [5] DONE
-  // ["assign arrays",
-  // "alloweth Numeral xcontext be 0 \
-  //  alloweth Numeral y be 2 \
-  //  alloweth Numeral z be 1 \
-  //  alloweth Liste of Numeral w be [6, 4, 5, 4, 3] \
-  //  alloweth Liste of ToBeOrNotToBe a be [fallacious, fallacious, faithful] \
-  //  alloweth Liste of Numeral x be [xcontext, y without z]"
-  // ],
+  ["assign arrays",
+  "alloweth Numeral xcontext be 0 \
+   alloweth Numeral y be 2 \
+   alloweth Numeral z be 1 \
+   alloweth Liste of Numeral w be [6, 4, 5, 4, 3] \
+   alloweth Liste of ToBeOrNotToBe a be [fallacious, fallacious, faithful] \
+   alloweth Liste of Numeral x be [xcontext, y without z]"
+  ],
   // [6] DONE
   ["short return",
   "enter ToBeOrNotToBe foo(Numeral f) { returneth }"
@@ -44,10 +44,10 @@ const semanticChecks = [
   ["return in nested if",
    "enter ToBeOrNotToBe foo(Numeral f) { whether (faithful) { returneth } }"
   ],
-  // [9] TODO
-  // ["break in nested if",
-  // "whilst(fallacious) { whether (faithful) { exit } }"
-  // ],
+  // [9] DONE
+  ["break in nested if",
+  "whilst(fallacious) { whether (faithful) { exit } }"
+  ],
   // [10] DONE
   ["long if",
   "whether (faithful) { speaketh(1) } otherwise {speaketh(3) }"
@@ -58,13 +58,12 @@ const semanticChecks = [
   ],
   // [12] TODO
   // ["for over collection",
-  // "alloweth Liste of Numeral y be [1, 2] \
-  //  in regards to(x within y) { speaketh(x) }"
+  // "in regards to(x within y) { speaketh(x) }"
   // ],
   // [13] TODO
-  ["for in range",
-  "in regards to (alloweth Numeral x be 0, x lesser 15, x increment) { speaketh(x) }"
-  ],
+  // ["for in range",
+  // "in regards to (alloweth Numeral x be 0, x lesser 15, x increment) { speaketh(x) }"
+  // ],
   // [14] TODO
 
   // ["conditionals with ints",
