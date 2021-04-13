@@ -66,11 +66,11 @@ const semanticChecks = [
   ],
   // [14] TODO
   ["conditionals with ints",
-  "speaketh(whether(true) { speaketh(5) } otherwise {speaketh(6) } )"
+  "whether(true) { speaketh(5) } otherwise { speaketh(6) }"
   ],
   // [15] TODO
   ["conditionals with floats",
-  "speaketh(whether(1.2 lesser 1.6) { speaketh(5.6) } otherwise {speaketh(6.1) } )"
+  "whether(1.2 lesser 1.6) { speaketh(5.6) } otherwise {speaketh(6.1) }"
   ],
   // [16] DONE
   ["conditionals with strings",
@@ -117,9 +117,9 @@ const semanticChecks = [
   // [27] TODO: REWRITE THIS GARBAGE
   ["subscript exp", "let a=[1,2]speaketh(a[0])"],
   // [28] TODO: REWRITE THIS GARBAGE
-  ["array of struct", "struct S{} let x=[S(), S()]"],
+  ["array of corollary", "struct S{} let x=[S(), S()]"],
   // [29] TODO: REWRITE THIS GARBAGE
-  ["struct of arrays and opts", "struct S{x: [int] y: string??}"],
+  ["corollary of Listes", "struct S{x: [int] y: string??}"],
   // [30] TODO: REWRITE THIG GARBAGE
   ["assigned functions", "function f() {}\nlet g = fg = f"],
   // [31] TODO
@@ -135,15 +135,17 @@ const semanticChecks = [
   // [33] TODO
   [
     "pass a function to a function",
-    `enter Numeral f(Numeral x, ToBeOrNotToBe y) { returneth 1 }
-     enter Indistinguishable g(ToBeOrNotToBe z) {}
+    `enter Numeral f (Numeral x, ToBeOrNotToBe y) { returneth 1 }
+    enter ToBeOrNotToBe g(ToBeOrNotToBe z) { }
      f(2, g)`,
   ],
   // [34] TODO
   [
     "function return types",
-    `enter Numeral square(Numeral x) { returneth x accumulate x }
-     enter Numeral compose() { returneth square }`,
+    `enter Numeral compose( ) { 
+      enter Numeral square(Numeral x) { returneth x accumulate x }
+      returneth square
+    }`,
   ],
   // [35] TODO
   ["struct parameters", "struct S {} function f(x: S) {}"],
@@ -154,126 +156,139 @@ const semanticChecks = [
 ]
 
 // Programs that are syntactically correct but have semantic errors
-// const semanticErrors = [
-//   ["non-distinct fields", "struct S {x: boolean x: int}", /Fields must be distinct/],
-//   ["non-int increment", "alloweth Numeral x be fallacious x increment", /an integer, found boolean/],
-//   ["non-int decrement", 'alloweth Numeral x = Lexicographical("")x++', /an integer, found [string]?/], //TO-DO bc some[""] is optional and I am confused
-//   ["undeclared id", "speaketh(x)", /Identifier x not declared/],
-//   ["redeclared id", "alloweth Numeral x be 1 alloweth Numeral x be 1", /Identifier x already declared/],
-//   // ["assign to const", "const x = 1x = 2", /Cannot assign to constant x/],
-//   ["assign bad type", "alloweth Numeral x be 1 alloweth Numeral x  be faithful", /Cannot assign a boolean to a int/],
-//   ["assign bad array type", "alloweth Numeral x be 1 alloweth Liste x be [true]", /Cannot assign a \[boolean\] to a int/],
-//   // ["assign bad optional type", "let x=1x=some 2", /Cannot assign a int\? to a int/],
-//   ["break outside loop", "exit", /Break can only appear in a loop/],
-//   [
-//     "break inside function",
-//     "whilst(x){execute{exit}}",
-//     /Break can only appear in a loop/,
-//   ],
-//   ["return outside function", "returneth", /Return can only appear in a function/],
-//   [
-//     "return value from void function",
-//     "enter f() {returneth 1}",
-//     /Cannot return a value here/,
-//   ],
-//   [
-//     "return nothing from non-void",
-//     "enter Numeral f(){ returneth }",
-//     /should be returned here/,
-//   ],
-//   ["return type mismatch", "enter Numeral f(){returneth fallacious}", /boolean to a int/],
-//   ["non-boolean short if test", "whether (1) {}", /a boolean, found int/],
-//   ["non-boolean if test", "whether (1) {} otherwise {}", /a boolean, found int/],
-//   ["non-boolean while test", "whilest (1) {}", /a boolean, found int/],
-//   // ["non-integer repeat", 'repeat "1" {}', /an integer, found string/],
-//   // ["non-integer low range", "for i in true...2 {}", /an integer, found boolean/],
-//   // ["non-integer high range", "for i in 1..<no int {}", /an integer, found int\?/],
-//   ["non-array in for", "in regards to(i within 100) {}", /Array expected/],
-//   // ["non-boolean conditional test", "speaketh(1?2:3) ", /a boolean, found int/],
-//   // ["diff types in conditional arms", "speaketh(true?1:true) ", /not have the same type/],
-//   // ["unwrap non-optional", "speaketh(1??2) ", /Optional expected/],
-//   ["bad types for ||", "speaketh(fallacious alternatively 1) ", /a boolean, found int/],
-//   ["bad types for &&", "speaketh(fallacious furthermore 1) ", /a boolean, found int/],
-//   ["bad types for ==", "speaketh(fallacious tis 1) ", /Operands do not have the same type/],
-//   ["bad types for !=", "speaketh(fallacious tis 1) ", /Operands do not have the same type/],
-//   ["bad types for +", "speaketh(fallacious with 1) ", /number or string, found boolean/],
-//   ["bad types for -", "speaketh(fallacious without 1) ", /a number, found boolean/],
-//   ["bad types for *", "speaketh(fallacious accumulate 1) ", /a number, found boolean/],
-//   ["bad types for /", "speaketh(fallacious sunder 1) ", /a number, found boolean/],
-//   ["bad types for **", "speaketh(fallacious exponentiate 1) ", /a number, found boolean/],
-//   ["bad types for <", "speaketh(fallacious lesser 1) ", /number or string, found boolean/],
-//   ["bad types for <=", "speaketh(fallacious tis lesser 1) ", /number or string, found bool/],
-//   ["bad types for >", "speaketh(fallacious nobler 1) ", /number or string, found bool/],
-//   ["bad types for >=", "speaketh(fallacious tis nobler 1) ", /number or string, found bool/],
-//   ["bad types for ==", "speaketh(2 tis 2.0) ", /not have the same type/],
-//   ["bad types for !=", "speaketh(fallacious nay be 1) ", /not have the same type/],
-//   ["bad types for negation", "speaketh(-faithful) ", /a number, found boolean/],
-//   ["bad types for length", "speaketh(#fallacious)", /Array expected/],
-//   ["bad types for not", 'speaketh(nay"hello")', /a boolean, found string/],
-//   ["non-integer index", "alloweth a be [1]speaketh(a[fallacious])", /integer, found boolean/],
-//   // ["no such field", "struct S{} let x=S() speaketh(x.y)", /No such field/],
-//   ["diff type array elements", "speaketh([3,3.0])", /Not all elements have the same type/],
-//   ["shadowing", "alloweth x be 1\nwhilest (faithful) {alloweth x be 1}", /Identifier x already declared/],
-//   ["call of uncallable", "alloweth x be 1\nspeaketh(x())", /Call of non-function/],
-//   [
-//     "Too many args",
-//     "enter Indistinguishable f(Numeral x) {}\nf(1,2)",
-//     /1 argument\(s\) required but 2 passed/,
-//   ],
-//   [
-//     "Too few args",
-//     "enter Indistinguishable f(Numeral x) {}\nf()",
-//     /1 argument\(s\) required but 0 passed/,
-//   ],
-//   [
-//     "Parameter type mismatch",
-//     "enter f(Numeral x) {}\nf(fallacious)",
-//     /Cannot assign a boolean to a int/,
-//   ],
-//   // [
-//   //   "function type mismatch",
-//   //   `enter f( Numeral x, y: (boolean)->void): int { return 1 }
-//   //    enter g(z: boolean): int { return 5 }
-//   //    f(2, g)`,
-//   //   /Cannot assign a \(boolean\)->int to a \(boolean\)->void/,
-//   // ],
-//   ["Non-type in param", "alloweth Numeral x be 1 enter Indistinguishable f(x y){}", /Type expected/],
-//   ["Non-type in return type", "alloweth Numeral x be 1 enter x f(){returneth 1}", /Type expected/],
-//   // ["Non-type in field type", "alloweth Numeral x be 1struct S {y:x}", /Type expected/],
-// ]
-
-// Test cases for expected semantic graphs after processing the AST. In general
-// this suite of cases should have a test for each kind of node, including
-// nodes that get rewritten as well as those that are just "passed through"
-// by the analyzer. For now, we're just testing the various rewrites only.
-
-// const Int = ast.Type.INT
-// const Void = ast.Type.VOID
-// const intToVoidType = new ast.FunctionType([Int], Void)
-
-// const varX = Object.assign(new ast.Variable("x", fallacious), { type: Int })
-
-// const letX1 = Object.assign(new ast.VariableDeclaration("x", fallacious, 1n), {
-//   variable: varX,
-// })
-// const assignX2 = new ast.Assignment(varX, 2n)
-
-// const funDeclF = Object.assign(
-//   new ast.FunctionDeclaration("f", [new ast.Parameter("x", Int)], Void, []),
-//   {
-//     function: Object.assign(new ast.Function("f"), {
-//       type: intToVoidType,
-//     }),
-//   }
-// )
-
-// const structS = new ast.StructDeclaration("S", [new ast.Field("x", Int)])
-
-// const graphChecks = [
-//   ["Variable created & resolved", "let x=1 x=2", [letX1, assignX2]],
-//   ["functions created & resolved", "function f(x: int) {}", [funDeclF]],
-//   ["field type resolved", "struct S {x: int}", [structS]],
-// ]
+const semanticErrors = [
+  // [38] TODO: REWRITE THIS GARBAGE
+  ["non-distinct fields", "struct S {x: boolean x: int}", /Fields must be distinct/],
+  // [39] TODO
+  ["non-int increment", "alloweth Numeral x be fallacious x increment", /an integer, found boolean/],
+  // [40] TODO: REWRITE THIS GARBAGE
+  ["non-int decrement", 'alloweth Lexicographical x = "hello" x increment', /an integer, found [string]?/], //TO-DO bc some[""] is optional and I am confused
+  // [41] DONE
+  ["undeclared id", "speaketh(x)", /Identifier x not declared/],
+  // [42] DONE
+  ["redeclared id", "alloweth Numeral x be 1 alloweth Numeral x be 1", /Identifier x already declared/],
+  // [43] TODO
+  ["assign bad type", "alloweth Numeral x be faithful", /Cannot assign a boolean to a int/],
+  // [44] TODO
+  ["assign bad array type", "alloweth Numeral x be 1 alloweth Liste x be [true]", /Cannot assign a \[boolean\] to a int/],
+  // [45] TODO
+  ["break outside loop", "exit", /Break can only appear in a loop/],
+  // [46] TODO: REWRITE THIS GARBAGE
+  [
+    "break inside function",
+    "whilst(x){execute{exit}}",
+    /Break can only appear in a loop/,
+  ],
+  // [47] TODO
+  ["return outside function", "returneth", /Return can only appear in a function/],
+  // [48] TODO
+  [
+    "return value from void function",
+    "enter f() {returneth 1}",
+    /Cannot return a value here/,
+  ],
+  // [49] TODO
+  [
+    "return nothing from non-void",
+    "enter Numeral f(){ returneth }",
+    /should be returned here/,
+  ],
+  // [50] TODO
+  ["return type mismatch", "enter Numeral f(){returneth fallacious}", /boolean to a int/],
+  // [51] TODO
+  ["non-boolean short if test", "whether (1) {}", /a boolean, found int/],
+  // [52] TODO
+  ["non-boolean if test", "whether (1) {} otherwise {}", /a boolean, found int/],
+  // [53] TODO
+  ["non-boolean while test", "whilest (1) {}", /a boolean, found int/],
+  // [54] TODO
+  ["non-integer range", "in regards to (i within faithful){}", /an integer, found boolean/],
+  // [55] TODO
+  ["non-array in for", "in regards to(i within 100) {}", /Array expected/],
+  // [56] TODO
+  ["non-boolean conditional test", "whether (1) {}", /a boolean, found int/],
+  // [57] TODO
+  ["diff types in conditional arms", "whether (x be 5) { x be fallacious } ", /not have the same type/],
+  // [58] TODO
+  ["bad types for ||", "speaketh(fallacious alternatively 1) ", /a boolean, found int/],
+  // [59] TODO
+  ["bad types for and", "speaketh(fallacious furthermore 1) ", /a boolean, found int/],
+  // [60] DONE
+  ["bad types for ==", "speaketh(fallacious tis 1) ", /Operands do not have the same type/],
+ // [61] DONE
+  ["bad types for !=", "speaketh(fallacious tis 1) ", /Operands do not have the same type/],
+  // [62] TODO
+  ["bad types for +", "speaketh(fallacious with 1) ", /number or string, found boolean/],
+  // [63] TODO
+  ["bad types for -", "speaketh(fallacious without 1) ", /a number, found boolean/],
+  // [64] TODO
+  ["bad types for *", "speaketh(fallacious accumulate 1) ", /a number, found boolean/],
+  // [65] TODO
+  ["bad types for /", "speaketh(fallacious sunder 1) ", /a number, found boolean/],
+  // [66] TODO
+  ["bad types for **", "speaketh(fallacious exponentiate 1) ", /a number, found boolean/],
+  // [67] TODO
+  ["bad types for <", "speaketh(fallacious lesser 1) ", /number or string, found boolean/],
+  // [68] TODO
+  ["bad types for <=", "speaketh(fallacious tis lesser 1) ", /number or string, found bool/],
+  // [69] TODO, NICELY
+  ["bad types for >", "speaketh(fallacious nobler 1) ", /number or string, found bool/],
+  // [70] TODO
+  ["bad types for >=", "speaketh(fallacious tis nobler 1) ", /number or string, found bool/],
+  // [71] TODO
+  ["bad types for ==", "speaketh(2 tis 2.0) ", /not have the same type/],
+  // [72] DONE
+  ["bad types for !=", "speaketh(fallacious tis not 1) ", /not have the same type/],
+  // [73] TODO
+  ["bad types for negation", "speaketh(nay(faithful)) ", /a number, found boolean/],
+  // [74] TODO
+  ["bad types for length", "speaketh(#fallacious)", /Array expected/],
+  // [75] TODO
+  ["bad types for not", 'speaketh(nay("hello"))', /a boolean, found string/],
+  // [76] TODO
+  ["non-integer index", "alloweth a be [1] speaketh(a[fallacious])", /integer, found boolean/],
+  // [77] TODO
+  ["diff type array elements", "speaketh([3,3.0])", /Not all elements have the same type/],
+  // [78] TODO
+  ["shadowing", "alloweth Numeral x be 1 \
+                whilst (faithful) { \
+                  alloweth Numeral  x be 1 \
+                }", /Identifier x already declared/],
+  // [79] TODO
+  ["call of uncallable", "alloweth x be 1\nspeaketh(x())", /Call of non-function/],
+  // [80] TODO
+  [
+    "Too many args",
+    "enter Indistinguishable f(Numeral x) {}\nf(1,2)",
+    /1 argument\(s\) required but 2 passed/,
+  ],
+  // [81] TODO
+  [
+    "Too few args",
+    "enter Indistinguishable f(Numeral x) {}\nf()",
+    /1 argument\(s\) required but 0 passed/,
+  ],
+  // [82] TODO
+  [
+    "Parameter type mismatch",
+    "enter f(Numeral x) {}\nf(fallacious)",
+    /Cannot assign a boolean to a int/,
+  ],
+  // [83] TODO
+  [
+    "function type mismatch",
+    `enter f( Numeral x, y: (boolean)->void): int { return 1 }
+     enter g(z: boolean): int { return 5 }
+     f(2, g)`,
+    /Cannot assign a \(boolean\)->int to a \(boolean\)->void/,
+  ],
+  // [84] TODO
+  ["Non-type in param", "alloweth Numeral x be 1 enter Indistinguishable f(x y){}", /Type expected/],
+  // [85] TODO
+  ["Non-type in return type", "alloweth Numeral x be 1 enter x f(){returneth 1}", /Type expected/],
+  // [86] TODO
+  ["Non-type in field type", "alloweth Numeral x be 1struct S {y:x}", /Type expected/],
+]
 
 describe("The analyzer", () => {
   for (const [scenario, source] of semanticChecks) {
