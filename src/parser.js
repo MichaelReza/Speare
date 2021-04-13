@@ -113,7 +113,13 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
     )
   },
   ContFlow_forin(_for, _sp, var1, _in, var2, _ep, _sb, body, _eb) {
-    return new ast.ForIn(_for.sourceString, var1.ast(), _in.sourceString, var2.ast(), body.ast())
+    return new ast.ForIn(
+      _for.sourceString,
+      var1.ast(),
+      _in.sourceString,
+      var2.ast(),
+      body.ast()
+    )
   },
   ContFlow_while(whle, _sp, logicExp, _ep, _sb, body, _eb) {
     return new ast.WhileLoop(whle.sourceString, logicExp.ast(), body.ast())
@@ -160,10 +166,20 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   // },
 
   Param(type, varname, optional) {
-    return new ast.Param(type.ast(), varname.sourceString, optional.sourceString)
+    return new ast.Param(
+      type.ast(),
+      varname.sourceString,
+      optional.sourceString
+    )
   },
   Varname(id) {
     return new ast.IdentifierExpression(id.sourceString)
+  },
+  Factor_arrlookup(varname, _sb, addsub, _eb) {
+      return new ast.ArrLookUp(varname.sourceString, addsub.ast())
+  },
+  Factor_dictlookup(varname, _sb, addsub, _eb) {
+    return new ast.DictLookUp(varname.sourceString, addsub.ast())
   },
   String_string(_squote, str, _equote) {
     return new ast.StringValue(str.sourceString)

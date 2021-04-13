@@ -225,6 +225,18 @@ export class Liste {
   }
 }
 
+export class ArrLookUp {
+  constructor(varibale, exp) {
+    Object.assign(this, { varibale, exp })
+  }
+}
+
+export class DictLookUp {
+  constructor(varibale, exp) {
+    Object.assign(this, { varibale, exp })
+  }
+}
+
 export class Numeral {
   constructor(value) {
     Object.assign(this, { value })

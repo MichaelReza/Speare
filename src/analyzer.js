@@ -368,7 +368,6 @@ class Context {
     } else if (e.sign === "sqrt") {
       check(e.value).isNumeral()
     } else {
-
     }
     return e
   }
@@ -383,6 +382,17 @@ class Context {
     a.values = this.analyze(a.values)
     check(a.values).allHaveSameType()
     a.type = new ListeType(a.values[0].type)
+    return a
+  }
+  Concordance(a) {
+    a.dictEntries.forEach(x => x = this.analyze(x))
+    a.keyType = a.dictEntries[0].key.type
+    a.valType = a.dictEntries[0].val.type
+    return a
+  }
+  DictItem(a) {
+    a.key = this.analyze(a.key)
+    a.val = this.analyze(a.val)
     return a
   }
   EmptyArray(e) {
