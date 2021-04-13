@@ -45,6 +45,9 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   Statement_return(_return, id) {
     return new ast.Return(id.sourceString)
   },
+  Statement_break(_break) {
+    return new ast.Break()
+  },
   Statement_incdecby(id, op, relExp) {
     return new ast.IncDecby(id.sourceString, op.sourceString, relExp.ast())
   },
@@ -184,8 +187,11 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   Concordance(_sb, dictItems, _eb) {
     return new ast.Concordance(dictItems.asIteration().ast())
   },
-  DictItem_dictionaryitem(key, _colon, val) {
-    return new ast.DictItem(key.ast(), val.ast())
+  DictEntry_dictionaryentry(key, _colon, val) {
+    return new ast.DictEntry(key.ast(), val.ast())
+  },
+  ArrayItem_arrayitem(arr, _sb, index, _cb) {
+    return new ast.ArrayItem(arr.ast(), index.ast())
   },
   _terminal() {
     return null

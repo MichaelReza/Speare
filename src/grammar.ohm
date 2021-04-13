@@ -11,7 +11,7 @@ Speare {
                 | "returneth" (Varname | RelExp)?                                --return
                 | Varname (incrementby | decrementby) RelExp                    --incdecby
                 | Varname (increment | decrement)                               --incdec
-                | break
+                | break                                                         --break
   ContFlow      = if "(" LogicExp+ ")" "{" Body "}" ( elif "(" LogicExp+ ")" "{" Body "}" )* ( else "{" Body "}")? --complexconditional
                 | switch Factor "{" (case Factor ":" Body )+ "}"                                 --switchcase
                 | for "(" Statement "," (Statement | RelExp) "," Statement ")" "{" Body "}"      --forloop
@@ -33,7 +33,9 @@ Speare {
                 | "(" AddSub ")"                                                --parens
                 | ("nay" | abs | sqrt)	"(" Factor ")"                          --unary
                 | String
-  DictItem      = AddSub colon AddSub                                           --dictionaryitem
+  DictEntry     = Varname colon AddSub                                           --dictionaryentry
+  ArrayItem     = Varname "[" AddSub "]"                                         --arrayitem
+                | ArrayItem "[" AddSub "]"
 
 
 
@@ -77,7 +79,7 @@ Speare {
   Tobeornottobe	   	  =	"fallacious" | "faithful"
   Numeral             = digit+ ("." digit+)?
   Liste               = "[" ListOf<AddSub, ","> "]"
-  Concordance         = "{" ListOf<DictItem, ","> "}"
+  Concordance         = "{" ListOf<DictEntry, ","> "}"
 
   Lexicographical     = "\"" alnum "\""
   Illused             = "null"

@@ -176,6 +176,9 @@ export class Return {
   }
 }
 
+export class Break {
+}
+
 export class IncDecby {
   constructor(name, op, expression) {
     Object.assign(this, { name, op, expression })
@@ -243,7 +246,7 @@ export class Concordance {
   }
 }
 
-export class DictItem {
+export class DictEntry {
   constructor(key, val) {
     Object.assign(this, { key, val })
   }
