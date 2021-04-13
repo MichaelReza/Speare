@@ -36,7 +36,7 @@ Speare {
                 | ("nay" | abs | sqrt)	"(" Factor ")"                          --unary
                 | String
   DictEntry     = Varname colon AddSub                                           --dictionaryentry
-  ArrayLookup     = Varname "[" AddSub "]"
+  ArrayLookup   = Varname "[" AddSub "]"
                 | ArrayLookup "[" AddSub "]"
   
 
