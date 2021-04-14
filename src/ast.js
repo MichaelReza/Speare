@@ -57,7 +57,7 @@ export class ListeType extends Type {
 export class ConcordanceType extends Type {
   // Example: [int]
   constructor(keyType, valType) {
-    super(`[${keyType.name}:${valType.name}]`)
+    super(`[${keyType.name ?? keyType}:${valType.name ?? valType}]`)
     this.keyType = keyType
     this.valType = valType
   }

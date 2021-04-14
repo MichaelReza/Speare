@@ -5,7 +5,8 @@ import * as ast from "../src/ast.js"
 
 // Programs that are semantically correct
 const semanticChecks = [
-  [ // [1] DONE
+  [
+    // [1] DONE
     "variable declarations",
     "alloweth Numeral x be 1\
     alloweth ToBeOrNotToBe y be fallacious",
@@ -20,9 +21,7 @@ const semanticChecks = [
   // [3] DONE
   ["initialize with nonempty array", "alloweth Liste of Numeral n be [5, 8]"],
   // [4] DONE
-  ["function declaration",
-  "enter ToBeOrNotToBe foo( Numeral f ) {}"
-  ],
+  ["function declaration", "enter ToBeOrNotToBe foo( Numeral f ) {}"],
   // [5] DONE
   ["assign arrays",
   "alloweth Numeral xcontext be 0 \
@@ -33,32 +32,34 @@ const semanticChecks = [
    alloweth Liste of Numeral x be [xcontext, y without z]"
   ],
   // [6] DONE
-  ["short return",
-  "enter ToBeOrNotToBe foo(Numeral f) { returneth }"
-  ],
+  ["short return", "enter ToBeOrNotToBe foo(Numeral f) { returneth }"],
   // [7] DONE
-  ["long return",
-  "enter ToBeOrNotToBe foo(Numeral f) { returneth faithful }"
-  ],
+  ["long return", "enter ToBeOrNotToBe foo(Numeral f) { returneth faithful }"],
   // [8] DONE
-  ["return in nested if",
-   "enter ToBeOrNotToBe foo(Numeral f) { whether (faithful) { returneth } }"
+  [
+    "return in nested if",
+    "enter ToBeOrNotToBe foo(Numeral f) { whether (faithful) { returneth } }",
   ],
   // [9] DONE
   ["break in nested if",
   "whilst(fallacious) { whether (faithful) { exit } }"
   ],
   // [10] DONE
-  ["long if",
-  "whether (faithful) { speaketh(1) } otherwise {speaketh(3) }"
-  ],
+  ["long if", "whether (faithful) { speaketh(1) } otherwise {speaketh(3) }"],
   // [11] DONE
-  ["else if",
-  "whether (faithful) { speaketh(1)} subsequently (faithful) { speaketh(0) } otherwise {speaketh(3) }"
+  [
+    "else if",
+    "whether (faithful) { speaketh(1)} subsequently (faithful) { speaketh(0) } otherwise {speaketh(3) }",
   ],
-  // [12] DONE
-  ["for in range",
-  "in regards to (alloweth Numeral x be 0, x lesser 15, x increment) { speaketh(x) }"
+  // [12] TODO
+  // ["for over collection",
+  // "alloweth Liste of Numeral y be [1, 2] \
+  //  in regards to(x within y) { speaketh(x) }"
+  // ],
+  // [13] TODO
+  [
+    "for in range",
+    "in regards to (alloweth Numeral x be 0, x lesser 15, x increment) { speaketh(x) }",
   ],
   // [13] TODO
   ["nested for in range",
@@ -73,39 +74,41 @@ const semanticChecks = [
   "whether(faithful) { speaketh(5) } otherwise { speaketh(6) }"
   ],
   // [15] TODO
-  ["conditionals with floats",
-  "whether(1.2 lesser 1.6) { speaketh(5.6) } otherwise {speaketh(6.1) }"
+  [
+    "conditionals with floats",
+    "whether(1.2 lesser 1.6) { speaketh(5.6) } otherwise {speaketh(6.1) }",
   ],
   // [16] DONE
-  ["conditionals with strings",
-  "whether(1 lesser 6) { speaketh(\"hello\") } otherwise {speaketh(\"Goodbye\") }"
+  [
+    "conditionals with strings",
+    'whether(1 lesser 6) { speaketh("hello") } otherwise {speaketh("Goodbye") }',
   ],
   // [17] DONE
-  ["OR",
-  "speaketh(faithful alternatively 1 lesser 2 alternatively fallacious alternatively faithful)"
+  [
+    "OR",
+    "speaketh(faithful alternatively 1 lesser 2 alternatively fallacious alternatively faithful)",
   ],
   // [18] DONE
-  ["AND",
-  "speaketh(faithful furthermore 1 furthermore 2 furthermore fallacious tis not faithful)"
+  [
+    "AND",
+    "speaketh(faithful furthermore 1 furthermore 2 furthermore fallacious tis not faithful)",
   ],
   // [19] DONE ? -- had to add lexicographical into parser
-  ["relations",
-  'speaketh(1 tis lesser 2 furthermore "x" nobler "y" furthermore 3.5 tis lesser 1.2)'
+  [
+    "relations",
+    'speaketh(1 tis lesser 2 furthermore "x" nobler "y" furthermore 3.5 tis lesser 1.2)',
   ],
   // [20] DONE
-  ["ok to == arrays",
-  "speaketh([1] tis [5,8])"
-  ],
+  ["ok to == arrays", "speaketh([1] tis [5,8])"],
   // [21] DONE
-  ["ok to != arrays",
-  "speaketh([1] tis not [5,8])"
-  ],
+  ["ok to != arrays", "speaketh([1] tis not [5,8])"],
   // [22] DONE
-  ["arithmetic",
-  "speaketh(5 exponentiate nay(3))"
-  ],
+  ["arithmetic", "speaketh(5 exponentiate nay(3))"],
   // [23] DONE
-  ["variables", "alloweth Liste of Liste of Liste of Liste of Numeral x be [[[[1]]]]"],
+  [
+    "variables",
+    "alloweth Liste of Liste of Liste of Liste of Numeral x be [[[[1]]]]",
+  ],
   // [24] ----: We don't support optionals (for now)
   // ["recursive structs", "struct S {z: S?} let x = S(no S)"],
   // [25] TODO: REWRITE THIS GARBAGE -- we don't have a way of reading values from a dict so this doesnt work at all -_-
@@ -117,18 +120,23 @@ const semanticChecks = [
   // alloweth Numeral x be S(T(1))\
   // speaketh(x.z.y)"],
   // [26] TODO: REWRITE THIS GARBAGE
-  // ["member exp", "struct S {x: int} let y = S(1)speaketh(y.x)"],
+  // [
+  //   "subscript dict",
+  //   "alloweth Concordance of Lexicographical and Numeral y be {\"x\": 5} speaketh(y.\"x\")",
+  // ],
   // [27] TODO: REWRITE THIS GARBAGE
-  // ["subscript exp", "let a=[1,2]speaketh(a[0])"],
+  // ["subscript liste", "alloweth Liste of Numeral a be [1,2] speaketh(a[0])"],
   // [28] TODO: REWRITE THIS GARBAGE
-  // ["array of corollary", "struct S{} let x=[S(), S()]"],
+  [
+    "array of corollary",
+    'alloweth Liste of Concordance of Lexicographical and Numeral S be [{"x": 1}, {"y": 1}]',
+  ],
   // [29] TODO: REWRITE THIS GARBAGE
-  // ["corollary of Listes", "struct S{x: [int] y: string??}"],
-  // [30] DONE:
-  // ["assigned functions", "enter ToBeOrNotToBe x() {} \
-  //                         alloweth Corollary b be x"],
-  // // [31] TODO
-  // ["call of assigned functions", "enter Numeral f(Numeral x) {}\nalloweth Numeral g be f g(1)"],
+  [
+    "corollary of Listes",
+    'alloweth Concordance of Lexicographical and Liste of Numeral S be {"x": [1,2,3]}',
+  ],
+ 
   // // [32] TODO
   // [
   //   "call of assigned function in expression",
@@ -147,7 +155,7 @@ const semanticChecks = [
   // // [34] TODO
   // [
   // "function return types",
-  // `enter Numeral compose( ) { 
+  // `enter Numeral compose( ) {
   //   enter Numeral square(Numeral x) { returneth x accumulate x }
   //   returneth square
   // }`,
@@ -155,11 +163,11 @@ const semanticChecks = [
   // [35] TODO
   // ["struct parameters", "struct S {} function f(x: S) {}"],
   // [36] TODO - we arent doing optionals (for now)
-  // ["array parameters", 
+  // ["array parameters",
   // "enter Indistinguishable f(Numeral? x) {}"
   // ],
   // [37] TODO - not supporting options (for now)
-  // ["optional parameters", 
+  // ["optional parameters",
   // "enter Indistinguishable f(Numeral x, Lexicographical? y) {}"],
 ]
 
