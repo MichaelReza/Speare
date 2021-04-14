@@ -340,6 +340,7 @@ class Context {
       //check(e.left).isInteger()
       //check(e.right).isInteger()
       //e.type = Type.INT
+      check(e.left).hasSameTypeAs(e.right)
     } else if (["with"].includes(e.op)) {
       check(e.left).isNumericOrString()
       check(e.left).hasSameTypeAs(e.right)
@@ -368,6 +369,7 @@ class Context {
     e.value = this.analyze(e.value)
     e.type = e.value.type
     if (e.sign === "nay") {
+      check(e.value).isBoolean()
     } else if (e.sign === "abs") {
       check(e.value).isNumeral()
     } else if (e.sign === "sqrt") {

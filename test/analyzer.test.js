@@ -184,7 +184,7 @@ const semanticErrors = [
     "whilst(x){execute{exit}}",
     /Exit can only appear in a loop/,
   ],
-  // [47] TODO
+  // [47] DONE
   [
     "return outside function",
     "returneth",
@@ -214,14 +214,14 @@ const semanticErrors = [
     "whether (1) {}",
     /a ToBeOrNotToBe, found number/,
   ],
-  // [52] TODO
+  // [52] DONE
   [
     "non-boolean if test",
     "whether (1) {} otherwise {}",
-    /a boolToBeOrNotToBeean, found number/,
+    /Expected a boolean, found Numeral/,
   ],
-  // [53] TODO
-  ["non-boolean while test", "whilest (1) {}", /a ToBeOrNotToBe, found number/],
+  // [53] DONE
+  ["non-boolean while test", "whilst (1) {}", /Expected a boolean, found Numeral/],
   // [54] TODO
   [
     "non-integer range",
@@ -230,11 +230,11 @@ const semanticErrors = [
   ],
   // [55] TODO
   ["non-array in for", "in regards to(i within 100) {}", /Array expected/],
-  // [56] TODO
+  // [56] DONE
   [
     "non-boolean conditional test",
     "whether (1) {}",
-    /a ToBeOrNotToBe, found number/,
+    /Expected a boolean, found Numeral/,
   ],
   // [57] TODO
   [
@@ -242,22 +242,22 @@ const semanticErrors = [
     "whether (x be 5) { x be fallacious } ",
     /not have the same type/,
   ],
-  // [58] TODO
+  // [58] DONE
   [
     "bad types for ||",
     "speaketh(fallacious alternatively 1) ",
-    /a ToBeOrNotToBe, found number/,
+    /Operands do not have the same type/,
   ],
-  // [59] TODO
+  // [59] DONE
   [
     "bad types for and",
-    "speaketh(fallacious furthermore 1) ",
-    /a ToBeOrNotToBe, found number/,
+    "speaketh(fallacious furthermore 1)",
+    /Operands do not have the same type/,
   ],
   // [60] DONE
   [
     "bad types for ==",
-    "speaketh(fallacious tis 1) ",
+    "speaketh(fallacious tis 1)",
     /Operands do not have the same type/,
   ],
   // [61] DONE
@@ -266,19 +266,19 @@ const semanticErrors = [
     "speaketh(fallacious tis 1) ",
     /Operands do not have the same type/,
   ],
-  // [62] TODO
+  // [62] DONE
   [
     "bad types for +",
-    "speaketh(fallacious with 1) ",
+    "speaketh(fallacious with 1)",
     /number or string, found ToBeOrNotToBe/,
   ],
-  // [63] TODO
+  // [63] DONE
   [
     "bad types for -",
     "speaketh(fallacious without 1) ",
     /a number, found ToBeOrNotToBe/,
   ],
-  // [64] TODO
+  // [64] DONE
   [
     "bad types for *",
     "speaketh(fallacious accumulate 1) ",
@@ -328,25 +328,25 @@ const semanticErrors = [
     "speaketh(fallacious tis not 1) ",
     /not have the same type/,
   ],
-  // [73] TODO
+  // [73] DONE
   [
     "bad types for negation",
-    "speaketh(nay(faithful)) ",
-    /a number, found ToBeOrNotToBe/,
+    "speaketh(nay(1))",
+    /Expected a boolean/,
   ],
   // [74] TODO
   ["bad types for length", "speaketh(#fallacious)", /Array expected/],
-  // [75] TODO
+  // [75] DONE
   [
     "bad types for not",
     'speaketh(nay("hello"))',
-    /a ToBeOrNotToBe, found Lexicographical/,
+    /Expected a boolean/,
   ],
-  // [76] TODO
+  // [76] DONE
   [
     "non-integer index",
-    "alloweth a be [1] speaketh(a[fallacious])",
-    /number, found ToBeOrNotToBe/,
+    "alloweth Liste of Numeral a be [1] speaketh(a[fallacious])",
+    /Expected a number/,
   ],
   // [77] TODO
   [
