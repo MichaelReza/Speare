@@ -7,8 +7,9 @@ Speare {
   Statement     = ContFlow+
                 | alloweth type Varname "be" LogicExp                           --variable
                 | Varname "be" (RelExp)                                         --assignment
-                | "speaketh" "(" LogicExp ")"                                   --print
-                | "returneth" (Varname | RelExp)?                                --return
+                | speaketh "(" RelExp ")"                                       --print
+                | returneth (Varname | RelExp)?                                 --return
+                | FunctionCall
                 | Varname (incrementby | decrementby) RelExp                    --incdecby
                 | Varname (increment | decrement)                               --incdec
                 | break                                                         --break
@@ -30,6 +31,7 @@ Speare {
   Factor        = StructureType
                 | ArrayLookup
                 | DictLookup
+                | FunctionCall
                 | Varname
                 | "(" AddSub ")"                                                --parens
                 | ("nay" | abs | sqrt)	"(" Factor ")"                          --unary
@@ -37,6 +39,7 @@ Speare {
   DictEntry     = AddSub colon AddSub
   ArrayLookup   = Varname ("[" AddSub "]")+
   DictLookup    = Factor "." AddSub
+  FunctionCall  = Varname "(" ListOf<AddSub, ","> ")"
 
 
 
@@ -48,6 +51,8 @@ Speare {
 
   //Reserved keywords
   alloweth            = "alloweth" ~alnum
+  speaketh            = "speaketh" 
+  returneth           = "returneth"
   enter               = "enter"
   colon               = ":"
 
@@ -152,8 +157,10 @@ Speare {
   accommodation	      = type
 
    //Defining Reserved Words
-   keyword            = ideogram ~alnum
+  keyword             = ideogram ~alnum
                       | alloweth ~alnum
+                      | returneth ~alnum
+                      | speaketh ~alnum
                       | accommodation ~alnum
                       | composition ~alnum
                       | controlflow ~alnum

@@ -142,6 +142,12 @@ const semanticChecks = [
     "concordance parameters",
     "alloweth Concordance of Numeral and Numeral S be {5 : 12}\nenter ToBeOrNotToBe fun(Concordance of Numeral and Numeral x) {}",
   ],
+  // [36] DONE
+  [
+    "storeing function calls",
+    "enter ToBeOrNotToBe foo(Numeral f) { returneth } \
+     alloweth ToBeOrNotToBe x be foo(3)"
+  ],
 ]
 
 // Programs that are syntactically correct but have semantic errors
@@ -369,23 +375,24 @@ const semanticErrors = [
     "alloweth x be 1\nspeaketh(x())",
     /Call of non-function/,
   ],
-  // [80] TODO
+  // [80] DONE
   [
     "Too many args",
     "enter Indistinguishable f(Numeral x) {}\nf(1,2)",
     /1 argument\(s\) required but 2 passed/,
   ],
-  // [81] TODO
+  // [81] DONE
   [
     "Too few args",
     "enter Indistinguishable f(Numeral x) {}\nf()",
     /1 argument\(s\) required but 0 passed/,
   ],
-  // [82] TODO
+  // [82] DONE
   [
     "Parameter type mismatch",
-    "enter f(Numeral x) {}\nf(fallacious)",
-    /Cannot assign a boolean to a int/,
+    "enter ToBeOrNotToBe f(Numeral x) {}\
+     f(fallacious)",
+    /Cannot assign a ToBeOrNotToBe to Numeral x/,
   ],
   // [83] TODO
   [

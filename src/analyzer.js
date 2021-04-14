@@ -2,6 +2,7 @@ import {
   Variable,
   VariableAssignment,
   Type,
+  Param,
   CorollaryType,
   Corollary,
   ListeType,
@@ -112,7 +113,7 @@ const check = (self) => ({
   isCallable() {
     must(
       self.constructor === Concordance ||
-        self.type.constructor == CorollaryType,
+      self.type.constructor == Corollary,
       "Call of non-function or non-constructor"
     )
   },
@@ -136,8 +137,15 @@ const check = (self) => ({
     )
     targetTypes.forEach((type, i) => check(self[i]).isAssignableTo(type))
   },
-  matchParametersOf(calleeType) {
-    check(self).match(calleeType.parameterTypes)
+  matchParametersOf(func) {
+    must(
+      self.length === func.params.length,
+      `${func.params.length} argument(s) required but ${self.length} passed`
+    )
+    func.params.forEach((param, i) => {
+      must((self[i].type.name ?? self[i].name) === (param.type ?? param),
+      `Cannot assign a ${self[i].type.name ?? self[i].name} to ${param.type ?? param} ${param.name}`)
+    })
   },
   matchFieldsOf(corollaryType) {
     check(self).match(structType.fields.map((f) => f.type))
@@ -213,25 +221,7 @@ class Context {
     this.add(d.name, d.initializer) 
     return d
   }
-  FunctionDeclaration(d) {
-    d.returnType = d.returnType ? this.analyze(d.returnType) : Type.VOID
-    // Declarations generate brand new function objects
-    const f = (d.function = new Corollary(d.name))
-    // When entering a function body, we must reset the inLoop setting,
-    // because it is possible to declare a function inside a loop!
-    const childContext = this.newChild({ inLoop: false, forFunction: f })
-    d.parameters = childContext.analyze(d.parameters)
-    f.type = new CorollaryType(
-      d.parameters.map((p) => p.type),
-      d.returnType
-    )
-    // Add before analyzing the body to allow recursion
-    this.add(f.name, f)
-    d.body = childContext.analyze(d.body)
-    return d
-  }
-  Parameter(p) {
-    p.type = this.analyze(p.type)
+  Param(p) {
     this.add(p.name, p)
     return p
   }
@@ -269,8 +259,8 @@ class Context {
   Return(s) {
     check(this).isInsideAFunction()
     check(this.function).returnsSomething()
-    s.expression = this.analyze(s.expression)
-    check(s.expression).isReturnableFrom(this.function)
+    // Havent yet implemented return type checking
+    //check(s.expression).isReturnableFrom(this.function)
     return s
   }
   ShortReturnStatement(s) {
@@ -414,16 +404,10 @@ class Context {
     return e
   }
   Call(c) {
-    c.callee = this.analyze(c.callee)
-    check(c.callee).isCallable()
+    c.setParent = this.lookup(c.varname)
+    c.setType = this.lookup(c.varname).type
     c.args = this.analyze(c.args)
-    if (c.callee.constructor === Corollary) {
-      check(c.args).matchFieldsOf(c.callee)
-      c.type = c.callee // weird but seems ok for now
-    } else {
-      check(c.args).matchParametersOf(c.callee.type)
-      c.type = c.callee.type.returnType
-    }
+    check(c.args).matchParametersOf(c.parent)
     return c
   }
   IdentifierExpression(e) {
@@ -459,9 +443,13 @@ class Context {
     })
     return e
   }
-  Corollary(t) {
-    t = CorollaryType
-    return t
+
+  Corollary(f) {
+    const childContext = this.newChild({ inLoop: false, forFunction: f })
+    f.params = f.params.map(p => (childContext.analyze(p)))
+    this.add(f.id, f)
+    f.body = childContext.analyze(f.body)
+    return f
   }
   DictLookup(e) {
     e.dict = this.analyze(e.dict)

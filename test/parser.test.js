@@ -273,6 +273,7 @@ const goodPrograms = {
     "alloweth Concordance of Numeral and Numeral x be {12 : 6, 3 : 4, 8 : 9}",
   // Arithmetic:
   "Recognizes a print statement": "speaketh(x accumulate 5)",
+  "Recognizes parenthetical addition": "speaketh(x with (5 without 2))",
   "Recognizes arithmetic +-": "x be x with 5 without 6",
   "Recognizes arithmetic */": "y be x accumulate 6 sunder 12",
   "Recognizes decrementation": "x decrement",
@@ -339,6 +340,10 @@ const goodPrograms = {
     "whilst (x nobler 20) { \
       speaketh(x) \
     }",
+  "Recognizes while loop with logical op":
+    "whilst (2 nobler 1 furthermore 3 lesser 5) { \
+      speaketh(x) \
+    }",
   "Recognizes nested while loop":
     'whilst (x nobler 20) { \
       whilst (y nobler 20) { \
@@ -378,10 +383,10 @@ const badPrograms = [
   // Printing:
   [
     "Disallows printing logical statements",
-    "sayeth(6 with 7 alternatively 6 with 8)",
-    /Line 1, col 7:/,
+    "speaketh(6 with 7 alternatively 6 with 8)",
+    /Line 1, col 19:/,
   ],
-  ["Disallows saying type names", "sayeth(Numeral)", /Line 1, col 7:/],
+  ["Disallows saying type names", "speaketh(Numeral)", /Line 1, col 10:/],
   // Variable Assignment:
   ["Disallows incomplete statement", "alloweth", /Line 1, col 9:/],
   ["Disallows declaration", "alloweth x", /Line 1, col 10:/],
