@@ -93,7 +93,7 @@ const semanticChecks = [
   // [18] DONE
   [
     "AND",
-    "speaketh(faithful furthermore 1 furthermore 2 furthermore fallacious tis not faithful)",
+    "speaketh(faithful furthermore faithful furthermore fallacious tis not fallacious furthermore faithful)",
   ],
   // [19] DONE -- had to add lexicographical into parser
   [
