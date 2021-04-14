@@ -7,9 +7,10 @@ import {
   ListeType,
   Liste,
   Tobeornottobe,
+  ConcordanceType,
   Concordance,
   Numeral,
-  UnaryExpression
+  UnaryExpression,
 } from "./ast.js"
 import * as stdlib from "./stdlib.js"
 
@@ -158,6 +159,7 @@ class Context {
     return new Context(this, configuration)
   }
   analyze(node) {
+    //console.log(node)
     return this[node.constructor.name](node)
   }
   Program(p) {
@@ -187,7 +189,8 @@ class Context {
     // console.log(d.type)
     // console.log(d.initializer)
     check(d.type).isSameTypeAs(d.initializer.type)
-    this.add(d.name, d.initializer)
+    
+    this.add(d.name, d.initializer) 
     return d
   }
   Field(f) {
@@ -367,6 +370,7 @@ class Context {
     return e
   }
   Liste(a) {
+    console.log(a)
     a.values = this.analyze(a.values)
     check(a.values).allHaveSameType()
     a.type = new ListeType(a.values[0].type)
@@ -374,6 +378,10 @@ class Context {
   }
   Concordance(a) {
     a.dictEntries.forEach(x => x = this.analyze(x))
+    a.type = new ConcordanceType(
+      (a.keyType = a.dictEntries[0].key.type),
+      (a.valType = a.dictEntries[0].val.type)
+    )
     a.keyType = a.dictEntries[0].key.type
     a.valType = a.dictEntries[0].val.type
     return a
