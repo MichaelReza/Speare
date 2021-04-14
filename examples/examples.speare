@@ -1,1 +1,4 @@
-alloweth Liste of Concordance of Lexicographical and Numeral S be [{"x": 1}, {"y": 2}]
+alloweth Concordance of Lexicographical and Numeral c be {"z": 1}
+alloweth Concordance of Lexicographical and Concordance of Lexicographical and Numeral b be {"y": c}
+alloweth Concordance of Lexicographical and Concordance of Lexicographical and Concordance of Lexicographical and Numeral a be {"x": b}
+speaketh(a."x"."y"."z")

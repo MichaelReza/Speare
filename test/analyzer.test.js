@@ -109,16 +109,12 @@ const semanticChecks = [
     "variables",
     "alloweth Liste of Liste of Liste of Liste of Numeral x be [[[[1]]]]",
   ],
-  // [24] ----: We don't support optionals (for now)
-  // ["recursive structs", "struct S {z: S?} let x = S(no S)"],
-  // [25] TODO: REWRITE THIS GARBAGE -- we don't have a way of reading values from a dict so this doesnt work at all -_-
-  // also not really sure if we want to support the third line of what's going on here... it seems to be using values
-  // for lookup instead of keys
-  // ["nested structs",
-  // "alloweth Concordance T be {y: 1}\
-  // alloweth Concordance S be {z: T}\
-  // alloweth Numeral x be S(T(1))\
-  // speaketh(x.z.y)"],
+  // [25] DONE
+  ["nested structs",
+  "alloweth Concordance of Lexicographical and Numeral c be {\"z\": 1}\
+  alloweth Concordance of Lexicographical and Concordance of Lexicographical and Numeral b be {\"y\": c}\
+  alloweth Concordance of Lexicographical and Concordance of Lexicographical and Concordance of Lexicographical and Numeral a be {\"x\": b}\
+  speaketh(a.\"x\".\"y\".\"z\")"],
   // [26] TODO: REWRITE THIS GARBAGE
   // [
   //   "subscript dict",

@@ -190,7 +190,7 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   Concordance(_sb, dictItems, _eb) {
     return new ast.Concordance(dictItems.asIteration().ast())
   },
-  DictEntry_dictionaryentry(key, _colon, val) {
+  DictEntry(key, _colon, val) {
     return new ast.DictEntry(key.ast(), val.ast())
   },
   type_listdec(_listof, type){

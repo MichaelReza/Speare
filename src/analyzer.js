@@ -75,8 +75,17 @@ const check = (self) => ({
       "Fields must be distinct"
     )
   },
-  isInTheObject(object) {
-    must(object.type.fields.map((f) => f.name).includes(self), "No such field")
+  isInTheDict(object) {
+    // console.log(object)
+    // console.log(self)
+    let incflag = false
+    object.dictEntries.forEach(function f(entry) {
+      if (entry.key.value === self.value) {
+        incflag = true
+        return
+      }
+    })
+    must(incflag, "No such field")
   },
   isInsideALoop() {
     must(self.inLoop, "Break can only appear in a loop")
@@ -188,10 +197,6 @@ class Context {
     
     this.add(d.name, d.initializer) 
     return d
-  }
-  Field(f) {
-    f.type = this.analyze(f.type)
-    return f
   }
   FunctionDeclaration(d) {
     d.returnType = d.returnType ? this.analyze(d.returnType) : Type.VOID
@@ -368,12 +373,13 @@ class Context {
   }
   Concordance(a) {
     a.dictEntries.forEach(x => x = this.analyze(x))
-    a.type = new ConcordanceType(
-      (a.keyType = a.dictEntries[0].key.type),
-      (a.valType = a.dictEntries[0].val.type)
-    )
     a.keyType = a.dictEntries[0].key.type
     a.valType = a.dictEntries[0].val.type
+    a.type = new ConcordanceType(
+      (a.keyType),
+      (a.valType)
+    )
+    
     return a
   }
   DictEntry(a) {
@@ -427,7 +433,9 @@ class Context {
     e.array = this.analyze(e.array)
     e.type = e.array.type.baseType
     e.index = this.analyze(e.index)
-    check(e.index).isInteger()
+    e.index.forEach(function checkNumeral(exp) {
+      check(exp).isNumeral()
+    })
     return e
   }
   Corollary(t) {
@@ -436,15 +444,13 @@ class Context {
   }
   DictLookup(e) {
     e.dict = this.analyze(e.dict)
-    check(e.key).isInTheObject(e.dict)
-    e.type = e.dict.type.fields.find((f) => f.name === e.key).type
-    return e
-  }
-  MemberExpression(e) {
-    e.object = this.analyze(e.object)
-    check(e.field).isInTheObject(e.object)
-    e.type = e.object.type.fields.find((f) => f.name === e.field).type
-    return e
+    check(e.key).isInTheDict(e.dict)
+    e.dict.dictEntries.forEach(function f(entry) {
+      if (e.key.value === entry.key.value) {
+        e.value = entry.val
+      }
+    })
+    return e.value
   }
 }
 
