@@ -55,7 +55,6 @@ export class ListeType extends Type {
 }
 
 export class ConcordanceType extends Type {
-  // Example: [int]
   constructor(keyType, valType) {
     super(`[${keyType.name ?? keyType}:${valType.name ?? valType}]`)
     this.keyType = keyType
@@ -251,6 +250,7 @@ export class Tobeornottobe {
 
 export class Concordance {
   constructor(dictEntries) {
+    this.type = "Concordance of " + dictEntries[0].key.name + " and " + dictEntries[0].val.name
     Object.assign(this, { dictEntries })
   }
 }
