@@ -39,6 +39,12 @@ const check = (self) => ({
       `Expected a boolean, found ${self.type.name}`
     )
   },
+  isBooleanOrNumeric() {
+    must(
+      ([Type.BOOLEAN, Type.NUMERAL].includes(self.type)),
+      `Expected a boolean or numeral, found ${self.type.name}`
+    )
+  },
   isAType() {
     must([Type, Corollary].includes(self.constructor), "Type expected")
   },
@@ -370,7 +376,7 @@ class Context {
     e.value = this.analyze(e.value)
     e.type = e.value.type
     if (e.sign === "nay") {
-      check(e.value).isBoolean()
+      check(e.value).isBooleanOrNumeric()
     } else if (e.sign === "abs") {
       check(e.value).isNumeral()
     } else if (e.sign === "sqrt") {
