@@ -126,7 +126,7 @@ const semanticChecks = [
   //   "alloweth Concordance of Lexicographical and Numeral y be {\"x\": 5} speaketh(y.\"x\")",
   // ],
   // [27] TODO: REWRITE THIS GARBAGE
-  ["subscript liste", "alloweth Liste of Numeral a be [1,2] speaketh(a[0])"],
+  // ["subscript liste", "alloweth Liste of Numeral a be [1,2] speaketh(a[0])"],
   // [28] TODO: REWRITE THIS GARBAGE
   [
     "array of corollary",

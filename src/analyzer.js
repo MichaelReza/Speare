@@ -370,7 +370,7 @@ class Context {
     return e
   }
   Liste(a) {
-    console.log(a)
+    // console.log(a)
     a.values = this.analyze(a.values)
     check(a.values).allHaveSameType()
     a.type = new ListeType(a.values[0].type)
