@@ -143,14 +143,7 @@ const semanticChecks = [
   ],
 
   // [35] DONE
-["concordance parameters", "alloweth Concordance of Numeral and Numeral S be {5 : 12}\nenter ToBeOrNotToBe fun(Concordance of Numeral and Numeral x) {}"],
-  // [36] TODO - we arent doing optionals (for now)
-  ["array parameters",
-  "enter Indistinguishable f(Numeral? x) {}"
-  ],
-  // [37] TODO - not supporting options (for now)
-  ["optional parameters",
-  "enter Indistinguishable f(Numeral x, Lexicographical? y) {}"],
+  ["concordance parameters", "alloweth Concordance of Numeral and Numeral S be {5 : 12}\nenter ToBeOrNotToBe fun(Concordance of Numeral and Numeral x) {}"],
 ]
 
 // Programs that are syntactically correct but have semantic errors
