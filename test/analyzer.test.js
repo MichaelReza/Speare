@@ -164,11 +164,11 @@ const semanticErrors = [
     "alloweth Numeral x be 1 alloweth Numeral x be 1",
     /Identifier x already declared/,
   ],
-  // [43] TODO
+  // [43] DONE
   [
     "assign bad type",
     "alloweth Numeral x be faithful",
-    /Cannot assign a boolean to a int/,
+    /Variable initialized is not the same as declared type/,
   ],
   // [44] TODO
   [
@@ -177,18 +177,18 @@ const semanticErrors = [
     /Cannot assign a \[boolean\] to a int/,
   ],
   // [45] DONE
-  ["break outside loop", "exit", /Break can only appear in a loop/],
+  ["break outside loop", "exit", /Exit can only appear in a loop/],
   // [46] TODO: REWRITE THIS GARBAGE
   [
     "break inside function",
     "whilst(x){execute{exit}}",
-    /Break can only appear in a loop/,
+    /Exit can only appear in a loop/,
   ],
   // [47] TODO
   [
     "return outside function",
     "returneth",
-    /Return can only appear in a function/,
+    /Returneth can only appear in a function/,
   ],
   // [48] TODO
   [

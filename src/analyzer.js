@@ -88,8 +88,6 @@ const check = (self) => ({
     )
   },
   isInTheDict(object) {
-    // console.log(object)
-    // console.log(self)
     let incflag = false
     object.dictEntries.forEach(function f(entry) {
       if (entry.key.value === self.value) {
@@ -100,10 +98,10 @@ const check = (self) => ({
     must(incflag, "No such field")
   },
   isInsideALoop() {
-    must(self.inLoop, "Break can only appear in a loop")
+    must(self.inLoop, "Exit can only appear in a loop")
   },
   isInsideAFunction(context) {
-    must(self.function, "Return can only appear in a function")
+    must(self.function, "Returneth can only appear in a function")
   },
   isCallable() {
     must(
@@ -180,7 +178,6 @@ class Context {
     return new Context(this, configuration)
   }
   analyze(node) {
-    //console.log(node)
     return this[node.constructor.name](node)
   }
   Program(p) {
@@ -263,7 +260,7 @@ class Context {
     s.expression = this.analyze(s.expression)
     return s
   }
-  ReturnStatement(s) {
+  Return(s) {
     check(this).isInsideAFunction()
     check(this.function).returnsSomething()
     s.expression = this.analyze(s.expression)
