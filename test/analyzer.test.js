@@ -151,9 +151,9 @@ const semanticErrors = [
   // [38] DONE
   ["non-distinct fields", "alloweth Concordance of Lexicographical and Numeral S be {\"x\": 1, \"x\": 2}", /Keys must be distinct/],
   // [39] TODO
-  ["non-int increment", "alloweth Numeral x be fallacious x increment", /an integer, found boolean/],
-  // [40] TODO: REWRITE THIS GARBAGE
-  ["non-int decrement", 'alloweth Lexicographical x = "hello" x increment', /an integer, found [string]?/], //TO-DO bc some[""] is optional and I am confused
+  ["non-int increment", "alloweth Numeral x be fallacious x increment", /Variable initialized is not the same as declared type/],
+  // [40] DONE
+  ["non-int decrement", 'alloweth Lexicographical x be "hello" x increment', /Expected a number/],
   // [41] DONE
   ["undeclared id", "speaketh(x)", /Identifier x not declared/],
   // [42] DONE

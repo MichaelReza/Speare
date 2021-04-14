@@ -64,7 +64,7 @@ const check = (self) => ({
     must(self.type.name === other.type.name, "Operands do not have the same type")
   },
   isSameTypeAs(other) {
-    must((self.name ?? self) === (other.name ?? other), "Variable initializer is not the same as declared type")
+    must((self.name ?? self) === (other.name ?? other), "Variable initialized is not the same as declared type")
   },
   allHaveSameType() {
     must(
@@ -235,10 +235,12 @@ class Context {
   IncDec(s) {
     // Make sure s.name does not refer to readonly variable
     // make sure s.name refers to a integer...
+    check(this.lookup(s.name)).isNumeral()
     return s
   }
   IncDecby(s) {
     s.expression = this.analyze(s.expression)
+    check(this.lookup(s.name)).isNumeral()
     //check your expression type, should be integer
     //check s.name, make sure it is integer and not readonly
     return s

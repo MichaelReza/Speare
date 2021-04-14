@@ -1,1 +1,2 @@
-alloweth Concordance of Lexicographical and Numeral S be {"123": 1, "123": 2}
+alloweth Lexicographical x be "hello"
+x increment
