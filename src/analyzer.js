@@ -341,6 +341,7 @@ class Context {
       //check(e.right).isInteger()
       //e.type = Type.INT
       check(e.left).hasSameTypeAs(e.right)
+      e.type = Type.BOOLEAN
     } else if (["with"].includes(e.op)) {
       check(e.left).isNumericOrString()
       check(e.left).hasSameTypeAs(e.right)
