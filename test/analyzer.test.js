@@ -69,10 +69,9 @@ const semanticChecks = [
    }"
   ],
   // [14] TODO
-
-  // ["conditionals with ints",
-  // "whether(true) { speaketh(5) } otherwise { speaketh(6) }"
-  // ],
+  ["conditionals with ints",
+  "whether(faithful) { speaketh(5) } otherwise { speaketh(6) }"
+  ],
   // [15] TODO
   ["conditionals with floats",
   "whether(1.2 lesser 1.6) { speaketh(5.6) } otherwise {speaketh(6.1) }"

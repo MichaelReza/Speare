@@ -182,10 +182,6 @@ class Context {
   VariableInitialization(d) {
     // Declarations generate brand new variable objects
     d.initializer = this.analyze(d.initializer)
-    // d.variable = new Variable(d.name, d.readOnly)
-    // d.variable.type = d.initializer.type
-    // console.log(d.type)
-    // console.log(d.initializer)
     check(d.type).isSameTypeAs(d.initializer.type)
     this.add(d.name, d.initializer)
     return d
@@ -292,12 +288,9 @@ class Context {
   ForLoop(s) {
     s.init = this.analyze(s.init)
     s.condition = this.analyze(s.condition)
-    //s.s2 = this.analyze(s.s2)
     if (s.action) {
       s.action = this.analyze(s.action)
     }
-    // s.iterator = new Variable(s.iterator, true)
-    // s.iterator.type = s.collection.type.baseType
     s.body = this.newChild({ inLoop: true }).analyze(s.body)
     return s
   }
@@ -343,8 +336,6 @@ class Context {
     } else if (
       ["lesser", "tis lesser", "nobler", "tis nobler"].includes(e.op)
     ) {
-      // console.log(e.left)
-      // console.log(e.right)
       check(e.left).isNumericOrString()
       check(e.left).hasSameTypeAs(e.right)
       e.type = Type.BOOLEAN
