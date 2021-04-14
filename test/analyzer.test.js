@@ -12,7 +12,8 @@ const semanticChecks = [
     alloweth ToBeOrNotToBe y be fallacious",
   ],
   // [2] DONE
-  ["increment and decrement",
+  [
+    "increment and decrement",
     "alloweth Numeral x be 1 \
     x incrementby 2 \
     x increment \
@@ -23,13 +24,14 @@ const semanticChecks = [
   // [4] DONE
   ["function declaration", "enter ToBeOrNotToBe foo( Numeral f ) {}"],
   // [5] DONE
-  ["assign arrays",
-  "alloweth Numeral xcontext be 0 \
+  [
+    "assign arrays",
+    "alloweth Numeral xcontext be 0 \
    alloweth Numeral y be 2 \
    alloweth Numeral z be 1 \
    alloweth Liste of Numeral w be [6, 4, 5, 4, 3] \
    alloweth Liste of ToBeOrNotToBe a be [fallacious, fallacious, faithful] \
-   alloweth Liste of Numeral x be [xcontext, y without z]"
+   alloweth Liste of Numeral x be [xcontext, y without z]",
   ],
   // [6] DONE
   ["short return", "enter ToBeOrNotToBe foo(Numeral f) { returneth }"],
@@ -41,9 +43,7 @@ const semanticChecks = [
     "enter ToBeOrNotToBe foo(Numeral f) { whether (faithful) { returneth } }",
   ],
   // [9] DONE
-  ["break in nested if",
-  "whilst(fallacious) { whether (faithful) { exit } }"
-  ],
+  ["break in nested if", "whilst(fallacious) { whether (faithful) { exit } }"],
   // [10] DONE
   ["long if", "whether (faithful) { speaketh(1) } otherwise {speaketh(3) }"],
   // [11] DONE
@@ -62,16 +62,18 @@ const semanticChecks = [
     "in regards to (alloweth Numeral x be 0, x lesser 15, x increment) { speaketh(x) }",
   ],
   // [13] TODO
-  ["nested for in range",
-  "in regards to (alloweth Numeral i be 0, i lesser 15, i increment) { \
+  [
+    "nested for in range",
+    "in regards to (alloweth Numeral i be 0, i lesser 15, i increment) { \
      in regards to (alloweth Numeral j be 0, j lesser 15, j increment) { \
        speaketh(i with j) \
      }\
-   }"
+   }",
   ],
   // [14] TODO
-  ["conditionals with ints",
-  "whether(faithful) { speaketh(5) } otherwise { speaketh(6) }"
+  [
+    "conditionals with ints",
+    "whether(faithful) { speaketh(5) } otherwise { speaketh(6) }",
   ],
   // [15] TODO
   [
@@ -110,15 +112,17 @@ const semanticChecks = [
     "alloweth Liste of Liste of Liste of Liste of Numeral x be [[[[1]]]]",
   ],
   // [25] DONE
-  ["nested structs",
-  "alloweth Concordance of Lexicographical and Numeral c be {\"z\": 1}\
-  alloweth Concordance of Lexicographical and Concordance of Lexicographical and Numeral b be {\"y\": c}\
-  alloweth Concordance of Lexicographical and Concordance of Lexicographical and Concordance of Lexicographical and Numeral a be {\"x\": b}\
-  speaketh(a.\"x\".\"y\".\"z\")"],
+  [
+    "nested structs",
+    'alloweth Concordance of Lexicographical and Numeral c be {"z": 1}\
+  alloweth Concordance of Lexicographical and Concordance of Lexicographical and Numeral b be {"y": c}\
+  alloweth Concordance of Lexicographical and Concordance of Lexicographical and Concordance of Lexicographical and Numeral a be {"x": b}\
+  speaketh(a."x"."y"."z")',
+  ],
   // [26] TODO: REWRITE THIS GARBAGE
   [
     "subscript dict",
-    "alloweth Concordance of Lexicographical and Numeral y be {\"x\": 5} speaketh(y.\"x\")",
+    'alloweth Concordance of Lexicographical and Numeral y be {"x": 5} speaketh(y."x")',
   ],
   // [27] TODO: REWRITE THIS GARBAGE
   ["subscript liste", "alloweth Liste of Numeral a be [1,2] speaketh(a[0])"],
@@ -132,24 +136,22 @@ const semanticChecks = [
     "corollary of Listes",
     'alloweth Concordance of Lexicographical and Liste of Numeral S be {"x": [1,2,3]}',
   ],
- 
-  // [32] TODO
-  [
-    "call of assigned function in expression",
-    `enter Indistinguishable f(Numeral x, ToBeOrNotToBe y) {}
-    alloweth Enter g be f
-    speaketh(g(1, true))
-    f be g // Type check here`,
-  ],
 
   // [35] DONE
-  ["concordance parameters", "alloweth Concordance of Numeral and Numeral S be {5 : 12}\nenter ToBeOrNotToBe fun(Concordance of Numeral and Numeral x) {}"],
+  [
+    "concordance parameters",
+    "alloweth Concordance of Numeral and Numeral S be {5 : 12}\nenter ToBeOrNotToBe fun(Concordance of Numeral and Numeral x) {}",
+  ],
 ]
 
 // Programs that are syntactically correct but have semantic errors
 const semanticErrors = [
   // [38] DONE
-  ["non-distinct fields", "alloweth Concordance of Lexicographical and Numeral S be {\"x\": 1, \"x\": 2}", /Keys must be distinct/],
+  [
+    "non-distinct fields",
+    'alloweth Concordance of Lexicographical and Numeral S be {"x": 1, "x": 2}',
+    /Keys must be distinct/,
+  ],
   // [39] TODO
   ["non-int increment", "alloweth Numeral x be fallacious x increment", /Variable initialized is not the same as declared type/],
   // [40] DONE
@@ -157,11 +159,23 @@ const semanticErrors = [
   // [41] DONE
   ["undeclared id", "speaketh(x)", /Identifier x not declared/],
   // [42] DONE
-  ["redeclared id", "alloweth Numeral x be 1 alloweth Numeral x be 1", /Identifier x already declared/],
+  [
+    "redeclared id",
+    "alloweth Numeral x be 1 alloweth Numeral x be 1",
+    /Identifier x already declared/,
+  ],
   // [43] TODO
-  ["assign bad type", "alloweth Numeral x be faithful", /Cannot assign a boolean to a int/],
+  [
+    "assign bad type",
+    "alloweth Numeral x be faithful",
+    /Cannot assign a boolean to a int/,
+  ],
   // [44] TODO
-  ["assign bad array type", "alloweth Numeral x be 1 alloweth Liste x be [true]", /Cannot assign a \[boolean\] to a int/],
+  [
+    "assign bad array type",
+    "alloweth Numeral x be 1 alloweth Liste x be [true]",
+    /Cannot assign a \[boolean\] to a int/,
+  ],
   // [45] DONE
   ["break outside loop", "exit", /Break can only appear in a loop/],
   // [46] TODO: REWRITE THIS GARBAGE
@@ -171,7 +185,11 @@ const semanticErrors = [
     /Break can only appear in a loop/,
   ],
   // [47] TODO
-  ["return outside function", "returneth", /Return can only appear in a function/],
+  [
+    "return outside function",
+    "returneth",
+    /Return can only appear in a function/,
+  ],
   // [48] TODO
   [
     "return value from void function",
@@ -185,68 +203,172 @@ const semanticErrors = [
     /should be returned here/,
   ],
   // [50] TODO
-  ["return type mismatch", "enter Numeral f(){returneth fallacious}", /ToBeOrNotToBe to a number/],
+  [
+    "return type mismatch",
+    "enter Numeral f(){returneth fallacious}",
+    /ToBeOrNotToBe to a number/,
+  ],
   // [51] TODO
-  ["non-boolean short if test", "whether (1) {}", /a ToBeOrNotToBe, found number/],
+  [
+    "non-boolean short if test",
+    "whether (1) {}",
+    /a ToBeOrNotToBe, found number/,
+  ],
   // [52] TODO
-  ["non-boolean if test", "whether (1) {} otherwise {}", /a boolToBeOrNotToBeean, found number/],
+  [
+    "non-boolean if test",
+    "whether (1) {} otherwise {}",
+    /a boolToBeOrNotToBeean, found number/,
+  ],
   // [53] TODO
   ["non-boolean while test", "whilest (1) {}", /a ToBeOrNotToBe, found number/],
   // [54] TODO
-  ["non-integer range", "in regards to (i within faithful){}", /a number, found ToBeOrNotToBe/],
+  [
+    "non-integer range",
+    "in regards to (i within faithful){}",
+    /a number, found ToBeOrNotToBe/,
+  ],
   // [55] TODO
   ["non-array in for", "in regards to(i within 100) {}", /Array expected/],
   // [56] TODO
-  ["non-boolean conditional test", "whether (1) {}", /a ToBeOrNotToBe, found number/],
+  [
+    "non-boolean conditional test",
+    "whether (1) {}",
+    /a ToBeOrNotToBe, found number/,
+  ],
   // [57] TODO
-  ["diff types in conditional arms", "whether (x be 5) { x be fallacious } ", /not have the same type/],
+  [
+    "diff types in conditional arms",
+    "whether (x be 5) { x be fallacious } ",
+    /not have the same type/,
+  ],
   // [58] TODO
-  ["bad types for ||", "speaketh(fallacious alternatively 1) ", /a ToBeOrNotToBe, found number/],
+  [
+    "bad types for ||",
+    "speaketh(fallacious alternatively 1) ",
+    /a ToBeOrNotToBe, found number/,
+  ],
   // [59] TODO
-  ["bad types for and", "speaketh(fallacious furthermore 1) ", /a ToBeOrNotToBe, found number/],
+  [
+    "bad types for and",
+    "speaketh(fallacious furthermore 1) ",
+    /a ToBeOrNotToBe, found number/,
+  ],
   // [60] DONE
-  ["bad types for ==", "speaketh(fallacious tis 1) ", /Operands do not have the same type/],
+  [
+    "bad types for ==",
+    "speaketh(fallacious tis 1) ",
+    /Operands do not have the same type/,
+  ],
   // [61] DONE
-  ["bad types for !=", "speaketh(fallacious tis 1) ", /Operands do not have the same type/],
+  [
+    "bad types for !=",
+    "speaketh(fallacious tis 1) ",
+    /Operands do not have the same type/,
+  ],
   // [62] TODO
-  ["bad types for +", "speaketh(fallacious with 1) ", /number or string, found ToBeOrNotToBe/],
+  [
+    "bad types for +",
+    "speaketh(fallacious with 1) ",
+    /number or string, found ToBeOrNotToBe/,
+  ],
   // [63] TODO
-  ["bad types for -", "speaketh(fallacious without 1) ", /a number, found ToBeOrNotToBe/],
+  [
+    "bad types for -",
+    "speaketh(fallacious without 1) ",
+    /a number, found ToBeOrNotToBe/,
+  ],
   // [64] TODO
-  ["bad types for *", "speaketh(fallacious accumulate 1) ", /a number, found ToBeOrNotToBe/],
+  [
+    "bad types for *",
+    "speaketh(fallacious accumulate 1) ",
+    /a number, found ToBeOrNotToBe/,
+  ],
   // [65] DONE
-  ["bad types for /", "speaketh(fallacious sunder 1) ", /a number, found ToBeOrNotToBe/],
+  [
+    "bad types for /",
+    "speaketh(fallacious sunder 1) ",
+    /a number, found ToBeOrNotToBe/,
+  ],
   // [66] DONE
-  ["bad types for **", "speaketh(fallacious exponentiate 1) ", /a number, found ToBeOrNotToBe/],
+  [
+    "bad types for **",
+    "speaketh(fallacious exponentiate 1) ",
+    /a number, found ToBeOrNotToBe/,
+  ],
   // [67] DONE
-  ["bad types for <", "speaketh(fallacious lesser 1) ", /number or string, found ToBeOrNotToBe/],
+  [
+    "bad types for <",
+    "speaketh(fallacious lesser 1) ",
+    /number or string, found ToBeOrNotToBe/,
+  ],
   // [68] DONE
-  ["bad types for <=", "speaketh(fallacious tis lesser 1) ", /number or string, found ToBeOrNotToBe/],
+  [
+    "bad types for <=",
+    "speaketh(fallacious tis lesser 1) ",
+    /number or string, found ToBeOrNotToBe/,
+  ],
   // [69] DONE
-  ["bad types for >", "speaketh(fallacious nobler 1) ", /number or string, found ToBeOrNotToBe/],
+  [
+    "bad types for >",
+    "speaketh(fallacious nobler 1) ",
+    /number or string, found ToBeOrNotToBe/,
+  ],
   // [70] DONE
-  ["bad types for >=", "speaketh(fallacious tis nobler 1) ", /number or string, found ToBeOrNotToBe/],
+  [
+    "bad types for >=",
+    "speaketh(fallacious tis nobler 1) ",
+    /number or string, found ToBeOrNotToBe/,
+  ],
   // [71] DONE
   ["bad types for ==", "speaketh(2 tis fallacious) ", /not have the same type/],
   // [72] DONE
-  ["bad types for !=", "speaketh(fallacious tis not 1) ", /not have the same type/],
+  [
+    "bad types for !=",
+    "speaketh(fallacious tis not 1) ",
+    /not have the same type/,
+  ],
   // [73] TODO
-  ["bad types for negation", "speaketh(nay(faithful)) ", /a number, found ToBeOrNotToBe/],
+  [
+    "bad types for negation",
+    "speaketh(nay(faithful)) ",
+    /a number, found ToBeOrNotToBe/,
+  ],
   // [74] TODO
   ["bad types for length", "speaketh(#fallacious)", /Array expected/],
   // [75] TODO
-  ["bad types for not", 'speaketh(nay("hello"))', /a ToBeOrNotToBe, found Lexicographical/],
+  [
+    "bad types for not",
+    'speaketh(nay("hello"))',
+    /a ToBeOrNotToBe, found Lexicographical/,
+  ],
   // [76] TODO
-  ["non-integer index", "alloweth a be [1] speaketh(a[fallacious])", /number, found ToBeOrNotToBe/],
+  [
+    "non-integer index",
+    "alloweth a be [1] speaketh(a[fallacious])",
+    /number, found ToBeOrNotToBe/,
+  ],
   // [77] TODO
-  ["diff type array elements", "speaketh([3,3.0])", /Not all elements have the same type/],
+  [
+    "diff type array elements",
+    "speaketh([3,3.0])",
+    /Not all elements have the same type/,
+  ],
   // [78] TODO
-  ["shadowing", "alloweth Numeral x be 1 \
+  [
+    "shadowing",
+    "alloweth Numeral x be 1 \
                 whilst (faithful) { \
                   alloweth Numeral  x be 1 \
-                }", /Identifier x already declared/],
+                }",
+    /Identifier x already declared/,
+  ],
   // [79] TODO
-  ["call of uncallable", "alloweth x be 1\nspeaketh(x())", /Call of non-function/],
+  [
+    "call of uncallable",
+    "alloweth x be 1\nspeaketh(x())",
+    /Call of non-function/,
+  ],
   // [80] TODO
   [
     "Too many args",
@@ -274,11 +396,23 @@ const semanticErrors = [
     /Cannot assign a \(boolean\)->int to a \(boolean\)->void/,
   ],
   // [84] TODO
-  ["Non-type in param", "alloweth Numeral x be 1 enter Indistinguishable f(x y){}", /Type expected/],
+  [
+    "Non-type in param",
+    "alloweth Numeral x be 1 enter Indistinguishable f(x y){}",
+    /Type expected/,
+  ],
   // [85] TODO
-  ["Non-type in return type", "alloweth Numeral x be 1 enter x f(){returneth 1}", /Type expected/],
+  [
+    "Non-type in return type",
+    "alloweth Numeral x be 1 enter x f(){returneth 1}",
+    /Type expected/,
+  ],
   // [86] TODO
-  ["Non-type in field type", "alloweth Numeral x be 1struct S {y:x}", /Type expected/],
+  [
+    "Non-type in field type",
+    "alloweth Numeral x be 1struct S {y:x}",
+    /Type expected/,
+  ],
 ]
 
 describe("The analyzer", () => {
