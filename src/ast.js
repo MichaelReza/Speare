@@ -250,6 +250,7 @@ export class Tobeornottobe {
 
 export class Concordance {
   constructor(dictEntries) {
+    this.type = "Concordance of " + dictEntries[0].key.name + " and " + dictEntries[0].val.name
     Object.assign(this, { dictEntries })
   }
 }
