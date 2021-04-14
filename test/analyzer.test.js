@@ -93,7 +93,7 @@ const semanticChecks = [
     "AND",
     "speaketh(faithful furthermore 1 furthermore 2 furthermore fallacious tis not faithful)",
   ],
-  // [19] DONE ? -- had to add lexicographical into parser
+  // [19] DONE -- had to add lexicographical into parser
   [
     "relations",
     'speaketh(1 tis lesser 2 furthermore "x" nobler "y" furthermore 3.5 tis lesser 1.2)',
@@ -169,8 +169,8 @@ const semanticChecks = [
 
 // Programs that are syntactically correct but have semantic errors
 const semanticErrors = [
-  // [38] TODO: REWRITE THIS GARBAGE
-  // ["non-distinct fields", "struct S {x: boolean x: int}", /Fields must be distinct/],
+  // [38] DONE
+  ["non-distinct fields", "alloweth Concordance of Lexicographical and Numeral S be {\"x\": 1, \"x\": 2}", /Keys must be distinct/],
   // [39] TODO
   // ["non-int increment", "alloweth Numeral x be fallacious x increment", /an integer, found boolean/],
   // // [40] TODO: REWRITE THIS GARBAGE

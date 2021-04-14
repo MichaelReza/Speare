@@ -1,4 +1,1 @@
-alloweth Concordance of Lexicographical and Numeral c be {"z": 1}
-alloweth Concordance of Lexicographical and Concordance of Lexicographical and Numeral b be {"y": c}
-alloweth Concordance of Lexicographical and Concordance of Lexicographical and Concordance of Lexicographical and Numeral a be {"x": b}
-speaketh(a."x"."y"."z")
+alloweth Concordance of Lexicographical and Numeral S be {"123": 1, "123": 2}

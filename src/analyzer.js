@@ -45,6 +45,18 @@ const check = (self) => ({
   isAConcordance() {
     must(self.type.constructor === ConcordanceType, "Concordance expected")
   },
+  hasUniqueKeys() {
+    var keySet = []
+    var uniqueBool = true
+    self.dictEntries.forEach(function unique(entry) {
+      if (keySet.includes(entry.key.value)) {
+        uniqueBool = false;
+        return;
+      }
+      keySet.push(entry.key.value)
+    })
+    must(uniqueBool, "Keys must be distinct")
+  },
   isAListe() {
     must(self.type.constructor === ListeType, "Liste expected")
   },
@@ -372,6 +384,7 @@ class Context {
     return a
   }
   Concordance(a) {
+    check(a).hasUniqueKeys()
     a.dictEntries.forEach(x => x = this.analyze(x))
     a.keyType = a.dictEntries[0].key.type
     a.valType = a.dictEntries[0].val.type

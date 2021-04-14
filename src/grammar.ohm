@@ -72,7 +72,7 @@ Speare {
 
   // Type
   id                  = ~keyword letter alnum*            --name
-  String              = ~keyword "\"" letter* "\""        --string
+  String              = ~keyword "\"" alnum* "\""        --string
   Indistinguishable	  = "indistinguishable" ~alnum
   Tobeornottobe	   	  =	"fallacious" | "faithful"         
   Numeral             = digit+ ("." digit+)?
