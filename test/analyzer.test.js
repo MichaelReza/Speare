@@ -119,7 +119,7 @@ const semanticChecks = [
   alloweth Concordance of Lexicographical and Concordance of Lexicographical and Concordance of Lexicographical and Numeral a be {"x": b}\
   speaketh(a."x"."y"."z")',
   ],
-  // [26] TODO: REWRITE THIS GARBAGE
+  // [26] DONE
   [
     "subscript dict",
     'alloweth Concordance of Lexicographical and Numeral y be {"x": 5} speaketh(y."x")',
@@ -152,7 +152,7 @@ const semanticErrors = [
     'alloweth Concordance of Lexicographical and Numeral S be {"x": 1, "x": 2}',
     /Keys must be distinct/,
   ],
-  // [39] TODO
+  // [39] DONE
   ["non-int increment", "alloweth Numeral x be fallacious x increment", /Variable initialized is not the same as declared type/],
   // [40] DONE
   ["non-int decrement", 'alloweth Lexicographical x be "hello" x increment', /Expected a number/],
@@ -208,11 +208,11 @@ const semanticErrors = [
     "enter Numeral f(){returneth fallacious}",
     /ToBeOrNotToBe to a number/,
   ],
-  // [51] TODO
+  // [51] DONE
   [
     "non-boolean short if test",
     "whether (1) {}",
-    /a ToBeOrNotToBe, found number/,
+    /Expected a boolean, found Numeral/,
   ],
   // [52] DONE
   [
