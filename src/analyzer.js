@@ -30,7 +30,7 @@ const check = (self) => ({
   },
   isNumericOrString() {
     must(
-      [Type.NUMERAL, Type.STRING].includes(self.type),
+      self.type === "Numeral" || self.type === "Lexicographical" || [Type.NUMERAL, Type.STRING].includes(self.type),
       `Expected a number or string, found ${self.type.name}`
     )
   },
@@ -68,21 +68,21 @@ const check = (self) => ({
     must(self.type.constructor === ListeType, "Liste expected")
   },
   hasSameTypeAs(other) {
-    must(self.type.name === other.type.name, "Operands do not have the same type")
+    must((self.type.name ?? self.type) === (other.type.name ?? other.type), "Operands do not have the same type")
   },
   isSameTypeAs(other) {
     must((self.name ?? self) === (other.name ?? other), "Variable initialized is not the same as declared type")
   },
   allHaveSameType() {
     must(
-      self.slice(1).every(e => e.type.constructor.name === self[0].type.constructor.name),
+      self.slice(1).every(e => e.type.name === self[0].type.name),
       "Not all elements have the same type"
     )
   },
-  isAssignableTo(type) {
+  isAssignableTo(t) {
     must(
-      type === Type.ANY || self.type.isAssignableTo(type),
-      `Cannot assign a ${self.type.name} to a ${type.name}`
+      ((self.type.name ?? self.type) === (t.name ?? t)),
+      `Cannot assign a ${(self.type.name ?? self.type)} to a ${(t.name ?? t)}`
     )
   },
   isNotReadOnly() {
@@ -113,13 +113,13 @@ const check = (self) => ({
   isCallable() {
     must(
       self.constructor === Concordance ||
-      self.type.constructor == Corollary,
+      self.constructor == Corollary,
       "Call of non-function or non-constructor"
     )
   },
   returnsNothing() {
     must(
-      self.type.returnType === Type.VOID,
+      self.type === (Type.VOID.name ?? Type.VOID),
       "Something should be returned here"
     )
   },
@@ -127,7 +127,10 @@ const check = (self) => ({
     must(self.type.returnType !== Type.VOID, "Cannot return a value here")
   },
   isReturnableFrom(f) {
-    check(self).isAssignableTo(f.type.returnType)
+    must(
+      ((self.type.name ?? self.type) === (f.type.name ?? f.type)),
+      `Expected return of type ${(f.type.name ?? f.type)} and instead got return type ${(self.type.name ?? self.type)}.`
+    )
   },
   match(targetTypes) {
     // self is the array of arguments
@@ -143,8 +146,8 @@ const check = (self) => ({
       `${func.params.length} argument(s) required but ${self.length} passed`
     )
     func.params.forEach((param, i) => {
-      must((self[i].type.name ?? self[i].name) === (param.type ?? param),
-      `Cannot assign a ${self[i].type.name ?? self[i].name} to ${param.type ?? param} ${param.name}`)
+      must((self[i].type.name ?? self[i].name ?? self[i].type) === (param.type ?? param),
+      `Cannot assign a ${self[i].type.name ?? self[i].name ?? self[i].type} to ${param.type ?? param} ${param.name}`)
     })
   },
   matchFieldsOf(corollaryType) {
@@ -257,10 +260,14 @@ class Context {
     return s
   }
   Return(s) {
+    s.expression = this.analyze(s.expression)
     check(this).isInsideAFunction()
-    check(this.function).returnsSomething()
-    // Havent yet implemented return type checking
-    //check(s.expression).isReturnableFrom(this.function)
+    if (s.expression.length == 0) {
+      check(this.function).returnsNothing()
+    } else {
+      check(this.function).returnsSomething()
+      check(s.expression[0]).isReturnableFrom(this.function)
+    }
     return s
   }
   ShortReturnStatement(s) {
@@ -407,6 +414,7 @@ class Context {
     c.setParent = this.lookup(c.varname)
     c.setType = this.lookup(c.varname).type
     c.args = this.analyze(c.args)
+    check(c.parent).isCallable()
     check(c.args).matchParametersOf(c.parent)
     return c
   }

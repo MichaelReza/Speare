@@ -42,8 +42,8 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   Statement_print(_print, _sp, relExp, _ep) {
     return new ast.Print(relExp.ast())
   },
-  Statement_return(_return, id) {
-    return new ast.Return(id.sourceString)
+  Statement_return(_return, relExp) {
+    return new ast.Return(relExp.ast())
   },
   Statement_break(_break) {
     return new ast.Break()

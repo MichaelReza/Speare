@@ -381,11 +381,6 @@ const goodPrograms = {
 
 const badPrograms = [
   // Printing:
-  [
-    "Disallows printing logical statements",
-    "speaketh(6 with 7 alternatively 6 with 8)",
-    /Line 1, col 19:/,
-  ],
   ["Disallows saying type names", "speaketh(Numeral)", /Line 1, col 10:/],
   // Variable Assignment:
   ["Disallows incomplete statement", "alloweth", /Line 1, col 9:/],

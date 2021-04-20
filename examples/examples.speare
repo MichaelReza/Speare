@@ -1,2 +1,2 @@
-enter ToBeOrNotToBe f(Numeral x) { returneth }
-alloweth ToBeOrNotToBe x be f(3)
+alloweth Numeral x be 1
+enter Indistinguishable f(Numeral x, y){}
