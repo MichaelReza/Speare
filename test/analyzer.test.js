@@ -34,7 +34,8 @@ const semanticChecks = [
    alloweth Liste of Numeral x be [xcontext, y without z]",
   ],
   // [6] DONE
-  ["short return", "enter ToBeOrNotToBe foo(Numeral f) { returneth }"],
+  // NO THIS SHOULD RETURN AN ERROR
+  // ["short return", "enter ToBeOrNotToBe foo(Numeral f) { returneth }"],
   // [7] DONE
   ["long return", "enter ToBeOrNotToBe foo(Numeral f) { returneth faithful }"],
   // [8] DONE
@@ -93,7 +94,7 @@ const semanticChecks = [
   // [18] DONE
   [
     "AND",
-    "speaketh(faithful furthermore 1 furthermore 2 furthermore fallacious tis not faithful)",
+    "speaketh(faithful furthermore faithful furthermore fallacious tis not fallacious furthermore faithful)",
   ],
   // [19] DONE -- had to add lexicographical into parser
   [
@@ -142,6 +143,16 @@ const semanticChecks = [
     "concordance parameters",
     "alloweth Concordance of Numeral and Numeral S be {5 : 12}\nenter ToBeOrNotToBe fun(Concordance of Numeral and Numeral x) {}",
   ],
+  // [36] DONE
+  // NO THIS SHOULD FAIL
+  // [
+  //   " function calls",
+  //   "enter ToBeOrNotToBe foo(Numeral f) { returneth } \
+  //    alloweth ToBeOrNotToBe x be foo(3)"
+  // ],
+  ["diff type array elements",
+    "speaketh([3,3.0])"
+  ]
 ]
 
 // Programs that are syntactically correct but have semantic errors
@@ -170,18 +181,19 @@ const semanticErrors = [
     "alloweth Numeral x be faithful",
     /Variable initialized is not the same as declared type/,
   ],
-  // [44] TODO
+  // [44] DONE
   [
     "assign bad array type",
-    "alloweth Numeral x be 1 alloweth Liste x be [true]",
-    /Cannot assign a \[boolean\] to a int/,
+    "alloweth Liste of Numeral x be [faithful]",
+    /Variable initialized is not the same as declared type/,
   ],
   // [45] DONE
   ["break outside loop", "exit", /Exit can only appear in a loop/],
-  // [46] TODO: REWRITE THIS GARBAGE
+  // [46] DONE
   [
     "break inside function",
-    "whilst(x){execute{exit}}",
+    "enter Indistinguishable exe() {exit}\
+    whilst(faithful){exe()}",
     /Exit can only appear in a loop/,
   ],
   // [47] DONE
@@ -190,11 +202,11 @@ const semanticErrors = [
     "returneth",
     /Returneth can only appear in a function/,
   ],
-  // [48] TODO
+  // [48] DONE
   [
     "return value from void function",
-    "enter f() {returneth 1}",
-    /Cannot return a value here/,
+    "enter Indistinguishable f() {returneth 1}",
+    /Expected return of type Indistinguishable and instead got return type Numeral./,
   ],
   // [49] TODO
   [
@@ -206,7 +218,7 @@ const semanticErrors = [
   [
     "return type mismatch",
     "enter Numeral f(){returneth fallacious}",
-    /ToBeOrNotToBe to a number/,
+    /Expected return of type Numeral and instead got return type ToBeOrNotToBe./,
   ],
   // [51] DONE
   [
@@ -222,14 +234,9 @@ const semanticErrors = [
   ],
   // [53] DONE
   ["non-boolean while test", "whilst (1) {}", /Expected a boolean, found Numeral/],
-  // [54] TODO
-  [
-    "non-integer range",
-    "in regards to (i within faithful){}",
-    /a number, found ToBeOrNotToBe/,
-  ],
   // [55] TODO
-  ["non-array in for", "in regards to(i within 100) {}", /Array expected/],
+  // NO LONGER DOING THESE
+  // ["non-array in for", "in regards to(i within 100) {}", /Array expected/],
   // [56] DONE
   [
     "non-boolean conditional test",
@@ -240,7 +247,7 @@ const semanticErrors = [
   [
     "diff types in conditional arms",
     "whether (x be 5) { x be fallacious } ",
-    /not have the same type/,
+    /Expected /,//this is not a great test...
   ],
   // [58] DONE
   [
@@ -331,11 +338,11 @@ const semanticErrors = [
   // [73] DONE
   [
     "bad types for negation",
-    "speaketh(nay(1))",
+    "speaketh(nay([1,2,3]))",
     /Expected a boolean/,
   ],
-  // [74] TODO
-  ["bad types for length", "speaketh(#fallacious)", /Array expected/],
+  // [74] TODO -- we don't really do this
+  // ["bad types for length", "speaketh(#fallacious)", /Array expected/],
   // [75] DONE
   [
     "bad types for not",
@@ -348,10 +355,10 @@ const semanticErrors = [
     "alloweth Liste of Numeral a be [1] speaketh(a[fallacious])",
     /Expected a number/,
   ],
-  // [77] TODO
+  // [77] TODO -- we actually allow this, rewrote second element to boolean
   [
     "diff type array elements",
-    "speaketh([3,3.0])",
+    "speaketh([3,faithful])",
     /Not all elements have the same type/,
   ],
   // [78] TODO
@@ -363,55 +370,63 @@ const semanticErrors = [
                 }",
     /Identifier x already declared/,
   ],
-  // [79] TODO
+  // [79] DONE
   [
     "call of uncallable",
-    "alloweth x be 1\nspeaketh(x())",
+    "alloweth Numeral x be 1\
+    speaketh(x())",
     /Call of non-function/,
   ],
-  // [80] TODO
+  // [80] DONE
   [
     "Too many args",
-    "enter Indistinguishable f(Numeral x) {}\nf(1,2)",
+    "enter Indistinguishable f(Numeral x) {\
+      returneth\
+    }\
+    f(1,2)",
     /1 argument\(s\) required but 2 passed/,
   ],
-  // [81] TODO
+  // [81] DONE
   [
     "Too few args",
     "enter Indistinguishable f(Numeral x) {}\nf()",
     /1 argument\(s\) required but 0 passed/,
   ],
-  // [82] TODO
+  // [82] DONE
   [
     "Parameter type mismatch",
-    "enter f(Numeral x) {}\nf(fallacious)",
-    /Cannot assign a boolean to a int/,
+    "enter ToBeOrNotToBe f(Numeral x) {}\
+     f(fallacious)",
+    /Cannot assign a ToBeOrNotToBe to Numeral x/,
   ],
   // [83] TODO
   [
     "function type mismatch",
-    `enter f( Numeral x, y: (boolean)->void): int { return 1 }
-     enter g(z: boolean): int { return 5 }
-     f(2, g)`,
-    /Cannot assign a \(boolean\)->int to a \(boolean\)->void/,
+    `enter Numeral f(Numeral x, ToBeOrNotToBe y) { returneth 1 }
+     enter Numeral g() { returneth 5 }
+     f(2, g())`,
+    /Cannot assign a Numeral to ToBeOrNotToBe y/,
   ],
   // [84] TODO
   [
     "Non-type in param",
-    "alloweth Numeral x be 1 enter Indistinguishable f(x y){}",
-    /Type expected/,
+    "alloweth Numeral x be 1\
+    enter Indistinguishable f(Numeral x, y){}",
+    /Expected "Corollary", "Ideogram", "Illused", "Lexicographical", "Numeral", "ToBeOrNotToBe", "Indistinguishable", "Concordance of ", or "Liste of "/,
   ],
   // [85] TODO
   [
     "Non-type in return type",
-    "alloweth Numeral x be 1 enter x f(){returneth 1}",
-    /Type expected/,
+    "alloweth Numeral x be 1\
+    enter Indistinguishable f(){returneth x}",
+    /Expected return of type Indistinguishable and instead got return type Numeral/,
   ],
   // [86] TODO
   [
     "Non-type in field type",
-    "alloweth Numeral x be 1struct S {y:x}",
-    /Type expected/,
+    "alloweth Numeral x be 1\
+    alloweth Concordance S be {y:x}",
+    /Expected "Corollary"/,
   ],
 ]
 

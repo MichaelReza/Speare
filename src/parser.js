@@ -42,8 +42,8 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   Statement_print(_print, _sp, relExp, _ep) {
     return new ast.Print(relExp.ast())
   },
-  Statement_return(_return, id) {
-    return new ast.Return(id.sourceString)
+  Statement_return(_return, relExp) {
+    return new ast.Return(relExp.ast())
   },
   Statement_break(_break) {
     return new ast.Break()
@@ -155,12 +155,8 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   Factor_unary(sign, _sp, factor, _cp) {
     return new ast.UnaryExpression(sign.sourceString, factor.ast())
   },
-  // Factor_Types(type) {
-  //   return new ast.UnaryAssignment(type.ast())
-  // },
-
-  Param(type, varname) {
-    return new ast.Param(type.ast(), varname.sourceString)
+  Param(type, name) {
+    return new ast.Param(type.ast(), name.sourceString)
   },
   Varname(id) {
     return new ast.IdentifierExpression(id.sourceString)
@@ -170,6 +166,9 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   },
   DictLookup(dict, _dot, key) {
     return new ast.DictLookup(dict.ast(), key.ast())
+  },
+  FunctionCall(varname, _sp, args, _ep) {
+    return new ast.Call(varname.sourceString, args.asIteration().ast())
   },
   String_string(_squote, str, _equote) {
     return new ast.StringValue(str.sourceString)

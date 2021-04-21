@@ -101,10 +101,13 @@ export class Corollary {
   constructor(type, id, params, body) {
     Object.assign(this, { type, id, params, body })
   }
+  get returnType() {
+    return this.type
+  }
 }
 export class Param {
-  constructor(type, varname, optional) {
-    Object.assign(this, { type, varname, optional })
+  constructor(type, name) {
+    Object.assign(this, { type, name })
   }
 }
 
@@ -232,6 +235,18 @@ export class ArrayLookup {
 export class DictLookup {
   constructor(dict, key) {
     Object.assign(this, { dict, key })
+  }
+}
+
+export class Call {
+  constructor(varname, args) {
+    Object.assign(this, { varname, args })
+  }
+  set setType(t) {
+    this.type = t
+  }
+  set setParent(p) {
+    this.parent = p
   }
 }
 

@@ -2,6 +2,7 @@ import {
   Variable,
   VariableAssignment,
   Type,
+  Param,
   CorollaryType,
   Corollary,
   ListeType,
@@ -29,7 +30,7 @@ const check = (self) => ({
   },
   isNumericOrString() {
     must(
-      [Type.NUMERAL, Type.STRING].includes(self.type),
+      self.type === "Numeral" || self.type === "Lexicographical" || [Type.NUMERAL, Type.STRING].includes(self.type),
       `Expected a number or string, found ${self.type.name}`
     )
   },
@@ -37,6 +38,12 @@ const check = (self) => ({
     must(
       ([Type.BOOLEAN].includes(self.type)),
       `Expected a boolean, found ${self.type.name}`
+    )
+  },
+  isBooleanOrNumeric() {
+    must(
+      ([Type.BOOLEAN, Type.NUMERAL].includes(self.type)),
+      `Expected a boolean or numeral, found ${self.type.name}`
     )
   },
   isAType() {
@@ -61,21 +68,21 @@ const check = (self) => ({
     must(self.type.constructor === ListeType, "Liste expected")
   },
   hasSameTypeAs(other) {
-    must(self.type.name === other.type.name, "Operands do not have the same type")
+    must((self.type.name ?? self.type) === (other.type.name ?? other.type), "Operands do not have the same type")
   },
   isSameTypeAs(other) {
     must((self.name ?? self) === (other.name ?? other), "Variable initialized is not the same as declared type")
   },
   allHaveSameType() {
     must(
-      self.slice(1).every(e => e.type.constructor.name === self[0].type.constructor.name),
+      self.slice(1).every(e => e.type.name === self[0].type.name),
       "Not all elements have the same type"
     )
   },
-  isAssignableTo(type) {
+  isAssignableTo(t) {
     must(
-      type === Type.ANY || self.type.isAssignableTo(type),
-      `Cannot assign a ${self.type.name} to a ${type.name}`
+      ((self.type.name ?? self.type) === (t.name ?? t)),
+      `Cannot assign a ${(self.type.name ?? self.type)} to a ${(t.name ?? t)}`
     )
   },
   isNotReadOnly() {
@@ -106,13 +113,13 @@ const check = (self) => ({
   isCallable() {
     must(
       self.constructor === Concordance ||
-        self.type.constructor == CorollaryType,
+      self.constructor == Corollary,
       "Call of non-function or non-constructor"
     )
   },
   returnsNothing() {
     must(
-      self.type.returnType === Type.VOID,
+      self.type === (Type.VOID.name ?? Type.VOID),
       "Something should be returned here"
     )
   },
@@ -120,7 +127,10 @@ const check = (self) => ({
     must(self.type.returnType !== Type.VOID, "Cannot return a value here")
   },
   isReturnableFrom(f) {
-    check(self).isAssignableTo(f.type.returnType)
+    must(
+      ((self.type.name ?? self.type) === (f.type.name ?? f.type)),
+      `Expected return of type ${(f.type.name ?? f.type)} and instead got return type ${(self.type.name ?? self.type)}.`
+    )
   },
   match(targetTypes) {
     // self is the array of arguments
@@ -130,8 +140,15 @@ const check = (self) => ({
     )
     targetTypes.forEach((type, i) => check(self[i]).isAssignableTo(type))
   },
-  matchParametersOf(calleeType) {
-    check(self).match(calleeType.parameterTypes)
+  matchParametersOf(func) {
+    must(
+      self.length === func.params.length,
+      `${func.params.length} argument(s) required but ${self.length} passed`
+    )
+    func.params.forEach((param, i) => {
+      must((self[i].type.name ?? self[i].name ?? self[i].type) === (param.type ?? param),
+      `Cannot assign a ${self[i].type.name ?? self[i].name ?? self[i].type} to ${param.type ?? param} ${param.name}`)
+    })
   },
   matchFieldsOf(corollaryType) {
     check(self).match(structType.fields.map((f) => f.type))
@@ -207,25 +224,7 @@ class Context {
     this.add(d.name, d.initializer) 
     return d
   }
-  FunctionDeclaration(d) {
-    d.returnType = d.returnType ? this.analyze(d.returnType) : Type.VOID
-    // Declarations generate brand new function objects
-    const f = (d.function = new Corollary(d.name))
-    // When entering a function body, we must reset the inLoop setting,
-    // because it is possible to declare a function inside a loop!
-    const childContext = this.newChild({ inLoop: false, forFunction: f })
-    d.parameters = childContext.analyze(d.parameters)
-    f.type = new CorollaryType(
-      d.parameters.map((p) => p.type),
-      d.returnType
-    )
-    // Add before analyzing the body to allow recursion
-    this.add(f.name, f)
-    d.body = childContext.analyze(d.body)
-    return d
-  }
-  Parameter(p) {
-    p.type = this.analyze(p.type)
+  Param(p) {
     this.add(p.name, p)
     return p
   }
@@ -261,10 +260,14 @@ class Context {
     return s
   }
   Return(s) {
-    check(this).isInsideAFunction()
-    check(this.function).returnsSomething()
     s.expression = this.analyze(s.expression)
-    check(s.expression).isReturnableFrom(this.function)
+    check(this).isInsideAFunction()
+    if (s.expression.length == 0) {
+      check(this.function).returnsNothing()
+    } else {
+      check(this.function).returnsSomething()
+      check(s.expression[0]).isReturnableFrom(this.function)
+    }
     return s
   }
   ShortReturnStatement(s) {
@@ -370,7 +373,7 @@ class Context {
     e.value = this.analyze(e.value)
     e.type = e.value.type
     if (e.sign === "nay") {
-      check(e.value).isBoolean()
+      check(e.value).isBooleanOrNumeric()
     } else if (e.sign === "abs") {
       check(e.value).isNumeral()
     } else if (e.sign === "sqrt") {
@@ -408,16 +411,11 @@ class Context {
     return e
   }
   Call(c) {
-    c.callee = this.analyze(c.callee)
-    check(c.callee).isCallable()
+    c.setParent = this.lookup(c.varname)
+    c.setType = this.lookup(c.varname).type
     c.args = this.analyze(c.args)
-    if (c.callee.constructor === Corollary) {
-      check(c.args).matchFieldsOf(c.callee)
-      c.type = c.callee // weird but seems ok for now
-    } else {
-      check(c.args).matchParametersOf(c.callee.type)
-      c.type = c.callee.type.returnType
-    }
+    check(c.parent).isCallable()
+    check(c.args).matchParametersOf(c.parent)
     return c
   }
   IdentifierExpression(e) {
@@ -453,9 +451,13 @@ class Context {
     })
     return e
   }
-  Corollary(t) {
-    t = CorollaryType
-    return t
+
+  Corollary(f) {
+    const childContext = this.newChild({ inLoop: false, forFunction: f })
+    f.params = f.params.map(p => (childContext.analyze(p)))
+    this.add(f.id, f)
+    f.body = childContext.analyze(f.body)
+    return f
   }
   DictLookup(e) {
     e.dict = this.analyze(e.dict)
