@@ -1,0 +1,11 @@
+alloweth Numeral z be 0.5
+
+enter ToBeOrNotToBe f(Numeral x, ToBeOrNotToBe y) {
+  speaketh(x nobler absolutization(x))
+  returneth faithful
+}
+enter ToBeOrNotToBe g() {
+  returneth fallacious
+}
+
+f(z, g())
