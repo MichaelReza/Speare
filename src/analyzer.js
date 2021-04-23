@@ -277,27 +277,21 @@ class Context {
   }
   IfStatement(s) {
     s.le1 = this.analyze(s.le1)
-    s.le1.forEach(function checkBoolean(exp) {
-      check(exp).isBoolean()
-    })
+    check(s.le1).isBoolean()
     if (s.le2) {
       s.le2 = this.newChild().analyze(s.le2)
-      s.le2.forEach(function loopElifs(elifs) {
-        elifs.forEach(function checkBoolean(exp) {
-          check(exp).isBoolean()
+      s.le2.forEach(function loopElifs(elif) {
+          check(elif).isBoolean()
         })
-      })
     }
-    if (s._else) {
+    if (s.le3) {
       s.body3 = this.analyze(s.body3)
     }
     return s
   }
   WhileLoop(s) {
     s.logicExp = this.analyze(s.logicExp)
-    s.logicExp.forEach(function checkBoolean(exp) {
-      check(exp).isBoolean()
-    })
+    check(s.logicExp).isBoolean()
     s.body = this.newChild({ inLoop: true }).analyze(s.body)
     return s
   }

@@ -27,11 +27,9 @@ const semanticChecks = [
   [
     "assign arrays",
     "alloweth Numeral xcontext be 0 \
-   alloweth Numeral y be 2 \
-   alloweth Numeral z be 1 \
-   alloweth Liste of Numeral w be [6, 4, 5, 4, 3] \
-   alloweth Liste of ToBeOrNotToBe a be [fallacious, fallacious, faithful] \
-   alloweth Liste of Numeral x be [xcontext, y without z]",
+    alloweth Liste of Numeral boo be [xcontext] \
+    alloweth Liste of ToBeOrNotToBe a be [fallacious, faithful] \
+    alloweth Liste of Numeral x be [1, 2, 3]",
   ],
   // [6] DONE
   // NO THIS SHOULD RETURN AN ERROR

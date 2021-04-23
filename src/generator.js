@@ -37,7 +37,9 @@ export default function generate(program) {
         "exponentiate" : "**",
       }
 
-  const gen = node => generators[node.constructor.name](node)
+  const gen = node =>  {
+    return generators[node.constructor.name](node)
+  }
 
   const generators = {
     // Key idea: when generating an expression, just return the JS string; when
@@ -46,43 +48,49 @@ export default function generate(program) {
       gen(p.statements)
     },
     Type(t) {
-      //Type generator
+      // Type generator
     },
     ListeType(t) {
-      //Liste Type Generator
+      // Liste Type Generator
     },
     ConcordanceType(t) {
-      //Concordance Type Generator
+      // Concordance Type Generator
     },
     CorollaryType(t) {
-      //Corollary Type Generator
+      // Corollary Type Generator
     },
     Composition(c) {
-      //Composition Generator
+      // Composition Generator
     },
     Corollary(f) {
       return targetName(f)
     },
     Param(p) {
-      //Parameter Generator
+      // Parameter Generator
     },
     IfStatement(s) {
-      //If Statement Generator
+      // If Statement Generator
     },
     SwitchStatement(s) {
-      //Switch Statement Generator
+      // Switch Statement Generator
     },
     ForLoop(f) {
-      // For Loop Generator
+      output.push(`for (${gen(f.init)};${gen(f.condition)};${gen(f.action)}) {`)
+      gen(f.body)
+      output.push("}")
     },
     WhileLoop(w) {
-      // While Loop Generator
+      output.push(`while (${gen(w.logicExp)}) {`)
+      gen(w.body)
+      output.push("}")
     },
     DoWhile(d) {
       // Do-While Loop Generator
     },
     VariableInitialization(v) {
-      // Variable Init Generator
+      console.log(gen(v.initializer))
+      console.log( (`let ${v.name} = ${gen(v.initializer)}`) )
+      output.push(`let ${v.name} = ${gen(v.initializer)}`)
     },
     VariableAssignment(s) {
       output.push(`${gen(s.name)} = ${gen(s.value)};`)
@@ -91,10 +99,10 @@ export default function generate(program) {
       return targetName(v)
     },
     Print(e) {
-      // Print Generator
+      output.push(`console.log(${gen(e.expression)})`)
     },
     Return(e) {
-      // Return Generator
+      output.push(`return ${gen(e.expression)}`)
     },
     Break(b) {
       output.push("break;")
@@ -114,11 +122,21 @@ export default function generate(program) {
       }
     },
     BinaryExpression(b) {
-      const OP = OPERATORS[e.op] ?? e.op
-      return `(${gen(e.left)} ${OP} ${gen(e.right)})`
+      const OP = OPERATORS[b.op] ?? b.op
+      return `(${gen(b.left)} ${OP} ${gen(b.right)})`
     },
     UnaryExpression(u) {
+<<<<<<< Updated upstream
       return `${u.sign}(${gen(u.value)})`
+=======
+      if (u.sign === "nay") {
+        return (`!(${gen(u.value)})`)
+      } else if (u.sign === "absolutization") {
+        return (`Math.abs(${gen(u.value)})`)
+      } else {
+        return (`Math.sqrt(${gen(u.value)})`)
+      }
+>>>>>>> Stashed changes
     },
     UnaryAssignment(v) {
       // Unary Assignment Generator
@@ -132,6 +150,9 @@ export default function generate(program) {
     Liste(a) {
       return a.map(gen)
     },
+    Array(a) {
+      return a.map(gen)
+    },
     ArrayLookup(a) {
       // Liste Lookup Generator
     },
@@ -142,17 +163,16 @@ export default function generate(program) {
       // Call Generator
     },
     Numeral(n) {
-      return n
+      return n.value
     },
     Lexicographical(s) {
       return JSON.stringify(s)
     },
+    String(s) {
+      return (s)
+    },
     Tobeornottobe(t) {
-      if (t === "fallacious") {
-        return false
-      } else {
-        return true
-      }
+      return t.value === `fallacious` ? "false" : "true"
     },
     Concordance(c) {
       // Concordance Generator

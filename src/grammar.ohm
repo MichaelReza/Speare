@@ -13,12 +13,12 @@ Speare {
                 | Varname (incrementby | decrementby) RelExp                    --incdecby
                 | Varname (increment | decrement)                               --incdec
                 | break                                                         --break
-  ContFlow      = if "(" LogicExp+ ")" "{" Body "}" ( elif "(" LogicExp+ ")" "{" Body "}" )* ( else "{" Body "}")? --complexconditional
+  ContFlow      = if "(" LogicExp ")" "{" Body "}" ( elif "(" LogicExp ")" "{" Body "}" )* ( else "{" Body "}")? --complexconditional
                 | switch Factor "{" (case Factor ":" Body )+ "}"                                 --switchcase
                 | for "(" Statement "," LogicExp "," Statement ")" "{" Body "}"      --forloop
-                | while "(" LogicExp+ ")" "{" Body  "}"                     --while
+                | while "(" LogicExp ")" "{" Body  "}"                     --while
                 | do "{" Body "}" while "(" LogicExp+ ")"                --dowhile
-  LogicExp      = LogicExp logicalop RelExp                                       --logicalcombo
+  LogicExp      = LogicExp logicalop LogicExp                                       --logicalcombo
                 | RelExp
   RelExp        = AddSub relop AddSub                                           --equality
                 | AddSub                                                        --defer
@@ -32,8 +32,8 @@ Speare {
                 | ArrayLookup
                 | DictLookup
                 | FunctionCall
-                | Varname
-                | "(" AddSub ")"                                                --parens
+                | "-"? Varname                                                  --variablename
+                | "(" LogicExp ")"                                                --parens
                 | ("nay" | abs | sqrt)	"(" Factor ")"                          --unary
                 | String
   DictEntry     = AddSub colon AddSub
@@ -127,6 +127,7 @@ Speare {
   do                  = "execute"
   for                 = "in regards to"
   in                  = "within"
+  nay                 = "nay"
 
   controlflow         = elif
                       | for
@@ -164,5 +165,6 @@ Speare {
                       | accommodation ~alnum
                       | composition ~alnum
                       | controlflow ~alnum
+                      | nay ~alnum
 
 }

@@ -113,32 +113,32 @@ export class Param {
 
 // ContFlow -----------------------------------------------------------------
 export class IfStatement {
-  constructor(_if, le1, body, _elif, le2, body2, _else, body3) {
-    Object.assign(this, { _if, le1, body, _elif, le2, body2, _else, body3 })
+  constructor(le1, body, le2, body2, body3) {
+    Object.assign(this, { le1, body, le2, body2, body3 })
   }
 }
 
 export class SwitchStatement {
-  constructor(swtch, factor1, cse, factor2, body) {
-    Object.assign(this, { swtch, factor1, cse, factor2, body })
+  constructor(factor1, factor2, body) {
+    Object.assign(this, {factor1, factor2, body })
   }
 }
 
 export class ForLoop {
-  constructor(_for, init, condition, action, body) {
-    Object.assign(this, { _for, init, condition, action, body})
+  constructor(init, condition, action, body) {
+    Object.assign(this, {init, condition, action, body})
   }
 }
 
 export class WhileLoop {
-  constructor(whle, logicExp, body) {
-    Object.assign(this, { whle, logicExp, body})
+  constructor(logicExp, body) {
+    Object.assign(this, {logicExp, body})
   }
 }
 
 export class DoWhile {
-  constructor(doo, body, whle, logExp) {
-    Object.assign(this, { doo, body, whle, logExp })
+  constructor(body,logExp) {
+    Object.assign(this, {body, logExp })
   }
 }
 // End ContFlow --------------------------------------------
@@ -189,6 +189,11 @@ export class IncDec {
   }
 }
 // End Statement -------------------------------
+export class Parenthesized {
+  constructor(expression) {
+    Object.assign(this, {expression})
+  }
+}
 
 export class BinaryExpression {
   constructor(left, op, right) {
@@ -209,7 +214,8 @@ export class UnaryAssignment {
 }
 
 export class IdentifierExpression {
-  constructor(name) {
+  constructor(negate, name) {
+    this.negate = negate
     this.name = name
   }
 }
