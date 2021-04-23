@@ -118,7 +118,14 @@ export default function generate(program) {
       return `(${gen(e.left)} ${OP} ${gen(e.right)})`
     },
     UnaryExpression(u) {
-      return `${u.sign}(${gen(u.value)})`
+      let retVal = u.sign
+      if (retVal === "nay") {
+        `!(${gen(u.value)})`
+      } else if (reteVal === "absolutization") {
+        return `Math.abs(${gen(u.value)})`
+      } else {
+        return `Math.sqrt(${gen(u.value)})`
+      }
     },
     UnaryAssignment(v) {
       // Unary Assignment Generator

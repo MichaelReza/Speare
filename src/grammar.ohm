@@ -80,7 +80,7 @@ Speare {
   String              = ~keyword "\"" alnum* "\""        --string
   Indistinguishable	  = "indistinguishable" ~alnum
   Tobeornottobe	   	  =	"fallacious" | "faithful"         
-  Numeral             = digit+ ("." digit+)?
+  Numeral             = "-"? digit+ ("." digit+)?
   Liste               = "[" ListOf<AddSub, ","> "]"
   Concordance         = "{" ListOf<DictEntry, ","> "}"
 

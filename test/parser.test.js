@@ -3,7 +3,7 @@ import parse from "../src/parser.js"
 import util from "util"
 
 const source = `speaketh("hello")
-  speaketh(6 with 7)
+  speaketh(6 with -7)
   alloweth Numeral x be 6
   alloweth Numeral qwerty be (47 without 14)
   alloweth Numeral yuiop be nay(27)
@@ -81,7 +81,7 @@ const expectedAst = String.raw`   1 | Program statements=[#2,#4,#8,#10,#15,#18,#
    4 | Print expression=#5
    5 | BinaryExpression left=#6 op='with' right=#7
    6 | Numeral value=6
-   7 | Numeral value=7
+   7 | Numeral value=-7
    8 | VariableInitialization type='Numeral' name='x' initializer=#9
    9 | Numeral value=6
   10 | VariableInitialization type='Numeral' name='qwerty' initializer=#11

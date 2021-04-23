@@ -176,7 +176,7 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   Tobeornottobe(value) {
     return new ast.Tobeornottobe(value.sourceString)
   },
-  Numeral(_whole, _dot, _fractional) {
+  Numeral(_negative, _whole, _dot, _fractional) {
     return new ast.Numeral(Number(this.sourceString))
   },
   Lexicographical(_squote, str, _equote) {
