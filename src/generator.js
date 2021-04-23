@@ -118,10 +118,9 @@ export default function generate(program) {
       return `(${gen(e.left)} ${OP} ${gen(e.right)})`
     },
     UnaryExpression(u) {
-      let retVal = u.sign
-      if (retVal === "nay") {
+      if (u.sign === "nay") {
         `!(${gen(u.value)})`
-      } else if (reteVal === "absolutization") {
+      } else if (u.sign === "absolutization") {
         return `Math.abs(${gen(u.value)})`
       } else {
         return `Math.sqrt(${gen(u.value)})`
