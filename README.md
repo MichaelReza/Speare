@@ -61,8 +61,8 @@ Below, you will find a comprehensive set of examples of code in Speare. Hopefull
 
 ```javascript
 function foo(bar, baz) {
-  let x = 0;
-  return x;
+  let x = 0
+  return x
 }
 ```
 
@@ -92,11 +92,11 @@ enter Numeral foo(Numeral bar, Numeral baz) {
 <td>
 
 ```javascript
-var a;
-var b = 0;
-var c = "hello";
-var d = [6, 4, 3];
-var e = { 6: 12, 3: 7 };
+var a
+var b = 0
+var c = "hello"
+var d = [6, 4, 3]
+var e = { 6: 12, 3: 7 }
 ```
 
 </td>
@@ -107,8 +107,8 @@ var e = { 6: 12, 3: 7 };
 alloweth Numeral a
 alloweth Numeral b be 0
 alloweth Lexicographical c be "hello"
-alloweth Liste d be [6, 4, 3]
-alloweth Concordance e be {6 : 12, 3 : 7}
+alloweth Liste of Numeral d be [6, 4, 3]
+alloweth Concordance of Numeral and Numeral e be {6 : 12, 3 : 7}
 ```
 
 </td>
@@ -124,11 +124,11 @@ alloweth Concordance e be {6 : 12, 3 : 7}
 
 ```javascript
 if (x == 10) {
-  console.log(x);
+  console.log(x)
 } else if (x > 10) {
-  console.log("greater");
+  console.log("greater")
 } else {
-  console.log("less");
+  console.log("less")
 }
 ```
 
@@ -151,7 +151,7 @@ otherwise {
 </td>
 </table>
 
-### For, For-in Loops
+### For Loops
 
 - For loops in Speare must have two or three statements within them
 
@@ -163,9 +163,7 @@ otherwise {
 
 ```javascript
 for (int x = 0; x < 10; x++>) {
-  for (x in dataset) {
-    y += 5;
-  }
+  console.log("looping!")
 }
 ```
 
@@ -175,16 +173,14 @@ for (int x = 0; x < 10; x++>) {
 
 ```
 in regards to(alloweth x be 0, x lesser 10, x increment) {
-  in regards to (x within dataset) {
-    y incrementby 5
-  }
+  speaketh("looping!")
 }
 ```
 
 </td>
 </table>
 
-### While, Do-While loops
+### While loops
 
 <table>
 <tr> <th>JavaScript</th><th>Speare</th><tr>
@@ -194,9 +190,7 @@ in regards to(alloweth x be 0, x lesser 10, x increment) {
 
 ```javascript
 while (x) {
-  do {
-    y++;
-  } while (y <= 10);
+  console.log("looping")
 }
 ```
 
@@ -206,49 +200,10 @@ while (x) {
 
 ```
 whilst(x) {
-  execute {
-    y increment
-  } whilst(y tis lesser 10)
+  speaketh("looping")
 }
 
 
-```
-
-</td>
-</table>
-
-### Switch Case
-
-<table>
-<tr> <th>JavaScript</th><th>Speare</th><tr>
-</tr>
-
-<td>
-
-```javascript
-switch (x) {
-  case 0:
-    y = 0;
-    break;
-  case 1:
-    y = 1;
-    break;
-}
-```
-
-</td>
-
-<td>
-
-```
-trigger(x) {
-  condition 0:
-    y be 0;
-    exit;
-  condition 1:
-    y be 1;
-    exit;
-}
 ```
 
 </td>
@@ -389,13 +344,9 @@ Here is a list of all reserved words in the language:
 - whether
 - subsequently
 - otherwise
-- trigger
-- condition
 - exit
 - whilst
-- execute
 - in regards to
-- within
 
 <br />
 
