@@ -10,7 +10,7 @@
 }
 
 .navbar-container {
-  width:100%;
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -36,9 +36,9 @@
 }
 
 .logo h2 {
-  background-image: linear-gradient(90deg, #EA80FB, #FF80AB);
+  background-image: linear-gradient(90deg, #ea80fb, #ff80ab);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent; 
+  -webkit-text-fill-color: transparent;
   -moz-background-clip: text;
   -moz-text-fill-color: transparent;
   margin: 0;
@@ -68,9 +68,9 @@
 }
 
 .nav-link {
-  background-image: linear-gradient(90deg, #EA80FB, #FF80AB);
+  background-image: linear-gradient(90deg, #ea80fb, #ff80ab);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent; 
+  -webkit-text-fill-color: transparent;
   -moz-background-clip: text;
   -moz-text-fill-color: transparent;
   font-size: 36px;
@@ -80,11 +80,11 @@
   align-items: center;
   height: 100%;
   border-bottom: 0px solid var(--accent);
-
 }
 
 .nav-link:hover {
   /* color: #999; */
   border-bottom: 2px solid var(--accent);
-  /* transition: all 0.1s ease-out; */
+  transform: scale(1.075);
+  transition: all 0.25s ease-out;
 }

@@ -111,6 +111,7 @@
   cursor: pointer;
   background: #c8457c;
   transition: all 0.4s ease;
+  transform: scale(1.025);
 }
 
 @media (max-width: 1000px) {
@@ -159,6 +160,7 @@
 
   .butt {
     margin-bottom: 15px;
+    margin-left: 10px;
     width: max(45vw, 250px);
   }
 
