@@ -113,8 +113,8 @@ export class Param {
 
 // ContFlow -----------------------------------------------------------------
 export class IfStatement {
-  constructor(_if, le1, body, _elif, le2, body2, _else, body3) {
-    Object.assign(this, { _if, le1, body, _elif, le2, body2, _else, body3 })
+  constructor(le1, body, le2, body2, body3) {
+    Object.assign(this, {le1, body, le2, body2, body3 })
   }
 }
 
@@ -125,14 +125,14 @@ export class SwitchStatement {
 }
 
 export class ForLoop {
-  constructor(_for, init, condition, action, body) {
-    Object.assign(this, { _for, init, condition, action, body})
+  constructor(init, condition, action, body) {
+    Object.assign(this, { init, condition, action, body})
   }
 }
 
 export class WhileLoop {
-  constructor(whle, logicExp, body) {
-    Object.assign(this, { whle, logicExp, body})
+  constructor(logicExp, body) {
+    Object.assign(this, {logicExp, body})
   }
 }
 

@@ -67,22 +67,24 @@ export default function generate(program) {
       //Parameter Generator
     },
     IfStatement(s) {
-      //If Statement Generator
-    },
-    SwitchStatement(s) {
-      //Switch Statement Generator
+      // If Statement Generator
+      // output.push(`if (${})`)
     },
     ForLoop(f) {
-      // For Loop Generator
+      output.push(`for (${gen(f.init)};${gen(f.condition)};${gen(f.action)}) {`)
+      gen(f.body)
+      output.push("}")
     },
     WhileLoop(w) {
-      // While Loop Generator
+      output.push(`while (${gen(s.logicExp)}) {`)
+      gen(s.body)
+      output.push("}")
     },
     DoWhile(d) {
-      // Do-While Loop Generator
+      // output.push('do {${d.body}} while ($')
     },
     VariableInitialization(v) {
-      // Variable Init Generator
+      output.push(`let ${(v.name)} = ${gen(v.initializer)}`)
     },
     VariableAssignment(s) {
       output.push(`${gen(s.name)} = ${gen(s.value)};`)
@@ -91,10 +93,10 @@ export default function generate(program) {
       return targetName(v)
     },
     Print(e) {
-      // Print Generator
+      output.push(`console.log(${gen(e.expression)})`)
     },
     Return(e) {
-      // Return Generator
+      output.push(`return ${gen(e.expression)}`)
     },
     Break(b) {
       output.push("break;")
@@ -114,8 +116,8 @@ export default function generate(program) {
       }
     },
     BinaryExpression(b) {
-      const OP = OPERATORS[e.op] ?? e.op
-      return `(${gen(e.left)} ${OP} ${gen(e.right)})`
+      const OP = OPERATORS[b.op] ?? b.op
+      return `(${gen(b.left)} ${OP} ${gen(b.right)})`
     },
     UnaryExpression(u) {
       if (u.sign === "nay") {
@@ -139,7 +141,7 @@ export default function generate(program) {
       return a.map(gen)
     },
     ArrayLookup(a) {
-      // Liste Lookup Generator
+      return `${gen(a.array)}[${gen(a.index)}]`
     },
     DictLookup(d) {
       // Concordance Lookup Generator
@@ -148,7 +150,7 @@ export default function generate(program) {
       // Call Generator
     },
     Numeral(n) {
-      return n
+      return n.value
     },
     Lexicographical(s) {
       return JSON.stringify(s)

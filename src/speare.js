@@ -4,11 +4,12 @@ import fs from "fs/promises"
 import process from "process"
 import compile from "./compiler.js"
 
-const help = `Ael compiler
+const help = `Speare compiler
 Syntax: src/speare.js <filename> <outputType>
 Prints to stdout according to <outputType>, which must be one of:
   ast        the abstract syntax tree
   analyzed   the semantically analyzed representation
+  generated  JavaScript code version
   optimized  the optimized semantically analyzed representation
   js         the translation to JavaScript
 `

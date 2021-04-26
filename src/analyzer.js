@@ -277,18 +277,14 @@ class Context {
   }
   IfStatement(s) {
     s.le1 = this.analyze(s.le1)
-    s.le1.forEach(function checkBoolean(exp) {
-      check(exp).isBoolean()
-    })
+    check(s.le1).isBoolean()
     if (s.le2) {
       s.le2 = this.newChild().analyze(s.le2)
-      s.le2.forEach(function loopElifs(elifs) {
-        elifs.forEach(function checkBoolean(exp) {
-          check(exp).isBoolean()
+      s.le2.forEach(function loopElifs(elif) {
+          check(elif).isBoolean()
         })
-      })
     }
-    if (s._else) {
+    if (s.le3) {
       s.body3 = this.analyze(s.body3)
     }
     return s
@@ -315,14 +311,6 @@ class Context {
     }
     s.body = this.newChild({ inLoop: true }).analyze(s.body)
     return s
-  }
-  UnwrapElse(e) {
-    e.optional = this.analyze(e.optional)
-    e.alternate = this.analyze(e.alternate)
-    check(e.optional).isAnOptional()
-    check(e.alternate).isAssignableTo(e.optional.type.baseType)
-    e.type = e.optional.type
-    return e
   }
   OrExpression(e) {
     e.disjuncts = this.analyze(e.disjuncts)
