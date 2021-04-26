@@ -149,9 +149,9 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   Exponentiate_raisepower(factor, op, expo) {
     return new ast.BinaryExpression(factor.ast(), op.sourceString, expo.ast())
   },
-  Factor_parens(_sp, addSub, _cp) {
+  Factor_parens(_sp, logicExp, _cp) {
     // return new ast.LogicExpression(addSub.ast())
-    return addSub.ast()
+    return logicExp.ast()
   },
   Factor_unary(sign, _sp, factor, _cp) {
     return new ast.UnaryExpression(sign.sourceString, factor.ast())
