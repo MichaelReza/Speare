@@ -3,8 +3,6 @@
 // Invoke generate(program) with the program node to get back the JavaScript
 // translation as a string.
 
-import { IncDec } from "./ast.js"
-
 export default function generate(program) {
   const output = []
 
@@ -37,7 +35,11 @@ export default function generate(program) {
         "exponentiate" : "**",
       }
 
-  const gen = node => generators[node.constructor.name](node)
+  const gen = node =>  {
+    console.log(node)
+    console.log(node.constructor.name)
+    return generators[node.constructor.name](node)
+  }
 
   const generators = {
     // Key idea: when generating an expression, just return the JS string; when
@@ -76,13 +78,13 @@ export default function generate(program) {
       output.push("}")
     },
     WhileLoop(w) {
-      output.push(`while (${gen(s.logicExp)}) {`)
-      gen(s.body)
+      output.push(`while (${gen(w.logicExp)}) {`)
+      gen(w.body)
       output.push("}")
     },
-    DoWhile(d) {
-      // output.push('do {${d.body}} while ($')
-    },
+    // DoWhile(d) {
+    //   // output.push('do {${d.body}} while ($')
+    // },
     VariableInitialization(v) {
       output.push(`let ${(v.name)} = ${gen(v.initializer)}`)
     },
@@ -99,7 +101,7 @@ export default function generate(program) {
       output.push(`return ${gen(e.expression)}`)
     },
     Break(b) {
-      output.push("break;")
+      output.push("break")
     },
     IncDecBy(i) {
       if (i.op === "incrementby") {
@@ -121,11 +123,11 @@ export default function generate(program) {
     },
     UnaryExpression(u) {
       if (u.sign === "nay") {
-        `!(${gen(u.value)})`
+        return (`!(${gen(u.value)})`)
       } else if (u.sign === "absolutization") {
-        return `Math.abs(${gen(u.value)})`
+        return (`Math.abs(${gen(u.value)})`)
       } else {
-        return `Math.sqrt(${gen(u.value)})`
+        return (`Math.sqrt(${gen(u.value)})`)
       }
     },
     UnaryAssignment(v) {
@@ -138,6 +140,11 @@ export default function generate(program) {
       return JSON.stringify(s)
     },
     Liste(a) {
+      return a.map(gen)
+    },
+    // Apparently we need this for the array of statements in program...
+    // Why this isn't "Liste" idk
+    Array(a) {
       return a.map(gen)
     },
     ArrayLookup(a) {
@@ -156,11 +163,7 @@ export default function generate(program) {
       return JSON.stringify(s)
     },
     Tobeornottobe(t) {
-      if (t === "fallacious") {
-        return false
-      } else {
-        return true
-      }
+      return t.value === `fallacious` ? "false" : "true"
     },
     Concordance(c) {
       // Concordance Generator
@@ -178,7 +181,7 @@ export default function generate(program) {
      * on what to do, we just need to convert it to Speare. Of course, they do *not*
      * directly translate. We may also have differing features.
      */
-    Carlos() {
+    // Carlos() {
       // VariableDeclaration(d) {
       // // We don't care about const vs. let in the generated code! The analyzer has
       // // already checked that we never updated a const, so let is always fine.
@@ -319,7 +322,7 @@ export default function generate(program) {
       // Liste(a) {
       //   return a.map(gen)
       // }
-    },
+    // },
   }
 
   gen(program)
