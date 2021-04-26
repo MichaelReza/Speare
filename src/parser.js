@@ -105,6 +105,19 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   ContFlow_while(_whle, _sp, logicExp, _ep, _sb, body, _eb) {
     return new ast.WhileLoop(logicExp.ast(), body.ast())
   },
+  // switch Factor "{" (case Factor ":" Body )+ "}"
+  ContFlow_switchcase(
+    _switch,
+    factor,
+    _open,
+    _cases,
+    factors,
+    _colon,
+    body,
+    _close
+  ) {
+    throw new Error("Not implemented")
+  },
   ContFlow_dowhile(doo, _sb, body, _eb, whle, _sp, logExp, _ep) {
     return new ast.DoWhile(
       doo.sourceString,
@@ -137,7 +150,8 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
     return new ast.BinaryExpression(factor.ast(), op.sourceString, expo.ast())
   },
   Factor_parens(_sp, addSub, _cp) {
-    return new ast.LogicExpression(addSub.ast())
+    // return new ast.LogicExpression(addSub.ast())
+    return addSub.ast()
   },
   Factor_unary(sign, _sp, factor, _cp) {
     return new ast.UnaryExpression(sign.sourceString, factor.ast())
@@ -149,7 +163,7 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
     return new ast.IdentifierExpression(id.sourceString)
   },
   ArrayLookup(array, _sb, index, _eb) {
-      return new ast.ArrayLookup(array.ast(), index.ast())
+    return new ast.ArrayLookup(array.ast(), index.ast())
   },
   DictLookup(dict, _dot, key) {
     return new ast.DictLookup(dict.ast(), key.ast())
@@ -179,7 +193,7 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   DictEntry(key, _colon, val) {
     return new ast.DictEntry(key.ast(), val.ast())
   },
-  type_listdec(_listof, type){
+  type_listdec(_listof, type) {
     return new ast.ListeType(type.ast())
   },
   type_dictdec(_concof, keytype, _of, valuetype) {
