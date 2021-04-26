@@ -1,7 +1,7 @@
 import assert from "assert/strict"
 import parse from "../src/parser.js"
 import analyze from "../src/analyzer.js"
-import optimize from "../src/optimizer.js"
+// import optimize from "../src/optimizer.js"
 import generate from "../src/generator.js"
 
 function dedent(s) {
@@ -277,7 +277,7 @@ const fixtures = [
 describe("The code generator", () => {
   for (const fixture of fixtures) {
     it(`produces expected js output for the ${fixture.name} program`, () => {
-      const actual = generate(optimize(analyze(parse(fixture.source))))
+      const actual = generate(analyze(parse(fixture.source)))
       assert.deepEqual(actual, fixture.expected)
     })
   }
