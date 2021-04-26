@@ -10,14 +10,11 @@ function dedent(s) {
 
 const fixtures = [
   {
-<<<<<<< Updated upstream
-=======
     name: "unary",
     source: `alloweth ToBeOrNotToBe sally be nay(fallacious)`,
     expected: dedent`let sally = !(false)`,
   },
   {
->>>>>>> Stashed changes
     name: "small",
     source: `
       alloweth Numeral x be 3 accumulate 7

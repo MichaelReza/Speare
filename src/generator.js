@@ -126,9 +126,6 @@ export default function generate(program) {
       return `(${gen(b.left)} ${OP} ${gen(b.right)})`
     },
     UnaryExpression(u) {
-<<<<<<< Updated upstream
-      return `${u.sign}(${gen(u.value)})`
-=======
       if (u.sign === "nay") {
         return (`!(${gen(u.value)})`)
       } else if (u.sign === "absolutization") {
@@ -136,7 +133,6 @@ export default function generate(program) {
       } else {
         return (`Math.sqrt(${gen(u.value)})`)
       }
->>>>>>> Stashed changes
     },
     UnaryAssignment(v) {
       // Unary Assignment Generator
