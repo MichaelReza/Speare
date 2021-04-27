@@ -61,14 +61,27 @@ export default function generate(program) {
       //Composition Generator
     },
     Corollary(f) {
-      return targetName(f)
+      output.push(`function ${f.id}(${gen(f.params)}) {`)
+      gen(f.body)
+      output.push(`}`)
     },
     Param(p) {
       //Parameter Generator
+      return p.name
     },
     IfStatement(s) {
       // If Statement Generator
-      // output.push(`if (${})`)
+      output.push(`if (${gen(s.le1)}) {`)
+      gen(s.body)
+      if (s.le2[0] !== undefined) {
+        output.push(`} else if (${gen(s.le2)}) {`)
+        gen(s.body2)
+      } 
+      if (s.body3[0] !== undefined) {
+        output.push(`} else {`)
+        gen(s.body3)
+      }
+      output.push(`}`)
     },
     ForLoop(f) {
       output.push(`for (${gen(f.init)};${gen(f.condition)};${gen(f.action)}) {`)
@@ -87,6 +100,7 @@ export default function generate(program) {
       output.push(`let ${(v.name)} = ${gen(v.initializer)}`)
     },
     VariableAssignment(v) {
+      //console.log(v)
       output.push(`${v.name.name} = ${gen(v.value)}`)
     },
     Variable(v) {
@@ -95,6 +109,7 @@ export default function generate(program) {
     Print(e) {
       // console.log(e.expression)
       // console.log(gen(e.expression))
+      //console.log(e)
       output.push(`console.log(${gen(e.expression)})`)
     },
     Return(e) {
@@ -114,7 +129,7 @@ export default function generate(program) {
       if (i.op === "increment") {
         // console.log("REEEE")
         // console.log(i)
-        console.log(i.name)
+        //console.log(i.name)
         output.push(`${i.name}++`)
       } else {
         output.push(`${i.name}--`)
@@ -142,7 +157,7 @@ export default function generate(program) {
       return n.name
     },
     StringValue(s) {
-      return JSON.stringify(s)
+      return JSON.stringify(s.value)
     },
     Liste(a) {
       return a.map(gen)
@@ -160,13 +175,16 @@ export default function generate(program) {
     },
     Call(c) {
       // Call Generator
+      // NOT WORKING -----------------------------------
+      console.log(c.args)
+      output.push(`${c.varname}(${c.args.map(gen)})`)
     },
     Numeral(n) {
       return n.value
     },
-    Lexicographical(s) {
-      return JSON.stringify(s)
-    },
+    // StringValue(s) {
+    //   return JSON.stringify(s.value)
+    // },
     Tobeornottobe(t) {
       return t.value === `fallacious` ? "false" : "true"
     },

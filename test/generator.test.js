@@ -46,104 +46,114 @@ const fixtures = [
       console.log((y && y) || false || (x * 2) !== 5)
     `,
   },
-  // {
-  //   name: "if",
-  //   source: `
-  //     alloweth numeral x be 0
-  //     whether (x tis 0) { speaketh("1") }
-  //     whether (x tis 0) { speaketh(1) } otherwise { speaketh(2) }
-  //     whether (x tis 0) { speaketh(1) } subsequently (x tis 2) { speaketh(3) }
-  //     whether (x tis 0) { speaketh(1) } subsequently (x tis 2) { speaketh(3) } otherwise { speaketh(4) }
-  //   `,
-  //   expected: dedent`
-  //     let x_2 = 0;
-  //     if ((x_2 === 0)) {
-  //       console.log("1");
-  //     }
-  //     if ((x_2 === 0)) {
-  //       console.log(1);
-  //     } else {
-  //       console.log(2);
-  //     }
-  //     if ((x_2 === 0)) {
-  //       console.log(1);
-  //     } else {
-  //       if ((x_2 === 2)) {
-  //         console.log(3);
-  //       }
-  //     }
-  //     if ((x_2 === 0)) {
-  //       console.log(1);
-  //     } else
-  //       if ((x_2 === 2)) {
-  //         console.log(3);
-  //       } else {
-  //         console.log(4);
-  //       }
-  //   `,
-  // },
-  // {
-  //   name: "while",
-  //   source: `
-  //     alloweth Numeral x be 0
-  //     whilst (x lesser 5) {
-  //       alloweth Numeral y be 0
-  //       whilst (y lesser 5) {
-  //         speaketh(x accumulate y)
-  //         y be y with 1
-  //         exit
-  //       }
-  //       x be x with 1
-  //     }
-  //     execute {
-  //       speaketh(x)
-  //       x be x with 1
-  //     } whilst (x lesser 10)
-  //   `,
-  //   expected: dedent`
-  //     let x_3 = 0;
-  //     while ((x_3 < 5)) {
-  //       let y_2 = 0;
-  //       while ((y_2 < 5)) {
-  //         console.log((x_3 * y_2));
-  //         y_2 = (y_2 + 1);
-  //         break;
-  //       }
-  //       x_3 = (x_3 + 1);
-  //     }
-  //     do {
-  //       console.log(x_3);
-  //       x_3 = (x_3 + 1);
-  //     } while((x_3 < 10));
-  //   `,
-  // },
-  // {
-  //   name: "functions",
-  //   source: `
-  //     alloweth Numeral z be 0.5
-
-  //     enter ToBeOrNotToBe f(Numeral x, ToBeOrNotToBe y) {
-  //       speaketh(x nobler absolutization(x))
-  //       returneth faithful
-  //     }
-  //     enter ToBeOrNotToBe g() {
-  //       returneth fallacious
-  //     }
-
-  //     f(z, g())
-  //   `,
-  //   expected: dedent`
-  //     let z_1 = 0.5;
-  //     function f_2(x_3, y_4) {
-  //       console.log((Math.sin(x_3) > Math.PI));
-  //       return;
-  //     }
-  //     function g_5() {
-  //       return false;
-  //     }
-  //     f_2(z_1, g_5());
-  //   `,
-  // },
+  {
+    name: "if",
+    source: `
+      alloweth Numeral x be 0
+      whether (x tis 0) { speaketh("1") }
+      whether (x tis 0) { speaketh(1) } otherwise { speaketh(2) }
+      whether (x tis 0) { speaketh(1) } subsequently (x tis 2) { speaketh(3) }
+      whether (x tis 0) { speaketh(1) } subsequently (x tis 2) { speaketh(3) } otherwise { speaketh(4) }
+    `,
+    expected: dedent`
+      let x = 0
+      if (x === 0) {
+        console.log("1")
+      }
+      if (x === 0) {
+        console.log(1)
+      } else {
+        console.log(2)
+      }
+      if (x === 0) {
+        console.log(1)
+      } else if (x === 2) {
+        console.log(3)
+      }
+      if (x === 0) {
+        console.log(1)
+      } else if (x === 2) {
+        console.log(3)
+      } else {
+        console.log(4)
+      }
+    `,
+  },
+  {
+    name: "while",
+    source: `
+      alloweth Numeral x be 0
+      whilst (x lesser 5) {
+        alloweth Numeral y be 0
+        whilst (y lesser 5) {
+          speaketh(x accumulate y)
+          y be y with 1
+          exit
+        }
+        x be x with 1
+      }
+    `,
+    expected: dedent`
+      let x = 0
+      while (x < 5) {
+        let y = 0
+        while (y < 5) {
+          console.log(x * y)
+          y = y + 1
+          break
+        }
+        x = x + 1
+      }
+    `,
+  },
+  {
+    name: "functions",
+    source: `
+      alloweth Numeral z be 0.5
+      enter ToBeOrNotToBe f(Numeral x, ToBeOrNotToBe y) {
+        speaketh(x nobler absolutization(x))
+        returneth faithful
+      }
+      enter ToBeOrNotToBe g() {
+        returneth fallacious
+      }
+    `,
+    expected: dedent`
+      let z = 0.5
+      function f(x,y) {
+        console.log(x > Math.abs(x))
+        return true
+      }
+      function g() {
+        return false
+      }
+    `,
+  },
+  {
+    name: "function calls",
+    source: `
+      enter ToBeOrNotToBe f(Numeral x, ToBeOrNotToBe y) {
+        speaketh(x nobler absolutization(x))
+        returneth faithful
+      }
+      enter ToBeOrNotToBe g() {
+        returneth fallacious
+      }
+      f(0.5, g())
+      g()
+    `,
+    expected: dedent`
+      function f(x,y) {
+        console.log(x > Math.abs(x))
+        return true
+      }
+      function g() {
+        return false
+      }
+      f(0.5,g())
+      g()
+    `,
+  },
   // {
   //   name: "arrays",
   //   source: `

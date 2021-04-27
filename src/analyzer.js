@@ -22,10 +22,13 @@ function must(condition, errorMessage) {
 }
 
 const check = (self) => ({
+  // REVISIT
   isNumeral() {
+    
     var t = typeof self.value !== "undefined" && typeof self.value.type !== "undefined" ? self.value.type : self.type
     must(
-      [Type.NUMERAL].includes(t),
+      // Created addition for strange way that we handle identifier expressions
+      [Type.NUMERAL, Type.NUMERAL.name].includes(t ?? t.type),
       `Expected a number, found ${t.name}`
     )
   },
@@ -454,7 +457,6 @@ class Context {
   }
   DictLookup(e) {
     e.dict = this.analyze(e.dict).value
-    console.log(e.dict)
     check(e.key).isInTheDict(e.dict)
     e.dict.dictEntries.forEach(function f(entry) {
       if (e.key.value === entry.key.value) {
