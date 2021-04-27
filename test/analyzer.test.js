@@ -106,7 +106,7 @@ const semanticChecks = [
   // [21] DONE
   ["ok to != arrays", "speaketh([1] tis not [5,8])"],
   // [22] DONE
-  ["arithmetic", "speaketh(5 exponentiate nay(3))"],
+  ["arithmetic", "speaketh(5 exponentiate -3)"],
   // [23] DONE
   [
     "variables",

@@ -15,22 +15,35 @@ const fixtures = [
     expected: dedent`let sally = !(false)`,
   },
   {
+    name: "Numeral dec and assignment",
+    source: `
+    alloweth Numeral x be 3
+    x be 4
+    speaketh(x)
+    `,
+    expected: dedent`
+    let x = 3
+    x = 4
+    console.log(x)
+    `
+  },
+  {
     name: "small",
     source: `
       alloweth Numeral x be 3 accumulate 7
       x increment
       x decrement
       alloweth ToBeOrNotToBe y be fallacious
-      y be ((5 exponentiate -x) sunder (nay(100)) tis nobler -x) alternatively fallacious
-      speaketh(y furthermore y alternatively fallacious alternatively x accumulate 2 tis not 5)
+      y be (((5 exponentiate -x) sunder -100 tis nobler -x) alternatively fallacious)
+      speaketh((y furthermore y) alternatively fallacious alternatively (x accumulate 2) tis not 5)
     `,
     expected: dedent`
-      let x_1 = 3 * 7;
-      x_1++;
-      x_1--;
-      let y_1 = true;
-      y_1 = (((5 ** -x_1) / -100) > -x_1) || false;
-      console.log((y_1 && y_1) || false || (x_1 * 2) !== 5);
+      let x = 3 * 7;
+      x++;
+      x--;
+      let y = true;
+      y = (((5 ** -x) / -100) > -x) || false;
+      console.log((y && y) || false || (x * 2) !== 5);
     `,
   },
   // {

@@ -37,7 +37,7 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
     )
   },
   Statement_assignment(id, _be, relExp) {
-    return new ast.VariableAssignment(id.sourceString, relExp.ast())
+    return new ast.VariableAssignment(id.ast(), relExp.ast())
   },
   Statement_print(_print, _sp, relExp, _ep) {
     return new ast.Print(relExp.ast())
@@ -148,6 +148,12 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   },
   Exponentiate_raisepower(factor, op, expo) {
     return new ast.BinaryExpression(factor.ast(), op.sourceString, expo.ast())
+  },
+  Factor_variable(sign, id) {
+    if (sign.sourceString !== "-") {
+      return new ast.IdentifierExpression(id.sourceString)
+    }
+    return new ast.UnaryExpression(sign.sourceString, id.ast())
   },
   Factor_parens(_sp, logicExp, _cp) {
     // return new ast.LogicExpression(addSub.ast())

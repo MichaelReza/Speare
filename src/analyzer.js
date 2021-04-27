@@ -23,9 +23,10 @@ function must(condition, errorMessage) {
 
 const check = (self) => ({
   isNumeral() {
+    var t = typeof self.value !== "undefined" && typeof self.value.type !== "undefined" ? self.value.type : self.type
     must(
-      [Type.NUMERAL].includes(self.type),
-      `Expected a number, found ${self.type.name}`
+      [Type.NUMERAL].includes(t),
+      `Expected a number, found ${t.name}`
     )
   },
   isNumericOrString() {
@@ -221,8 +222,20 @@ class Context {
     d.initializer = this.analyze(d.initializer)
     check(d.type).isSameTypeAs(d.initializer.type)
     
-    this.add(d.name, d.initializer) 
+    this.add(d.name, d.initializer)
     return d
+  }
+  // Assignment(s) {
+  //   s.source = this.analyze(s.source)
+  //   s.target = this.analyze(s.target)
+  //   check(s.source).isAssignableTo(s.target.type)
+  //   check(s.target).isNotReadOnly()
+  //   return s
+  // }
+  VariableAssignment(v) {
+    v.value = this.analyze(v.value)
+    check(v.value).isAssignableTo(this.lookup(v.name.name))
+    return v
   }
   Param(p) {
     this.add(p.name, p)
@@ -239,13 +252,6 @@ class Context {
     check(this.lookup(s.name)).isNumeral()
     //check your expression type, should be integer
     //check s.name, make sure it is integer and not readonly
-    return s
-  }
-  Assignment(s) {
-    s.source = this.analyze(s.source)
-    s.target = this.analyze(s.target)
-    check(s.source).isAssignableTo(s.target.type)
-    check(s.target).isNotReadOnly()
     return s
   }
   UnaryAssignment(s) {
@@ -361,13 +367,10 @@ class Context {
     e.value = this.analyze(e.value)
     e.type = e.value.type
     if (e.sign === "nay") {
-      check(e.value).isBooleanOrNumeric()
-    } else if (e.sign === "abs") {
+      check(e.value).isBoolean()
+    } else if (e.sign === "absolutization" || e.sign === "quadrangle" || e.sign === "-") {
       check(e.value).isNumeral()
-    } else if (e.sign === "sqrt") {
-      check(e.value).isNumeral()
-    } else {
-    }
+    } else {}
     return e
   }
   Liste(a) {
@@ -408,7 +411,9 @@ class Context {
   }
   IdentifierExpression(e) {
     // Id expressions get "replaced" with the variables they refer to
-    return this.lookup(e.name)
+    e.value = this.lookup(e.name)
+    e.type = e.value.type
+    return e
   }
   TypeId(t) {
     t = this.lookup(t.name)
@@ -448,7 +453,8 @@ class Context {
     return f
   }
   DictLookup(e) {
-    e.dict = this.analyze(e.dict)
+    e.dict = this.analyze(e.dict).value
+    console.log(e.dict)
     check(e.key).isInTheDict(e.dict)
     e.dict.dictEntries.forEach(function f(entry) {
       if (e.key.value === entry.key.value) {

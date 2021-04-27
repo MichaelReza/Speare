@@ -32,7 +32,7 @@ Speare {
                 | ArrayLookup
                 | DictLookup
                 | FunctionCall
-                | Varname
+                | "-"? Varname                                                   --variable
                 | "(" LogicExp ")"                                                --parens
                 | ("nay" | abs | sqrt)	"(" Factor ")"                          --unary
                 | String

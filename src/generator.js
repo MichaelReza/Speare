@@ -36,8 +36,6 @@ export default function generate(program) {
       }
 
   const gen = node =>  {
-    console.log(node)
-    console.log(node.constructor.name)
     return generators[node.constructor.name](node)
   }
 
@@ -88,13 +86,15 @@ export default function generate(program) {
     VariableInitialization(v) {
       output.push(`let ${(v.name)} = ${gen(v.initializer)}`)
     },
-    VariableAssignment(s) {
-      output.push(`${gen(s.name)} = ${gen(s.value)};`)
+    VariableAssignment(v) {
+      output.push(`${v.name.name} = ${gen(v.value)}`)
     },
     Variable(v) {
       return targetName(v)
     },
     Print(e) {
+      // console.log(e.expression)
+      // console.log(gen(e.expression))
       output.push(`console.log(${gen(e.expression)})`)
     },
     Return(e) {
@@ -126,15 +126,17 @@ export default function generate(program) {
         return (`!(${gen(u.value)})`)
       } else if (u.sign === "absolutization") {
         return (`Math.abs(${gen(u.value)})`)
-      } else {
+      } else if (u.sign === "quadrangle") {
         return (`Math.sqrt(${gen(u.value)})`)
+      } else if (u.sign === "-") {
+        return (`-${gen(u.value)}`)
       }
     },
     UnaryAssignment(v) {
       // Unary Assignment Generator
     },
     IdentifierExpression(n) {
-      // Identifier Expression Generator
+      return n.name
     },
     StringValue(s) {
       return JSON.stringify(s)
