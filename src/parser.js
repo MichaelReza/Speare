@@ -37,7 +37,7 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
     )
   },
   Statement_assignment(id, _be, relExp) {
-    return new ast.VariableAssignment(id.sourceString, relExp.ast())
+    return new ast.VariableAssignment(id.ast(), relExp.ast())
   },
   Statement_print(_print, _sp, relExp, _ep) {
     return new ast.Print(relExp.ast())
@@ -75,23 +75,11 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
     _eb3
   ) {
     return new ast.IfStatement(
-      _if.sourceString,
       le1.ast(),
       body.ast(),
-      _elif.sourceString,
       le2.ast(),
       body2.ast(),
-      _else.sourceString,
       body3.ast()
-    )
-  },
-  ContFlow_switchcase(swtch, factor, _sb, cse, factor2, _col, body, _eb) {
-    return new ast.SwitchStatement(
-      swtch.sourceString,
-      factor.ast(),
-      cse.sourceString,
-      factor2.ast(),
-      body.ast()
     )
   },
   ContFlow_forloop(
@@ -108,15 +96,27 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
     _eb
   ) {
     return new ast.ForLoop(
-      _for.sourceString,
       init.ast(),
       condition.ast(),
       action.ast(),
       body.ast()
     )
   },
-  ContFlow_while(whle, _sp, logicExp, _ep, _sb, body, _eb) {
-    return new ast.WhileLoop(whle.sourceString, logicExp.ast(), body.ast())
+  ContFlow_while(_whle, _sp, logicExp, _ep, _sb, body, _eb) {
+    return new ast.WhileLoop(logicExp.ast(), body.ast())
+  },
+  // switch Factor "{" (case Factor ":" Body )+ "}"
+  ContFlow_switchcase(
+    _switch,
+    factor,
+    _open,
+    _cases,
+    factors,
+    _colon,
+    body,
+    _close
+  ) {
+    throw new Error("Not implemented")
   },
   ContFlow_dowhile(doo, _sb, body, _eb, whle, _sp, logExp, _ep) {
     return new ast.DoWhile(
@@ -149,8 +149,15 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   Exponentiate_raisepower(factor, op, expo) {
     return new ast.BinaryExpression(factor.ast(), op.sourceString, expo.ast())
   },
-  Factor_parens(_sp, addSub, _cp) {
-    return new ast.BinaryExpression(addSub.ast())
+  Factor_variable(sign, id) {
+    if (sign.sourceString !== "-") {
+      return new ast.IdentifierExpression(id.sourceString)
+    }
+    return new ast.UnaryExpression(sign.sourceString, id.ast())
+  },
+  Factor_parens(_sp, logicExp, _cp) {
+    // return new ast.LogicExpression(addSub.ast())
+    return logicExp.ast()
   },
   Factor_unary(sign, _sp, factor, _cp) {
     return new ast.UnaryExpression(sign.sourceString, factor.ast())
@@ -162,7 +169,7 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
     return new ast.IdentifierExpression(id.sourceString)
   },
   ArrayLookup(array, _sb, index, _eb) {
-      return new ast.ArrayLookup(array.ast(), index.ast())
+    return new ast.ArrayLookup(array.ast(), index.ast())
   },
   DictLookup(dict, _dot, key) {
     return new ast.DictLookup(dict.ast(), key.ast())
@@ -192,7 +199,7 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   DictEntry(key, _colon, val) {
     return new ast.DictEntry(key.ast(), val.ast())
   },
-  type_listdec(_listof, type){
+  type_listdec(_listof, type) {
     return new ast.ListeType(type.ast())
   },
   type_dictdec(_concof, keytype, _of, valuetype) {

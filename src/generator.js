@@ -3,8 +3,6 @@
 // Invoke generate(program) with the program node to get back the JavaScript
 // translation as a string.
 
-import { IncDec } from "./ast.js"
-
 export default function generate(program) {
   const output = []
 
@@ -37,7 +35,9 @@ export default function generate(program) {
         "exponentiate" : "**",
       }
 
-  const gen = node => generators[node.constructor.name](node)
+  const gen = node =>  {
+    return generators[node.constructor.name](node)
+  }
 
   const generators = {
     // Key idea: when generating an expression, just return the JS string; when
@@ -67,37 +67,41 @@ export default function generate(program) {
       //Parameter Generator
     },
     IfStatement(s) {
-      //If Statement Generator
-    },
-    SwitchStatement(s) {
-      //Switch Statement Generator
+      // If Statement Generator
+      // output.push(`if (${})`)
     },
     ForLoop(f) {
-      // For Loop Generator
+      output.push(`for (${gen(f.init)};${gen(f.condition)};${gen(f.action)}) {`)
+      gen(f.body)
+      output.push("}")
     },
     WhileLoop(w) {
-      // While Loop Generator
+      output.push(`while (${gen(w.logicExp)}) {`)
+      gen(w.body)
+      output.push("}")
     },
-    DoWhile(d) {
-      // Do-While Loop Generator
-    },
+    // DoWhile(d) {
+    //   // output.push('do {${d.body}} while ($')
+    // },
     VariableInitialization(v) {
-      // Variable Init Generator
+      output.push(`let ${(v.name)} = ${gen(v.initializer)}`)
     },
-    VariableAssignment(s) {
-      output.push(`${gen(s.name)} = ${gen(s.value)};`)
+    VariableAssignment(v) {
+      output.push(`${v.name.name} = ${gen(v.value)}`)
     },
     Variable(v) {
       return targetName(v)
     },
     Print(e) {
-      // Print Generator
+      // console.log(e.expression)
+      // console.log(gen(e.expression))
+      output.push(`console.log(${gen(e.expression)})`)
     },
     Return(e) {
-      // Return Generator
+      output.push(`return ${gen(e.expression)}`)
     },
     Break(b) {
-      output.push("break;")
+      output.push("break")
     },
     IncDecBy(i) {
       if (i.op === "incrementby") {
@@ -108,29 +112,34 @@ export default function generate(program) {
     },
     IncDec(i) {
       if (i.op === "increment") {
-        output.push(`${gen(i.variable)}++;`)
+        // console.log("REEEE")
+        // console.log(i)
+        console.log(i.name)
+        output.push(`${i.name}++`)
       } else {
-        output.push(`${gen(i.variable)}--;`)
+        output.push(`${i.name}--`)
       }
     },
     BinaryExpression(b) {
-      const OP = OPERATORS[e.op] ?? e.op
-      return `(${gen(e.left)} ${OP} ${gen(e.right)})`
+      const OP = OPERATORS[b.op] ?? b.op
+      return `${gen(b.left)} ${OP} ${gen(b.right)}`
     },
     UnaryExpression(u) {
       if (u.sign === "nay") {
-        `!(${gen(u.value)})`
+        return (`!(${gen(u.value)})`)
       } else if (u.sign === "absolutization") {
-        return `Math.abs(${gen(u.value)})`
-      } else {
-        return `Math.sqrt(${gen(u.value)})`
+        return (`Math.abs(${gen(u.value)})`)
+      } else if (u.sign === "quadrangle") {
+        return (`Math.sqrt(${gen(u.value)})`)
+      } else if (u.sign === "-") {
+        return (`-${gen(u.value)}`)
       }
     },
     UnaryAssignment(v) {
       // Unary Assignment Generator
     },
     IdentifierExpression(n) {
-      // Identifier Expression Generator
+      return n.name
     },
     StringValue(s) {
       return JSON.stringify(s)
@@ -138,8 +147,13 @@ export default function generate(program) {
     Liste(a) {
       return a.map(gen)
     },
+    // Apparently we need this for the array of statements in program...
+    // Why this isn't "Liste" idk
+    Array(a) {
+      return a.map(gen)
+    },
     ArrayLookup(a) {
-      // Liste Lookup Generator
+      return `${gen(a.array)}[${gen(a.index)}]`
     },
     DictLookup(d) {
       // Concordance Lookup Generator
@@ -148,17 +162,13 @@ export default function generate(program) {
       // Call Generator
     },
     Numeral(n) {
-      return n
+      return n.value
     },
     Lexicographical(s) {
       return JSON.stringify(s)
     },
     Tobeornottobe(t) {
-      if (t === "fallacious") {
-        return false
-      } else {
-        return true
-      }
+      return t.value === `fallacious` ? "false" : "true"
     },
     Concordance(c) {
       // Concordance Generator
@@ -176,7 +186,7 @@ export default function generate(program) {
      * on what to do, we just need to convert it to Speare. Of course, they do *not*
      * directly translate. We may also have differing features.
      */
-    Carlos() {
+    // Carlos() {
       // VariableDeclaration(d) {
       // // We don't care about const vs. let in the generated code! The analyzer has
       // // already checked that we never updated a const, so let is always fine.
@@ -317,7 +327,7 @@ export default function generate(program) {
       // Liste(a) {
       //   return a.map(gen)
       // }
-    },
+    // },
   }
 
   gen(program)

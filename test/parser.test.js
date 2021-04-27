@@ -373,10 +373,10 @@ const goodPrograms = {
      otherwise { speaketh(y) }",
 
   // Switch-Case Statements:
-  "Recognizes Switch-case statement":
-    "trigger x { condition 0: speaketh(z) condition 1: speaketh(y) }",
-  "Recognizes Switch-case with break":
-    "trigger x { condition 0: speaketh(z) exit condition 1: speaketh(y) exit }",
+  // "Recognizes Switch-case statement":
+  //   "trigger x { condition 0: speaketh(z) condition 1: speaketh(y) }",
+  // "Recognizes Switch-case with break":
+  //   "trigger x { condition 0: speaketh(z) exit condition 1: speaketh(y) exit }",
 }
 
 const badPrograms = [
@@ -450,13 +450,13 @@ const badPrograms = [
   ],
 
   // Switch-Case Statements:
-  ["Disallows switch with no cases", "trigger x { }", /Line 1, col 13:/],
-  // Types:
-  [
-    "Disallows incomplete statement",
-    "alloweth increment be",
-    /Line 1, col 10:/,
-  ],
+  // ["Disallows switch with no cases", "trigger x { }", /Line 1, col 13:/],
+  // // Types:
+  // [
+  //   "Disallows incomplete statement",
+  //   "alloweth increment be",
+  //   /Line 1, col 10:/,
+  // ],
 ]
 
 describe("the Parser", () => {

@@ -6,19 +6,19 @@ Speare {
   Body          = (Statement | Work)*
   Statement     = ContFlow+
                 | alloweth type Varname "be" LogicExp                           --variable
-                | Varname "be" (RelExp)                                         --assignment
+                | Varname "be" LogicExp                                         --assignment
                 | speaketh "(" LogicExp ")"                                       --print
                 | returneth RelExp?                                             --return
                 | FunctionCall
                 | Varname (incrementby | decrementby) RelExp                    --incdecby
                 | Varname (increment | decrement)                               --incdec
                 | break                                                         --break
-  ContFlow      = if "(" LogicExp+ ")" "{" Body "}" ( elif "(" LogicExp+ ")" "{" Body "}" )* ( else "{" Body "}")? --complexconditional
+  ContFlow      = if "(" LogicExp ")" "{" Body "}" ( elif "(" LogicExp ")" "{" Body "}" )* ( else "{" Body "}")? --complexconditional
                 | switch Factor "{" (case Factor ":" Body )+ "}"                                 --switchcase
                 | for "(" Statement "," LogicExp "," Statement ")" "{" Body "}"      --forloop
                 | while "(" LogicExp+ ")" "{" Body  "}"                     --while
                 | do "{" Body "}" while "(" LogicExp+ ")"                --dowhile
-  LogicExp      = LogicExp logicalop RelExp                                       --logicalcombo
+  LogicExp      = LogicExp logicalop LogicExp                                       --logicalcombo
                 | RelExp
   RelExp        = AddSub relop AddSub                                           --equality
                 | AddSub                                                        --defer
@@ -32,8 +32,8 @@ Speare {
                 | ArrayLookup
                 | DictLookup
                 | FunctionCall
-                | Varname
-                | "(" AddSub ")"                                                --parens
+                | "-"? Varname                                                   --variable
+                | "(" LogicExp ")"                                                --parens
                 | ("nay" | abs | sqrt)	"(" Factor ")"                          --unary
                 | String
   DictEntry     = AddSub colon AddSub
