@@ -38,12 +38,12 @@ const fixtures = [
       speaketh((y furthermore y) alternatively fallacious alternatively (x accumulate 2) tis not 5)
     `,
     expected: dedent`
-      let x = 3 * 7;
-      x++;
-      x--;
-      let y = true;
-      y = (((5 ** -x) / -100) > -x) || false;
-      console.log((y && y) || false || (x * 2) !== 5);
+      let x = 3 * 7
+      x++
+      x--
+      let y = false
+      y = (((5 ** -x) / -100) > -x) || false
+      console.log((y && y) || false || (x * 2) !== 5)
     `,
   },
   // {

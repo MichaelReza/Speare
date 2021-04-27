@@ -6,7 +6,7 @@ Speare {
   Body          = (Statement | Work)*
   Statement     = ContFlow+
                 | alloweth type Varname "be" LogicExp                           --variable
-                | Varname "be" (RelExp)                                         --assignment
+                | Varname "be" LogicExp                                         --assignment
                 | speaketh "(" LogicExp ")"                                       --print
                 | returneth RelExp?                                             --return
                 | FunctionCall

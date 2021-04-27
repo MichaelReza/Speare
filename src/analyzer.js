@@ -82,8 +82,8 @@ const check = (self) => ({
   },
   isAssignableTo(t) {
     must(
-      ((self.type.name ?? self.type) === (t.name ?? t)),
-      `Cannot assign a ${(self.type.name ?? self.type)} to a ${(t.name ?? t)}`
+      ((self.type.name ?? self.type) === (t.type.name ?? t.type ?? t.name ?? t)),
+      `Cannot assign a ${(self.type.name ?? self.type)} to a ${(t.type.name ?? t.type ?? t.name ?? t)}`
     )
   },
   isNotReadOnly() {

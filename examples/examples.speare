@@ -1,3 +1,6 @@
 alloweth Numeral x be 3 accumulate 7
 x increment
 x decrement
+alloweth ToBeOrNotToBe y be fallacious
+y be ((5 exponentiate -x sunder -100) tis nobler -x) alternatively fallacious
+speaketh((y furthermore y) alternatively fallacious alternatively (x accumulate 2) tis not 5)

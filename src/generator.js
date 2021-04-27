@@ -112,14 +112,17 @@ export default function generate(program) {
     },
     IncDec(i) {
       if (i.op === "increment") {
-        output.push(`${gen(i.variable)}++;`)
+        // console.log("REEEE")
+        // console.log(i)
+        console.log(i.name)
+        output.push(`${i.name}++`)
       } else {
-        output.push(`${gen(i.variable)}--;`)
+        output.push(`${i.name}--`)
       }
     },
     BinaryExpression(b) {
       const OP = OPERATORS[b.op] ?? b.op
-      return `(${gen(b.left)} ${OP} ${gen(b.right)})`
+      return `${gen(b.left)} ${OP} ${gen(b.right)}`
     },
     UnaryExpression(u) {
       if (u.sign === "nay") {
