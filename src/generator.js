@@ -162,7 +162,7 @@ export default function generate(program) {
       return JSON.stringify(s.value)
     },
     Liste(a) {
-      return a.map(gen)
+      return `[${a.values.map(gen)}]`
     },
     // Apparently we need this for the array of statements in program...
     // Why this isn't "Liste" idk

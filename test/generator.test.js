@@ -154,19 +154,19 @@ const fixtures = [
       g()
     `,
   },
-  // {
-  //   name: "arrays",
-  //   source: `
-  //     alloweth Liste of ToBeOrNotToBe a be [faithful, fallacious, faithful]
-  //     alloweth Liste of Numeral b be [10, 40 - 20, 30]
-  //     speaketh(a[0] alternatively (b[0] lesser 88))
-  //   `,
-  //   expected: dedent`
-  //     let a_1 = [true, false, true];
-  //     let b_2 = [10, 20, 30];
-  //     console.log((a_1[1] || (((b_2[0] < 88)) ? (false) : (true))));
-  //   `,
-  // },
+  {
+    name: "arrays",
+    source: `
+      alloweth Liste of ToBeOrNotToBe a be [faithful, fallacious, faithful]
+      alloweth Liste of Numeral b be [10, 40 without 20, 30]
+      speaketh(a[0] alternatively (b[0] lesser 88))
+    `,
+    expected: dedent`
+      let a = [true,false,true]
+      let b = [10,(40 - 20),30]
+      console.log((a[0] || (b[0] < 88)))
+    `,
+  },
   // {
   //   name: "dictionaries",
   //   source: `

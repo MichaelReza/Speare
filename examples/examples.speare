@@ -1,8 +1,3 @@
-enter Numeral f (Numeral x, Numeral func) {
-    returneth x
-}
-enter Numeral g (Numeral y) {
-    returneth y
-}
-
-f(3, g(3))
+alloweth Liste of ToBeOrNotToBe a be [faithful, fallacious, faithful]
+alloweth Liste of Numeral b be [10, (40 without 20), 30]
+speaketh(a[0] alternatively (b[0] lesser 88))
