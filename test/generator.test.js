@@ -178,7 +178,6 @@ const fixtures = [
     expected: dedent`
       let x = 12
       let S = {"x" : 5}
-      S = {"x" : 6}
       let y = S."x"
       console.log(y)
     `,
