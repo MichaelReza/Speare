@@ -202,31 +202,6 @@ const fixtures = [
     `,
   },
   // {
-  //   name: "switch",
-  //   source: `
-  //     alloweth Numeral x be 0
-  //     trigger x {
-  //       condition 0:
-  //         speaketh(x)
-  //         exit
-  //       condition 1:
-  //         speaketh(x sunder 2)
-  //         exit
-  //     }
-  //   `,
-  //   expected: dedent`
-  //     let x_11 = 0;
-  //     switch(x_11) {
-  //       case 0:
-  //         console.log(x_11);
-  //         break;
-  //       case 1:
-  //         console.log(x_11 - 2);
-  //         break;
-  //     }
-  //   `,
-  // },
-  // {
   //   name: "class",
   //   source: `
   //     Composition Foo {
