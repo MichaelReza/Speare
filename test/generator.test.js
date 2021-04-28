@@ -167,42 +167,42 @@ const fixtures = [
       console.log((a[0] || (b[0] < b[3])))
     `,
   },
-  {
-    name: "dictionaries",
-    source: `
-      alloweth Numeral x be 12
-      alloweth Concordance of Lexicographical and Numeral S be { "x" : 5 }
-      alloweth Numeral y be S."x"
-      speaketh(y)
-    `,
-    expected: dedent`
-      let x = 12
-      let S = {"x" : 5}
-      let y = S."x"
-      console.log(y)
-    `,
-  },
   // {
-  //   name: "for loops",
+  //   name: "dictionaries",
   //   source: `
-  //     alloweth Liste of Numeral a be [10, 20, 30]
-  //     in regards to (Numeral i be 0, i lesser 50, i increment ) {
-  //       speaketh(i)
-  //     }
-  //     in regards to(Numeral j be 0, j lesser 3, j increment ) {
-  //       speaketh(a[j])
-  //     }
+  //     alloweth Numeral x be 12
+  //     alloweth Concordance of Lexicographical and Numeral S be { "x" : 5 }
+  //     alloweth Numeral y be S."x"
+  //     speaketh(y)
   //   `,
   //   expected: dedent`
-  //     let a_0 = [10, 20, 30];
-  //     for (let i_1 = 0; i_1 < 50; i_1++) {
-  //       console.log(i_1);
-  //     }
-  //     for (let j_2 = 0; j_2 < 3; j_2++) {
-  //       console.log(a_0[j_2]);
-  //     }
+  //     let x = 12
+  //     let S = {"x" : 5}
+  //     let y = S."x"
+  //     console.log(y)
   //   `,
   // },
+  {
+    name: "for loops",
+    source: `
+      alloweth Liste of Numeral a be [10, 20, 30]
+      in regards to (alloweth Numeral i be 0, i lesser 50, i increment ) {
+        speaketh(i)
+      }
+      in regards to(alloweth Numeral j be 0, j lesser 3, j increment ) {
+        speaketh(a[j])
+      }
+    `,
+    expected: dedent`
+      let a = [10, 20, 30]
+      for (let i = 0; (i < 50); i++) {
+        console.log(i)
+      }
+      for (let j = 0; (j < 3); j++) {
+        console.log(a[j])
+      }
+    `,
+  },
   // {
   //   name: "switch",
   //   source: `

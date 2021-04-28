@@ -1,5 +1,4 @@
-alloweth Numeral x be 12
-alloweth Concordance of Lexicographical and Numeral S be { "x" : 5 }
-S be { "x" : 6 }
-alloweth Numeral y be S."x"
-speaketh(y)
+
+in regards to (alloweth Numeral i be 0, i lesser 50, i increment ) {
+    speaketh(i)
+}

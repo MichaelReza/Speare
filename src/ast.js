@@ -130,6 +130,18 @@ export class ForLoop {
   }
 }
 
+export class ForLoopVariable {
+  constructor(type, name, initializer) {
+    Object.assign(this, { type, name, initializer })
+  }
+}
+
+export class ForLoopAction {
+  constructor(name, op) {
+    Object.assign(this, { name, op })
+  }
+}
+
 export class WhileLoop {
   constructor(logicExp, body) {
     Object.assign(this, {logicExp, body})

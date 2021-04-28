@@ -229,13 +229,6 @@ class Context {
     this.add(d.name, d.initializer)
     return d
   }
-  // Assignment(s) {
-  //   s.source = this.analyze(s.source)
-  //   s.target = this.analyze(s.target)
-  //   check(s.source).isAssignableTo(s.target.type)
-  //   check(s.target).isNotReadOnly()
-  //   return s
-  // }
   VariableAssignment(v) {
     v.value = this.analyze(v.value)
     check(v.value).isAssignableTo(this.lookup(v.name.name))
@@ -321,6 +314,16 @@ class Context {
     }
     s.body = this.newChild({ inLoop: true }).analyze(s.body)
     return s
+  }
+  ForLoopVariable(v) {
+    v.initializer = this.analyze(v.initializer)
+    check(v.type).isSameTypeAs(v.initializer.type)
+    this.add(v.name, v.initializer)
+    return v
+  }
+  ForLoopAction(v) {
+    check(this.lookup(v.name)).isNumeral()
+    return v
   }
   OrExpression(e) {
     e.disjuncts = this.analyze(e.disjuncts)

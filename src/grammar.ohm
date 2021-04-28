@@ -15,7 +15,7 @@ Speare {
                 | break                                                         --break
   ContFlow      = if "(" LogicExp ")" "{" Body "}" ( elif "(" LogicExp ")" "{" Body "}" )* ( else "{" Body "}")? --complexconditional
                 | switch Factor "{" (case Factor ":" Body )+ "}"                                 --switchcase
-                | for "(" Statement "," LogicExp "," Statement ")" "{" Body "}"      --forloop
+                | for "(" ForLoopVariable "," LogicExp "," ForLoopAction ")" "{" Body "}"      --forloop
                 | while "(" LogicExp+ ")" "{" Body  "}"                     --while
                 | do "{" Body "}" while "(" LogicExp+ ")"                --dowhile
   LogicExp      = LogicExp logicalop LogicExp                                       --logicalcombo
@@ -36,13 +36,16 @@ Speare {
                 | "(" LogicExp ")"                                                --parens
                 | ("nay" | abs | sqrt)	"(" Factor ")"                          --unary
                 | String
-  DictEntry     = AddSub colon AddSub
-  ArrayLookup   = Varname ("[" AddSub "]")+
-  DictLookup    = Factor "." AddSub
-  FunctionCall  = Varname "(" ListOf<AddSub, ","> ")"
+  
+
+  // Statement Specific Grammar Features
+  DictEntry              = AddSub colon AddSub
+  ArrayLookup            = Varname ("[" AddSub "]")+
+  DictLookup             = Factor "." AddSub
+  FunctionCall           = Varname "(" ListOf<AddSub, ","> ")"
   StatementFunctionCall  = Varname "(" ListOf<AddSub, ","> ")"
-
-
+  ForLoopVariable        = alloweth type Varname "be" LogicExp
+  ForLoopAction          = Varname (increment | decrement)
 
 
   // Define ids for variables, params

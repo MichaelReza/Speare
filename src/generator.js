@@ -86,7 +86,7 @@ export default function generate(program) {
       output.push(`}`)
     },
     ForLoop(f) {
-      output.push(`for (${gen(f.init)};${gen(f.condition)};${gen(f.action)}) {`)
+      output.push(`for (${gen(f.init)}; ${gen(f.condition)}; ${gen(f.action)}) {`)
       gen(f.body)
       output.push("}")
     },
@@ -99,7 +99,10 @@ export default function generate(program) {
     //   // output.push('do {${d.body}} while ($')
     // },
     VariableInitialization(v) {
-      output.push(`let ${(v.name)} = ${gen(v.initializer)}`)
+      output.push(`let ${v.name} = ${gen(v.initializer)}`)
+    },
+    ForLoopVariable(v) {
+      return `let ${v.name} = ${gen(v.initializer)}`
     },
     VariableAssignment(v) {
       output.push(`${v.name.name} = ${gen(v.value)}`)
@@ -128,6 +131,13 @@ export default function generate(program) {
         output.push(`${i.name}++`)
       } else {
         output.push(`${i.name}--`)
+      }
+    },
+    ForLoopAction(i) {
+      if (i.op === "increment") {
+        return `${i.name}++`
+      } else {
+        return `${i.name}--`
       }
     },
     BinaryExpression(b) {

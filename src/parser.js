@@ -29,11 +29,11 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
       body.ast()
     )
   },
-  Statement_variable(_allow, type, id, _be, relExp) {
+  Statement_variable(_allow, type, id, _be, logicExp) {
     return new ast.VariableInitialization(
       type.ast(),
       id.sourceString,
-      relExp.ast()
+      logicExp.ast()
     )
   },
   Statement_assignment(id, _be, relExp) {
@@ -179,6 +179,12 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   },
   StatementFunctionCall(varname, _sp, args, _ep) {
     return new ast.StatementCall(varname.sourceString, args.asIteration().ast())
+  },
+  ForLoopVariable(_allow, type, id, _be, logicExp) {
+    return new ast.ForLoopVariable(type.ast(), id.sourceString, logicExp.ast())
+  },
+  ForLoopAction(id, op) {
+    return new ast.ForLoopAction(id.sourceString, op.sourceString)
   },
   String_string(_squote, str, _equote) {
     return new ast.StringValue(str.sourceString)
