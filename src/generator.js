@@ -176,7 +176,7 @@ export default function generate(program) {
       return `${gen(a.array)}[${gen(a.index)}]`
     },
     DictLookup(d) {
-      console.log(d)
+      return `${gen(d.dict)}[${gen(d.key)}]`
       // Concordance Lookup Generator
     },
     Call(c) {
