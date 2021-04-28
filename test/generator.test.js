@@ -111,7 +111,7 @@ const fixtures = [
     source: `
       alloweth Numeral z be 0.5
       enter ToBeOrNotToBe f(Numeral x, ToBeOrNotToBe y) {
-        speaketh(x nobler absolutization(x))
+        speaketh((x nobler absolutization(x)))
         returneth faithful
       }
       enter ToBeOrNotToBe g() {
@@ -121,7 +121,7 @@ const fixtures = [
     expected: dedent`
       let z = 0.5
       function f(x, y) {
-        console.log(x > Math.abs(x))
+        console.log((x > Math.abs(x)))
         return true
       }
       function g() {
@@ -133,7 +133,7 @@ const fixtures = [
     name: "function calls",
     source: `
       enter ToBeOrNotToBe f(Numeral x, ToBeOrNotToBe y) {
-        speaketh(x nobler absolutization(x))
+        speaketh((x nobler absolutization(x)))
         returneth faithful
       }
       enter ToBeOrNotToBe g() {
@@ -144,7 +144,7 @@ const fixtures = [
     `,
     expected: dedent`
       function f(x, y) {
-        console.log(x > Math.abs(x))
+        console.log((x > Math.abs(x)))
         return true
       }
       function g() {
@@ -158,13 +158,13 @@ const fixtures = [
     name: "arrays",
     source: `
       alloweth Liste of ToBeOrNotToBe a be [faithful, fallacious, faithful]
-      alloweth Liste of Numeral b be [10, 40 without 20, 30]
-      speaketh(a[0] alternatively b[0] lesser b[3])
+      alloweth Liste of Numeral b be [10, (40 without 20), 30]
+      speaketh(a[0] alternatively (b[0] lesser b[3]))
     `,
     expected: dedent`
       let a = [true, false, true]
-      let b = [10, 40 - 20, 30]
-      console.log(a[0] || b[0] < b[3])
+      let b = [10, (40 - 20), 30]
+      console.log((a[0] || (b[0] < b[3])))
     `,
   },
   // {
