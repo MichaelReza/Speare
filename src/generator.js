@@ -33,6 +33,8 @@ export default function generate(program) {
         "sunder" : "/",
         "residue" : "%",
         "exponentiate" : "**",
+        "alternatively" : "||",
+        "furthermore" : "&&"
       }
 
   const gen = node =>  {
@@ -61,7 +63,7 @@ export default function generate(program) {
       //Composition Generator
     },
     Corollary(f) {
-      output.push(`function ${f.id}(${gen(f.params)}) {`)
+      output.push(`function ${f.id}(${gen(f.params).join(", ")}) {`)
       gen(f.body)
       output.push(`}`)
     },
@@ -160,7 +162,7 @@ export default function generate(program) {
       return JSON.stringify(s.value)
     },
     Liste(a) {
-      return a.map(gen)
+      return `[${a.values.map(gen).join(", ")}]`
     },
     // Apparently we need this for the array of statements in program...
     // Why this isn't "Liste" idk
@@ -175,21 +177,11 @@ export default function generate(program) {
     },
     Call(c) {
       // Call Generator
-      // NOT WORKING -----------------------------------
-      // console.log(`we made it here: ${c.args}`)
-      // console.log(`generatedArgs: ${gen(c.args)}`)
-      //c.args.forEach(x => {console.log(`${x} ; ${gen(x)}`)})
-      // return `${c.varname}(${gen(c.args)})`
-      return`${c.varname}(${gen(c.args)})`
+      return`${c.varname}(${gen(c.args).join(", ")})`
     },
     StatementCall(c) {
       // Call Generator
-      // NOT WORKING -----------------------------------
-      // console.log(`we made it here: ${c.args}`)
-      // console.log(`generatedArgs: ${gen(c.args)}`)
-      //c.args.forEach(x => {console.log(`${x} ; ${gen(x)}`)})
-      // return `${c.varname}(${gen(c.args)})`
-      output.push(`${c.varname}(${gen(c.args)})`)
+      output.push(`${c.varname}(${gen(c.args).join(", ")})`)
     },
     Numeral(n) {
       return n.value

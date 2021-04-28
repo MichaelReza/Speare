@@ -120,7 +120,7 @@ const fixtures = [
     `,
     expected: dedent`
       let z = 0.5
-      function f(x,y) {
+      function f(x, y) {
         console.log(x > Math.abs(x))
         return true
       }
@@ -143,30 +143,30 @@ const fixtures = [
       g()
     `,
     expected: dedent`
-      function f(x,y) {
+      function f(x, y) {
         console.log(x > Math.abs(x))
         return true
       }
       function g() {
         return false
       }
-      f(0.5,g())
+      f(0.5, g())
       g()
     `,
   },
-  // {
-  //   name: "arrays",
-  //   source: `
-  //     alloweth Liste of ToBeOrNotToBe a be [faithful, fallacious, faithful]
-  //     alloweth Liste of Numeral b be [10, 40 - 20, 30]
-  //     speaketh(a[0] alternatively (b[0] lesser 88))
-  //   `,
-  //   expected: dedent`
-  //     let a_1 = [true, false, true];
-  //     let b_2 = [10, 20, 30];
-  //     console.log((a_1[1] || (((b_2[0] < 88)) ? (false) : (true))));
-  //   `,
-  // },
+  {
+    name: "arrays",
+    source: `
+      alloweth Liste of ToBeOrNotToBe a be [faithful, fallacious, faithful]
+      alloweth Liste of Numeral b be [10, 40 without 20, 30]
+      speaketh(a[0] alternatively b[0] lesser b[3])
+    `,
+    expected: dedent`
+      let a = [true, false, true]
+      let b = [10, 40 - 20, 30]
+      console.log(a[0] || b[0] < b[3])
+    `,
+  },
   // {
   //   name: "dictionaries",
   //   source: `
