@@ -116,9 +116,9 @@ const semanticChecks = [
   [
     "nested structs",
     'alloweth Concordance of Lexicographical and Numeral c be {"z": 1}\
-  alloweth Concordance of Lexicographical and Concordance of Lexicographical and Numeral b be {"y": c}\
-  alloweth Concordance of Lexicographical and Concordance of Lexicographical and Concordance of Lexicographical and Numeral a be {"x": b}\
-  speaketh(a."x"."y"."z")',
+    alloweth Concordance of Lexicographical and Concordance of Lexicographical and Numeral b be {"y": c}\
+    alloweth Concordance of Lexicographical and Concordance of Lexicographical and Concordance of Lexicographical and Numeral a be {"x": b}\
+    speaketh(a."x"."y"."z")',
   ],
   // [26] DONE
   [

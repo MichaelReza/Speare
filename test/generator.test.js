@@ -167,23 +167,22 @@ const fixtures = [
       console.log((a[0] || (b[0] < b[3])))
     `,
   },
-  // {
-  //   name: "dictionaries",
-  //   source: `
-  //     alloweth Numeral x be 12
-  //     Concordance of Numeral and Numeral S be { x : 5 }
-  //     alloweth Numeral y be S.x
-  //     speaketh(y)
-  //   `,
-  //   expected: dedent`
-  //     let x_3 = 5;
-  //     let S = {
-  //       x : 5
-  //     }
-  //     let y_3 = S.x;
-  //     console.log(y_3);
-  //   `,
-  // },
+  {
+    name: "dictionaries",
+    source: `
+      alloweth Numeral x be 12
+      alloweth Concordance of Lexicographical and Numeral S be { "x" : 5 }
+      S be { "x" : 6 }
+      alloweth Numeral y be S."x"
+      speaketh(y)
+    `,
+    expected: dedent`
+      let x = 12
+      let S = {"x" : 5}
+      let y = S."x"
+      console.log(y)
+    `,
+  },
   // {
   //   name: "for loops",
   //   source: `

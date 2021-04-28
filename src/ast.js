@@ -217,6 +217,7 @@ export class IdentifierExpression {
 export class StringValue {
   constructor(value) {
     this.value = value
+    this.name = "Lexicographical"
   }
 }
 
@@ -277,7 +278,7 @@ export class Tobeornottobe {
 
 export class Concordance {
   constructor(dictEntries) {
-    this.type = "Concordance of " + dictEntries[0].key.name + " and " + dictEntries[0].val.name
+    this.type = "[" + dictEntries[0].key.name + ":" + dictEntries[0].val.name + "]"
     Object.assign(this, { dictEntries })
   }
 }

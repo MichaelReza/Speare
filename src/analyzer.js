@@ -99,9 +99,10 @@ const check = (self) => ({
     )
   },
   isInTheDict(object) {
+
     let incflag = false
-    object.dictEntries.forEach(function f(entry) {
-      if (entry.key.value === self.value) {
+    object.dictEntries.forEach((e) => {
+      if (e.key.value === self.value) {
         incflag = true
         return
       }
@@ -387,11 +388,9 @@ class Context {
     a.dictEntries.forEach(x => x = this.analyze(x))
     a.keyType = a.dictEntries[0].key.type
     a.valType = a.dictEntries[0].val.type
-    a.type = new ConcordanceType(
-      (a.keyType),
-      (a.valType)
-    )
-    
+    let keyTypeName = typeof a.keyType.name !== "undefined" ? a.keyType.name : a.keyType
+    let valTypeName = typeof a.valType.name !== "undefined" ? a.valType.name : a.valType
+    a.type = "[" + keyTypeName + ":" + valTypeName + "]"
     return a
   }
   DictEntry(a) {
@@ -422,8 +421,8 @@ class Context {
   }
   IdentifierExpression(e) {
     // Id expressions get "replaced" with the variables they refer to
-    e.value = this.lookup(e.name)
-    e.type = e.value.type
+    // e.value = this.lookup(e.name)
+    e.type = this.lookup(e.name).type
     return e
   }
   TypeId(t) {
@@ -464,9 +463,9 @@ class Context {
     return f
   }
   DictLookup(e) {
-    e.dict = this.analyze(e.dict).value
+    e.dict = this.lookup(this.analyze(e.dict).name)
     check(e.key).isInTheDict(e.dict)
-    e.dict.dictEntries.forEach(function f(entry) {
+    e.dict.dictEntries.forEach((entry) => {
       if (e.key.value === entry.key.value) {
         e.value = entry.val
       }

@@ -102,16 +102,12 @@ export default function generate(program) {
       output.push(`let ${(v.name)} = ${gen(v.initializer)}`)
     },
     VariableAssignment(v) {
-      //console.log(v)
       output.push(`${v.name.name} = ${gen(v.value)}`)
     },
     Variable(v) {
       return targetName(v)
     },
     Print(e) {
-      // console.log(e.expression)
-      // console.log(gen(e.expression))
-      //console.log(e)
       output.push(`console.log(${gen(e.expression)})`)
     },
     Return(e) {
@@ -129,9 +125,6 @@ export default function generate(program) {
     },
     IncDec(i) {
       if (i.op === "increment") {
-        // console.log("REEEE")
-        // console.log(i)
-        //console.log(i.name)
         output.push(`${i.name}++`)
       } else {
         output.push(`${i.name}--`)
@@ -173,6 +166,7 @@ export default function generate(program) {
       return `${gen(a.array)}[${gen(a.index)}]`
     },
     DictLookup(d) {
+      console.log(d)
       // Concordance Lookup Generator
     },
     Call(c) {
@@ -193,7 +187,15 @@ export default function generate(program) {
       return t.value === `fallacious` ? "false" : "true"
     },
     Concordance(c) {
-      // Concordance Generator
+      let str = `{`
+      c.dictEntries.forEach((e, index) => {
+        str += `${gen(e.key)} : ${gen(e.val)}`
+        if (index < c.dictEntries.length - 1) {
+          str += `,`
+        }
+      })
+      str += `}`
+      return str
     },
     DictEntry(d) {
       // DictEntry Generator
