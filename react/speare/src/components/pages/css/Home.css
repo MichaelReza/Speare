@@ -17,19 +17,8 @@
 
 .home-section {
   display: block;
-  margin: 100px 10vw;
+  margin: 100px 10vw 1vw 10vw;
   /* width: 75%; */
-}
-
-.subsection {
-  height: 100%;
-  width: 50%;
-  float: left;
-}
-
-.subsection img {
-  width: 62%;
-  padding: 0em 0em 0em 6em;
 }
 
 h1 {
@@ -37,7 +26,6 @@ h1 {
   font-weight: 800;
   font-size: min(10vw, 50px);
   line-height: 1.2em;
-  margin-bottom: 0;
 }
 
 h2 {
@@ -160,7 +148,7 @@ p {
   align-items: center;
 
   margin: auto;
-  margin-top: 4vw;
+  margin-top: 4vh;
 }
 
 .home-butt {

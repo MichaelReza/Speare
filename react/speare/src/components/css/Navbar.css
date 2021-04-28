@@ -52,10 +52,10 @@
 .nav-menu {
   display: grid;
   grid-template-columns: repeat(3, auto);
-  grid-gap: 15px;
+  grid-gap: 1.5vw;
   list-style: none;
   width: 50vw;
-  margin-right: 40px;
+  margin-right: 3vw;
   justify-content: right;
   justify-items: right;
   align-content: right;
@@ -64,7 +64,7 @@
 .nav-item {
   font-size: 22px;
   height: 35px;
-  margin-left: 75px;
+  margin-left: 1vw;
 }
 
 .nav-link {
