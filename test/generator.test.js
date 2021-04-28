@@ -172,13 +172,13 @@ const fixtures = [
     source: `
       alloweth Numeral x be 12
       alloweth Concordance of Lexicographical and Numeral S be { "x" : 5 }
-      S be { "x" : 6 }
       alloweth Numeral y be S."x"
       speaketh(y)
     `,
     expected: dedent`
       let x = 12
       let S = {"x" : 5}
+      S = {"x" : 6}
       let y = S."x"
       console.log(y)
     `,

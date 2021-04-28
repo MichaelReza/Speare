@@ -187,18 +187,11 @@ export default function generate(program) {
       return t.value === `fallacious` ? "false" : "true"
     },
     Concordance(c) {
-      let str = `{`
-      c.dictEntries.forEach((e, index) => {
-        str += `${gen(e.key)} : ${gen(e.val)}`
-        if (index < c.dictEntries.length - 1) {
-          str += `,`
-        }
-      })
-      str += `}`
-      return str
+      return `{${gen(c.dictEntries).join(", ")}}`
     },
     DictEntry(d) {
       // DictEntry Generator
+      return `${gen(d.key)} : ${gen(d.val)}`
     },
     NonEmptyList(a) {
       // NonEmptyList Generator
