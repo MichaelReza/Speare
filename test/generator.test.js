@@ -229,43 +229,45 @@ const fixtures = [
   //     }
   //   `,
   // },
-  // {
-  //   name: "statements",
-  //   source: `
-  //     alloweth Numeral x be 0
-  //     x be 10
-  //     speaketh(x)
-  //     x incrementby 4
-  //     x decrement
-  //     alloweth ToBeOrNotToBe y be fallacious
-  //     y be nay(y)
-  //     alloweth Numeral z be 10
-  //     y be z lesser x
-  //     y be z nobler x
-  //     z be z with x
-  //     x be z without x
-  //     x be z accumulate z
-  //     x be z sunder z
-  //     x be z residue 5
-  //     z be z exponentiate 3
-  //   `,
-  //   expected: dedent`
-  //     let x_10 = 0;
-  //     x_10 = 10;
-  //     console.log(x_10);
-  //     x_10 = (x_10 + 4);
-  //     x_10 = (x_10 - 1);
-  //     let y_10 = false;
-  //     y_10 = !y_10;
-  //     let z_10 = 10;
-  //     y = z_10 < x_10;
-  //     y = z_10 > x_10;
-  //     z_10 = z_10 + Z_10;
-  //     x_10 = z_10 - z_10;
-  //     x_10 = z_10 % 5;
-  //     z_10 = z_10 ** 3;
-  //   `,
-  // },
+  {
+    name: "statements",
+    source: `
+      alloweth Numeral x be 0
+      x be 10
+      speaketh(x)
+      x incrementby 4
+      x decrement
+      alloweth ToBeOrNotToBe y be fallacious
+      y be nay(y)
+      alloweth Numeral z be 10
+      y be z lesser x
+      y be z nobler x
+      z be z with x
+      x be z without x
+      x be z accumulate z
+      x be z sunder z
+      x be z residue 5
+      z be z exponentiate 3
+    `,
+    expected: dedent`
+      let x = 0
+      x = 10
+      console.log(x)
+      x += 4
+      x--
+      let y = false
+      y = !(y)
+      let z = 10
+      y = (z < x)
+      y = (z > x)
+      z = (z + x)
+      x = (z - x)
+      x = (z * z)
+      x = (z / z)
+      x = (z % 5)
+      z = (z ** 3)
+    `,
+  },
 ]
 
 describe("The code generator", () => {

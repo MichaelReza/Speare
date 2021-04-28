@@ -34,7 +34,11 @@ export default function generate(program) {
         "residue" : "%",
         "exponentiate" : "**",
         "alternatively" : "||",
-        "furthermore" : "&&"
+        "furthermore" : "&&",
+        "incrementby" : "+=",
+        "decrementby" : "-=",
+        "increment" : "++",
+        "decrement" : "--"
       }
 
   const gen = node =>  {
@@ -119,30 +123,17 @@ export default function generate(program) {
     Break(b) {
       output.push("break")
     },
-    IncDecBy(i) {
-      if (i.op === "incrementby") {
-        output.push(`${gen(i.variable)}+=${gen(i.expression)};`)
-      } else {
-        output.push(`${gen(i.variable)}-=${gen(i.expression)};`)
-      }
+    IncDecby(i) {
+      output.push(`${i.name} ${OPERATORS[i.op]} ${gen(i.expression)}`)
     },
     IncDec(i) {
-      if (i.op === "increment") {
-        output.push(`${i.name}++`)
-      } else {
-        output.push(`${i.name}--`)
-      }
+        output.push(`${i.name}${OPERATORS[i.op]}`)
     },
     ForLoopAction(i) {
-      if (i.op === "increment") {
-        return `${i.name}++`
-      } else {
-        return `${i.name}--`
-      }
+      return `${i.name}${OPERATORS[i.op]}`
     },
     BinaryExpression(b) {
-      const OP = OPERATORS[b.op] ?? b.op
-      return `(${gen(b.left)} ${OP} ${gen(b.right)})`
+      return `(${gen(b.left)} ${OPERATORS[b.op]} ${gen(b.right)})`
     },
     UnaryExpression(u) {
       if (u.sign === "nay") {
