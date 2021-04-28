@@ -34,16 +34,16 @@ const fixtures = [
       x increment
       x decrement
       alloweth ToBeOrNotToBe y be fallacious
-      y be (((5 exponentiate -x) sunder -100 tis nobler -x) alternatively fallacious)
-      speaketh((y furthermore y) alternatively fallacious alternatively (x accumulate 2) tis not 5)
+      y be ((5 exponentiate -x) sunder -100 nobler -x alternatively fallacious)
+      speaketh(y furthermore y alternatively fallacious alternatively x accumulate 2 tis not 5)
     `,
     expected: dedent`
-      let x = 3 * 7
+      let x = (3 * 7)
       x++
       x--
       let y = false
-      y = (((5 ** -x) / -100) > -x) || false
-      console.log((y && y) || false || (x * 2) !== 5)
+      y = ((((5 ** -x) / -100) > -x) || false)
+      console.log((y && (y || (false || ((x * 2) !== 5)))))
     `,
   },
   {
@@ -57,22 +57,22 @@ const fixtures = [
     `,
     expected: dedent`
       let x = 0
-      if (x === 0) {
+      if ((x === 0)) {
         console.log("1")
       }
-      if (x === 0) {
+      if ((x === 0)) {
         console.log(1)
       } else {
         console.log(2)
       }
-      if (x === 0) {
+      if ((x === 0)) {
         console.log(1)
-      } else if (x === 2) {
+      } else if ((x === 2)) {
         console.log(3)
       }
-      if (x === 0) {
+      if ((x === 0)) {
         console.log(1)
-      } else if (x === 2) {
+      } else if ((x === 2)) {
         console.log(3)
       } else {
         console.log(4)
@@ -95,14 +95,14 @@ const fixtures = [
     `,
     expected: dedent`
       let x = 0
-      while (x < 5) {
+      while ((x < 5)) {
         let y = 0
-        while (y < 5) {
-          console.log(x * y)
-          y = y + 1
+        while ((y < 5)) {
+          console.log((x * y))
+          y = (y + 1)
           break
         }
-        x = x + 1
+        x = (x + 1)
       }
     `,
   },
@@ -121,7 +121,7 @@ const fixtures = [
     expected: dedent`
       let z = 0.5
       function f(x,y) {
-        console.log(x > Math.abs(x))
+        console.log((x > Math.abs(x)))
         return true
       }
       function g() {
@@ -144,7 +144,7 @@ const fixtures = [
     `,
     expected: dedent`
       function f(x,y) {
-        console.log(x > Math.abs(x))
+        console.log((x > Math.abs(x)))
         return true
       }
       function g() {
