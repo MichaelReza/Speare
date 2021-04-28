@@ -17,8 +17,19 @@
 
 .home-section {
   display: block;
-  margin: 125px;
-  width: 75%;
+  margin: 100px 10vw;
+  /* width: 75%; */
+}
+
+.subsection {
+  height: 100%;
+  width: 50%;
+  float: left;
+}
+
+.subsection img {
+  width: 62%;
+  padding: 0em 0em 0em 6em;
 }
 
 h1 {
@@ -63,14 +74,14 @@ p {
   box-shadow: 0px 4px 32px 1px rgba(0, 0, 0, 0.7);
   border-radius: 25px;
   width: 50%;
-  height: auto;
+  height: 180px;
   margin: 25px;
   overflow: hidden;
   display: flex;
   flex-direction: row;
   transition: all 0.4s ease;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  /* padding-top: 10px;
+  padding-bottom: 10px; */
 }
 
 .dev-card:hover {
@@ -83,15 +94,16 @@ p {
 }
 
 .dev-photo img {
-  padding-left: 5px;
-  border-radius: 25px;
-  width: 100%;
+  /* padding-left: 5px; */
+  /* border-radius: 25px; */
+  width: 180px;
+  /* margin-top: 10px; */
 }
 
 .dev-info {
   z-index: 0;
   display: inline-block;
-  width: 70%;
+  width: 100%;
   padding: 20px;
   overflow: hidden;
 }
@@ -126,8 +138,9 @@ p {
 
 .dev-links a {
   text-decoration: none;
-  float: right;
-  margin: 0.9em 0.5em 0 1.5em;
+  float: left;
+  margin: 7px 15px 0px 5px;
+  /* margin: 15px 10px 25px; */
   color: #4c21d7;
   font-weight: 700;
   font-size: 0.583em;
@@ -141,13 +154,13 @@ p {
 }
 
 .home-butt-container {
-  width: min(44%, 400px);
+  width: min(50%, 400px);
   justify-content: center;
   text-align: center;
   align-items: center;
 
   margin: auto;
-  margin-top: 6vw;
+  margin-top: 4vw;
 }
 
 .home-butt {
@@ -176,44 +189,33 @@ p {
   transition: all 0.4s ease;
 }
 
-@media screen and (min-width: 2560px) {
-  .dev-photo {
-    width: 8vw;
+@media screen and (max-width: 1600px) {
+  .dev-container {
+    display: inline;
+    margin: 0;
+    width: 100%;
   }
-}
-
-@media screen and (max-width: 2560px) {
-  .dev-photo {
-    width: 8.2vw;
+  
+  .dev-row {
+    display: inline;
+    justify-content: center;
   }
-}
-
-@media screen and (max-width: 2400px) {
-  .dev-photo {
-    width: 9vw;
-  }
-}
-
-@media screen and (max-width: 2240px) {
-  .dev-photo {
-    width: 10.5vw;
-  }
-}
-
-@media screen and (max-width: 1920px) {
-  .dev-photo {
-    width: 11.5vw;
-  }
-}
-
-@media screen and (max-width: 1800px) {
-  .dev-photo {
-    width: 12.7vw;
-  }
-}
-
-@media screen and (max-width: 1680px) {
-  .dev-photo {
-    width: 15vw;
+  .dev-card {
+    z-index: 0;
+    /* position: relative; */
+    background: #fadaff;
+    box-shadow: 0px 4px 32px 1px rgba(0, 0, 0, 0.7);
+    border-radius: 25px;
+    width: 700px;
+    height: 180px;
+    margin: auto;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    transition: all 0.4s ease;
+    /* padding-top: 10px;
+    padding-bottom: 10px; */
   }
 }
