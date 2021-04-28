@@ -139,7 +139,7 @@ export default function generate(program) {
     },
     BinaryExpression(b) {
       const OP = OPERATORS[b.op] ?? b.op
-      return `${gen(b.left)} ${OP} ${gen(b.right)}`
+      return `(${gen(b.left)} ${OP} ${gen(b.right)})`
     },
     UnaryExpression(u) {
       if (u.sign === "nay") {
