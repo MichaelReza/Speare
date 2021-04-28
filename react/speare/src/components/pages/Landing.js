@@ -1,10 +1,9 @@
 import React from 'react';
 import '../../App.css';
 import './css/Landing.css';
-import landingphoto from '../../assets/images/landingimg.svg';
-import typingwoman from '../../assets/images/typing_woman.svg';
-import headerbg from '../../assets/images/landingimgbg.svg';
-import headerwoman from '../../assets/images/typersmall.svg';
+import landing from '../../assets/images/landing.svg';
+import headerwoman from '../../assets/images/typersmall.svg'
+import headerbg from '../../assets/images/landingimgbg.svg'
 import logo from '../../assets/images/logo.png';
 import {Link} from 'react-router-dom'
 
@@ -20,9 +19,9 @@ function Landing() {
         </div>
         <div className="intro">
           <div className="img-container">
-            <img alt="Speare logo" src={logo}></img>
+            <img src={logo}></img>
           </div>
-          <h2>technology meets elegancy</h2>
+          <h2>technology <br/>meets elegancy</h2>
           <p>
             Speare is a language dedicated to bringing the
             beauty and sophistication of the English language to Computer Science.
@@ -38,8 +37,7 @@ function Landing() {
         </div>
         <div className="landing-photo-wrap">
           <div className="landing-photo">
-            <img alt="woman typing" className="typingwoman" src={typingwoman}></img>
-            <img alt="landing" className="landingbg" src={landingphoto}></img>
+            <img src={landing}></img>
           </div>
           </div>
         </div>
