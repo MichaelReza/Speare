@@ -176,8 +176,20 @@ export default function generate(program) {
     Call(c) {
       // Call Generator
       // NOT WORKING -----------------------------------
-      console.log(c.args)
-      output.push(`${c.varname}(${c.args.map(gen)})`)
+      // console.log(`we made it here: ${c.args}`)
+      // console.log(`generatedArgs: ${gen(c.args)}`)
+      //c.args.forEach(x => {console.log(`${x} ; ${gen(x)}`)})
+      // return `${c.varname}(${gen(c.args)})`
+      return`${c.varname}(${gen(c.args)})`
+    },
+    StatementCall(c) {
+      // Call Generator
+      // NOT WORKING -----------------------------------
+      // console.log(`we made it here: ${c.args}`)
+      // console.log(`generatedArgs: ${gen(c.args)}`)
+      //c.args.forEach(x => {console.log(`${x} ; ${gen(x)}`)})
+      // return `${c.varname}(${gen(c.args)})`
+      output.push(`${c.varname}(${gen(c.args)})`)
     },
     Numeral(n) {
       return n.value

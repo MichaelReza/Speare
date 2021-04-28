@@ -9,7 +9,7 @@ Speare {
                 | Varname "be" LogicExp                                         --assignment
                 | speaketh "(" LogicExp ")"                                       --print
                 | returneth RelExp?                                             --return
-                | FunctionCall
+                | StatementFunctionCall                                         
                 | Varname (incrementby | decrementby) RelExp                    --incdecby
                 | Varname (increment | decrement)                               --incdec
                 | break                                                         --break
@@ -40,6 +40,8 @@ Speare {
   ArrayLookup   = Varname ("[" AddSub "]")+
   DictLookup    = Factor "." AddSub
   FunctionCall  = Varname "(" ListOf<AddSub, ","> ")"
+  StatementFunctionCall  = Varname "(" ListOf<AddSub, ","> ")"
+
 
 
 

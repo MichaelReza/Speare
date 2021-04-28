@@ -412,6 +412,14 @@ class Context {
     check(c.args).matchParametersOf(c.parent)
     return c
   }
+  StatementCall(c) {
+    c.setParent = this.lookup(c.varname)
+    c.setType = this.lookup(c.varname).type
+    c.args = this.analyze(c.args)
+    check(c.parent).isCallable()
+    check(c.args).matchParametersOf(c.parent)
+    return c
+  }
   IdentifierExpression(e) {
     // Id expressions get "replaced" with the variables they refer to
     e.value = this.lookup(e.name)

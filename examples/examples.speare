@@ -1,10 +1,8 @@
-alloweth Numeral z be 0.5
-enter ToBeOrNotToBe f(Numeral x, ToBeOrNotToBe y) {
-    speaketh(x nobler absolutization(x))
-    returneth faithful
+enter Numeral f (Numeral x, Numeral func) {
+    returneth x
 }
-enter ToBeOrNotToBe g() {
-    returneth fallacious
+enter Numeral g (Numeral y) {
+    returneth y
 }
 
-f(z, g())
+f(3, g(3))

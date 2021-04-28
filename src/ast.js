@@ -250,6 +250,18 @@ export class Call {
   }
 }
 
+export class StatementCall {
+  constructor(varname, args) {
+    Object.assign(this, { varname, args })
+  }
+  set setType(t) {
+    this.type = t
+  }
+  set setParent(p) {
+    this.parent = p
+  }
+}
+
 export class Numeral {
   constructor(value) {
     Object.assign(this, { value })

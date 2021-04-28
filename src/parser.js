@@ -177,6 +177,9 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   FunctionCall(varname, _sp, args, _ep) {
     return new ast.Call(varname.sourceString, args.asIteration().ast())
   },
+  StatementFunctionCall(varname, _sp, args, _ep) {
+    return new ast.StatementCall(varname.sourceString, args.asIteration().ast())
+  },
   String_string(_squote, str, _equote) {
     return new ast.StringValue(str.sourceString)
   },
