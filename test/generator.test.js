@@ -201,34 +201,6 @@ const fixtures = [
       }
     `,
   },
-  // {
-  //   name: "class",
-  //   source: `
-  //     Composition Foo {
-  //       alloweth Numeral _x be 10
-  //       enter Composition constructor(Numeral x) {
-  //         _x be x
-  //       }
-
-  //       enter Numeral getX() {
-  //         returneth _x
-  //       }
-  //     }
-  //   `,
-  //   expected: dedent`
-  //     class Foo {
-  //       let _x = 10
-
-  //       constructor(x) {
-  //         _x = x
-  //       }
-
-  //       function getX() {
-  //         return _x
-  //       }
-  //     }
-  //   `,
-  // },
   {
     name: "statements",
     source: `

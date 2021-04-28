@@ -173,6 +173,8 @@ class Context {
     // Whether we are in a function, so that we know whether a return
     // statement can appear here, and if so, how we typecheck it
     this.function = configuration.forFunction ?? parent?.function ?? null
+    // Whether we are in a class
+    this.class = configuration.forClass ?? false
   }
   sees(name) {
     // Search "outward" through enclosing scopes
@@ -459,10 +461,25 @@ class Context {
 
   Corollary(f) {
     const childContext = this.newChild({ inLoop: false, forFunction: f })
-    f.params = f.params.map(p => (childContext.analyze(p)))
+    f.params = childContext.analyze(f.params)
     this.add(f.id, f)
     f.body = childContext.analyze(f.body)
     return f
+  }
+
+  Composition(c) {
+    // const childContext = this.newChild({ inLoop: false, forClass: c })
+    // c.compBody = childContext.analyze(c.compBody)
+    // this.add(c.id, c)
+    // return c
+    throw new Error("Compositions cannot be analyzed")
+  }
+
+  Constructor(c) {
+    const childContext = this.newChild({ inLoop: false, forFunction: c })
+    c.params = c.params.map(p => (childContext.analyze(p)))
+    c.body = childContext.analyze(c.body)
+    return c
   }
   
   DictLookup(e) {

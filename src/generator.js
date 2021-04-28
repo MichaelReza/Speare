@@ -63,9 +63,6 @@ export default function generate(program) {
     CorollaryType(t) {
       //Corollary Type Generator
     },
-    Composition(c) {
-      //Composition Generator
-    },
     Corollary(f) {
       output.push(`function ${f.id}(${gen(f.params).join(", ")}) {`)
       gen(f.body)
@@ -99,9 +96,6 @@ export default function generate(program) {
       gen(w.body)
       output.push("}")
     },
-    // DoWhile(d) {
-    //   // output.push('do {${d.body}} while ($')
-    // },
     VariableInitialization(v) {
       output.push(`let ${v.name} = ${gen(v.initializer)}`)
     },

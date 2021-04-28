@@ -1,7 +1,7 @@
 Speare {
   Program       = (Work | Statement)*
   Work          = Corollary | Composition
-  Composition   = "Composition" Varname "{" Work* "}"                           --class
+  Composition   = "Composition" Varname "{" Constructor? Work* "}"              --class
   Corollary     = enter type Varname "(" ListOf<Param, ","> ")" "{" Body "}"    --function
   Body          = (Statement | Work)*
   Statement     = ContFlow+
@@ -46,6 +46,7 @@ Speare {
   StatementFunctionCall  = Varname "(" ListOf<AddSub, ","> ")"
   ForLoopVariable        = alloweth type Varname "be" LogicExp
   ForLoopAction          = Varname (increment | decrement)
+  Constructor            = "constructor" "(" ListOf<Param, ","> ")" "{" Body "}"
 
 
   // Define ids for variables, params

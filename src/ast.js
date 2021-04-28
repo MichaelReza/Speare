@@ -97,6 +97,12 @@ export class Composition {
   }
 }
 
+export class Constructor {
+  constructor(params, constBody) {
+    Object.assign(this, { params, constBody })
+  }
+}
+
 export class Corollary {
   constructor(type, id, params, body) {
     Object.assign(this, { type, id, params, body })

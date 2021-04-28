@@ -8,8 +8,11 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   Program(statements) {
     return new ast.Program(statements.ast())
   },
-  Composition_class(_composition, id, _sb, compBody, _eb) {
-    return new ast.Composition(id.sourceString, compBody.ast())
+  Composition_class(_composition, id, _sb, constructor, compBody, _eb) {
+    return new ast.Composition(id.sourceString, constructor.ast(), compBody.ast())
+  },
+  Constructor(_constructor, _sp, params, _ep, _sb, constBody, _eb) {
+    return new ast.Constructor(params.asIteration().ast(), constBody.ast())
   },
   Corollary_function(
     _enter,
