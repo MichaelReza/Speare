@@ -36,14 +36,6 @@ const source = `speaketh("hello")
   otherwise {
     speaketh(x)
   }
-  trigger x {
-    condition 0:
-      speaketh(x)
-      exit
-    condition 1:
-      speaketh(x)
-      exit
-  }
   enter ToBeOrNotToBe foo(Numeral b) {
     alloweth Numeral c be 1
     enter ToBeOrNotToBe bar() {
@@ -68,177 +60,136 @@ const source = `speaketh("hello")
   }
   `
 
-const expectedAst = String.raw`   1 | Program statements=[#2,#4,#8,#10,#15,#18,#22,#26,#28,#34,#45,#49,#55,#61,#62,#64,#79,#130,#137,#149]
+const expectedAst = String.raw`   1 | Program statements=[#2,#4,#8,#10,#14,#17,#21,#25,#27,#34,#46,#50,#57,#64,#65,#67,#105,#112,#113]
    2 | Print expression=#3
-   3 | StringValue value='hello'
+   3 | StringValue value='hello' name='Lexicographical'
    4 | Print expression=#5
    5 | BinaryExpression left=#6 op='with' right=#7
-   6 | Numeral value=6
-   7 | Numeral value=-7
+   6 | Numeral value=6 name='Numeral'
+   7 | Numeral value=-7 name='Numeral'
    8 | VariableInitialization type='Numeral' name='x' initializer=#9
-   9 | Numeral value=6
+   9 | Numeral value=6 name='Numeral'
   10 | VariableInitialization type='Numeral' name='qwerty' initializer=#11
-  11 | BinaryExpression left=#12 op=undefined right=undefined
-  12 | BinaryExpression left=#13 op='without' right=#14
-  13 | Numeral value=47
-  14 | Numeral value=14
-  15 | VariableInitialization type='Numeral' name='yuiop' initializer=#16
-  16 | UnaryExpression sign='nay' value=#17
-  17 | Numeral value=27
-  18 | Print expression=#19
-  19 | BinaryExpression left=#20 op='furthermore' right=#21
-  20 | IdentifierExpression name='x'
-  21 | IdentifierExpression name='y'
-  22 | VariableInitialization type='Numeral' name='x' initializer=#23
-  23 | BinaryExpression left=#24 op='exponentiate' right=#25
-  24 | Numeral value=6
-  25 | Numeral value=2
-  26 | VariableInitialization type='Numeral' name='y' initializer=#27
-  27 | Numeral value=6.33
-  28 | VariableInitialization type='Liste of Numeral' name='z' initializer=#29
+  11 | BinaryExpression left=#12 op='without' right=#13
+  12 | Numeral value=47 name='Numeral'
+  13 | Numeral value=14 name='Numeral'
+  14 | VariableInitialization type='Numeral' name='yuiop' initializer=#15
+  15 | UnaryExpression sign='nay' value=#16
+  16 | Numeral value=27 name='Numeral'
+  17 | Print expression=#18
+  18 | BinaryExpression left=#19 op='furthermore' right=#20
+  19 | IdentifierExpression name='x'
+  20 | IdentifierExpression name='y'
+  21 | VariableInitialization type='Numeral' name='x' initializer=#22
+  22 | BinaryExpression left=#23 op='exponentiate' right=#24
+  23 | Numeral value=6 name='Numeral'
+  24 | Numeral value=2 name='Numeral'
+  25 | VariableInitialization type='Numeral' name='y' initializer=#26
+  26 | Numeral value=6.33 name='Numeral'
+  27 | VariableInitialization type=#28 name='z' initializer=#29
+  28 | ListeType name='[Numeral]' baseType='Numeral'
   29 | Liste values=[#30,#31,#32,#33]
-  30 | Numeral value=3
-  31 | Numeral value=5
-  32 | Numeral value=7
-  33 | Numeral value=9
-  34 | VariableInitialization type='Concordance of Numeral and Numeral' name='a' initializer=#35
-  35 | Concordance dictEntries=[#36,#39,#42]
-  36 | DictEntry key=#37 val=#38
-  37 | Numeral value=12
-  38 | Numeral value=6
-  39 | DictEntry key=#40 val=#41
-  40 | Numeral value=3
-  41 | Numeral value=4
-  42 | DictEntry key=#43 val=#44
-  43 | Numeral value=8
-  44 | Numeral value=9
-  45 | Print expression=#46
-  46 | BinaryExpression left=#47 op='accumulate' right=#48
-  47 | IdentifierExpression name='x'
-  48 | Numeral value=5
-  49 | VariableAssignment name='x' value=#50
-  50 | BinaryExpression left=#51 op='without' right=#54
-  51 | BinaryExpression left=#52 op='with' right=#53
-  52 | IdentifierExpression name='x'
-  53 | Numeral value=5
-  54 | Numeral value=6
-  55 | VariableAssignment name='x' value=#56
-  56 | BinaryExpression left=#57 op='sunder' right=#60
-  57 | BinaryExpression left=#58 op='accumulate' right=#59
+  30 | Numeral value=3 name='Numeral'
+  31 | Numeral value=5 name='Numeral'
+  32 | Numeral value=7 name='Numeral'
+  33 | Numeral value=9 name='Numeral'
+  34 | VariableInitialization type=#35 name='a' initializer=#36
+  35 | ConcordanceType name='[Numeral:Numeral]' keyType='Numeral' valType='Numeral'
+  36 | Concordance type='[Numeral:Numeral]' dictEntries=[#37,#40,#43]
+  37 | DictEntry key=#38 val=#39
+  38 | Numeral value=12 name='Numeral'
+  39 | Numeral value=6 name='Numeral'
+  40 | DictEntry key=#41 val=#42
+  41 | Numeral value=3 name='Numeral'
+  42 | Numeral value=4 name='Numeral'
+  43 | DictEntry key=#44 val=#45
+  44 | Numeral value=8 name='Numeral'
+  45 | Numeral value=9 name='Numeral'
+  46 | Print expression=#47
+  47 | BinaryExpression left=#48 op='accumulate' right=#49
+  48 | IdentifierExpression name='x'
+  49 | Numeral value=5 name='Numeral'
+  50 | VariableAssignment name=#51 value=#52
+  51 | IdentifierExpression name='x'
+  52 | BinaryExpression left=#53 op='without' right=#56
+  53 | BinaryExpression left=#54 op='with' right=#55
+  54 | IdentifierExpression name='x'
+  55 | Numeral value=5 name='Numeral'
+  56 | Numeral value=6 name='Numeral'
+  57 | VariableAssignment name=#58 value=#59
   58 | IdentifierExpression name='x'
-  59 | Numeral value=6
-  60 | Numeral value=12
-  61 | IncDec name='x' op='increment'
-  62 | IncDecby name='x' op='incrementby' expression=#63
-  63 | Numeral value=4
-  64 | Corollary type='ToBeOrNotToBe' id='foo' params=[#65] body=[#66,#78]
-  65 | Param type=null varname='f' optional=''
-  66 | Array 0=#67
-  67 | ForIn _for='in regards to' var1=#68 _in='within' var2=#69 body=[#70,#76]
-  68 | IdentifierExpression name='f'
-  69 | IdentifierExpression name='z'
-  70 | Array 0=#71
-  71 | ForIn _for='in regards to' var1=#72 _in='within' var2=#73 body=[#74]
-  72 | IdentifierExpression name='g'
-  73 | IdentifierExpression name='z'
-  74 | VariableAssignment name='g' value=#75
-  75 | Numeral value=6
-  76 | VariableAssignment name='f' value=#77
-  77 | Numeral value=7
-  78 | Return expression='f'
-  79 | Array 0=#80 1=#91 2=#102 3=#118
-  80 | WhileLoop whle='whilst' logicExp=[#81] body=[#84]
-  81 | BinaryExpression left=#82 op='nobler' right=#83
-  82 | IdentifierExpression name='x'
-  83 | Numeral value=20
-  84 | Array 0=#85
-  85 | WhileLoop whle='whilst' logicExp=[#86] body=[#89]
-  86 | BinaryExpression left=#87 op='nobler' right=#88
-  87 | IdentifierExpression name='x'
-  88 | Numeral value=20
-  89 | Print expression=#90
-  90 | StringValue value='nested'
-  91 | DoWhile doo='execute' body=[#92] whle='whilst' logExp=[#99]
-  92 | Array 0=#93
-  93 | DoWhile doo='execute' body=[#94] whle='whilst' logExp=[#96]
+  59 | BinaryExpression left=#60 op='sunder' right=#63
+  60 | BinaryExpression left=#61 op='accumulate' right=#62
+  61 | IdentifierExpression name='x'
+  62 | Numeral value=6 name='Numeral'
+  63 | Numeral value=12 name='Numeral'
+  64 | IncDec name='x' op='increment'
+  65 | IncDecby name='x' op='incrementby' expression=#66
+  66 | Numeral value=4 name='Numeral'
+  67 | Array 0=#68 1=#79 2=#90
+  68 | WhileLoop logicExp=[#69] body=[#72]
+  69 | BinaryExpression left=#70 op='nobler' right=#71
+  70 | IdentifierExpression name='x'
+  71 | Numeral value=20 name='Numeral'
+  72 | Array 0=#73
+  73 | WhileLoop logicExp=[#74] body=[#77]
+  74 | BinaryExpression left=#75 op='nobler' right=#76
+  75 | IdentifierExpression name='x'
+  76 | Numeral value=20 name='Numeral'
+  77 | Print expression=#78
+  78 | StringValue value='nested' name='Lexicographical'
+  79 | DoWhile doo='execute' body=[#80] whle='whilst' logExp=[#87]
+  80 | Array 0=#81
+  81 | DoWhile doo='execute' body=[#82] whle='whilst' logExp=[#84]
+  82 | Print expression=#83
+  83 | IdentifierExpression name='x'
+  84 | BinaryExpression left=#85 op='nobler' right=#86
+  85 | IdentifierExpression name='x'
+  86 | IdentifierExpression name='x'
+  87 | BinaryExpression left=#88 op='nobler' right=#89
+  88 | IdentifierExpression name='x'
+  89 | IdentifierExpression name='x'
+  90 | IfStatement le1=#91 body=[#94] le2=[#96] body2=[#99] body3=[#102]
+  91 | BinaryExpression left=#92 op='nobler' right=#93
+  92 | IdentifierExpression name='x'
+  93 | IdentifierExpression name='x'
   94 | Print expression=#95
   95 | IdentifierExpression name='x'
   96 | BinaryExpression left=#97 op='nobler' right=#98
   97 | IdentifierExpression name='x'
   98 | IdentifierExpression name='x'
-  99 | BinaryExpression left=#100 op='nobler' right=#101
- 100 | IdentifierExpression name='x'
+  99 | Array 0=#100
+ 100 | Print expression=#101
  101 | IdentifierExpression name='x'
- 102 | IfStatement _if='whether' le1=[#103] body=[#106] _elif='subsequently( x nobler x ) {\n    speaketh(x)\n  }' le2=[#108] body2=[#112] _else='otherwise {\n    speaketh(x)\n  }' body3=[#115]
- 103 | BinaryExpression left=#104 op='nobler' right=#105
+ 102 | Array 0=#103
+ 103 | Print expression=#104
  104 | IdentifierExpression name='x'
- 105 | IdentifierExpression name='x'
- 106 | Print expression=#107
- 107 | IdentifierExpression name='x'
- 108 | Array 0=#109
- 109 | BinaryExpression left=#110 op='nobler' right=#111
- 110 | IdentifierExpression name='x'
- 111 | IdentifierExpression name='x'
- 112 | Array 0=#113
- 113 | Print expression=#114
- 114 | IdentifierExpression name='x'
- 115 | Array 0=#116
- 116 | Print expression=#117
- 117 | IdentifierExpression name='x'
- 118 | SwitchStatement swtch='trigger' factor1=#119 cse='condition 0:\n' +
-  '      speaketh(x)\n' +
-  '      exit\n' +
-  '    condition 1:\n' +
-  '      speaketh(x)\n' +
-  '      exit' factor2=[#120,#121] body=[#122,#126]
- 119 | IdentifierExpression name='x'
- 120 | Numeral value=0
- 121 | Numeral value=1
- 122 | Array 0=#123 1=#125
- 123 | Print expression=#124
- 124 | IdentifierExpression name='x'
- 125 | Break
- 126 | Array 0=#127 1=#129
- 127 | Print expression=#128
- 128 | IdentifierExpression name='x'
- 129 | Break
- 130 | Corollary type='ToBeOrNotToBe' id='foo' params=[#131] body=[#132,#134]
- 131 | Param type=null varname='b' optional=''
- 132 | VariableInitialization type='Numeral' name='c' initializer=#133
- 133 | Numeral value=1
- 134 | Corollary type='ToBeOrNotToBe' id='bar' params=[] body=[#135]
- 135 | Print expression=#136
- 136 | StringValue value='hello'
- 137 | Composition id='foo' compBody=[#138,#143,#144]
- 138 | Corollary type='ToBeOrNotToBe' id='foo' params=[#139] body=[#140,#142]
- 139 | Param type=null varname='b' optional=''
- 140 | VariableInitialization type='Numeral' name='c' initializer=#141
- 141 | Numeral value=1
- 142 | Return expression='c'
- 143 | Composition id='bar' compBody=[]
- 144 | Corollary type='ToBeOrNotToBe' id='foo' params=[#145] body=[#146,#148]
- 145 | Param type=null varname='b' optional=''
- 146 | VariableInitialization type='Numeral' name='c' initializer=#147
- 147 | Numeral value=1
- 148 | Return expression='c'
- 149 | Array 0=#150
- 150 | ForLoop _for='in regards to' s1=#151 s2=#153 s3=#156 body=[#157]
- 151 | VariableInitialization type='Numeral' name='d' initializer=#152
- 152 | Numeral value=0
- 153 | BinaryExpression left=#154 op='nobler' right=#155
- 154 | IdentifierExpression name='d'
- 155 | Numeral value=20
- 156 | IncDec name='d' op='decrement'
- 157 | Array 0=#158
- 158 | ForLoop _for='in regards to' s1=#159 s2=#161 s3=#164 body=[#165]
- 159 | VariableInitialization type='Numeral' name='e' initializer=#160
- 160 | Numeral value=0
- 161 | BinaryExpression left=#162 op='nobler' right=#163
- 162 | IdentifierExpression name='e'
- 163 | Numeral value=20
- 164 | IncDec name='e' op='decrement'
- 165 | Print expression=#166
- 166 | StringValue value='nested'`
+ 105 | Corollary type='ToBeOrNotToBe' id='foo' params=[#106] body=[#107,#109]
+ 106 | Param type='Numeral' name='b'
+ 107 | VariableInitialization type='Numeral' name='c' initializer=#108
+ 108 | Numeral value=1 name='Numeral'
+ 109 | Corollary type='ToBeOrNotToBe' id='bar' params=[] body=[#110]
+ 110 | Print expression=#111
+ 111 | StringValue value='hello' name='Lexicographical'
+ 112 | Composition id='foo' compBody=[]
+ 113 | Array 0=#114
+ 114 | ForLoop init=#115 condition=#117 action=#120 body=[#121]
+ 115 | ForLoopVariable type='Numeral' name='d' initializer=#116
+ 116 | Numeral value=0 name='Numeral'
+ 117 | BinaryExpression left=#118 op='nobler' right=#119
+ 118 | IdentifierExpression name='d'
+ 119 | Numeral value=20 name='Numeral'
+ 120 | ForLoopAction name='d' op='decrement'
+ 121 | Array 0=#122
+ 122 | ForLoop init=#123 condition=#125 action=#128 body=[#129]
+ 123 | ForLoopVariable type='Numeral' name='e' initializer=#124
+ 124 | Numeral value=0 name='Numeral'
+ 125 | BinaryExpression left=#126 op='nobler' right=#127
+ 126 | IdentifierExpression name='e'
+ 127 | Numeral value=20 name='Numeral'
+ 128 | ForLoopAction name='e' op='decrement'
+ 129 | Print expression=#130
+ 130 | StringValue value='nested' name='Lexicographical'`
 
 const goodPrograms = {
   // Empty Program:
@@ -434,6 +385,16 @@ const badPrograms = [
     "execute{alloweth x be 12}",
     /Line 1, col 18:/,
   ],
+  // Do-While Loops:
+  [
+    "Disallows sqitch case",
+    "trigger x { \
+      condition 1: \
+        speaketh(fallacious) \
+        exit \
+    }",
+    /Not implemented/,
+  ],
 
   // IF-statements:
   [
@@ -467,8 +428,8 @@ describe("the Parser", () => {
     })
   }
 
-  // it("produces the expected AST for all node types", () => {
-  //   assert.deepStrictEqual(util.format(parse(source)), expectedAst)
-  // })
-  // console.log(util.format(parse(source)))
+  it("produces the expected AST for all node types", () => {
+    assert.deepStrictEqual(util.format(parse(source)), expectedAst)
+  })
+  console.log(util.format(parse(source)))
 })

@@ -1,14 +1,13 @@
-// // Abstract Syntax Tree Nodes
-// //
-// // This module defines classes for the AST nodes. Only the constructors are
-// // defined here. Semantic analysis methods, optimization methods, and code
-// // generation are handled by other modules. This keeps the compiler organized
-// // by phase.
-// //
-// // The root (Program) node has a custom inspect method, so you can console.log
-// // the root node and you'll get a lovely formatted string with details on the
-// // entire AST. It even works well if you analyze the AST and turn it into a
-// // graph with cycles.
+/** Abstract Syntax Tree Nodes
+    This module defines classes for the AST nodes. Only the constructors are
+    defined here. Semantic analysis methods, optimization methods, and code
+    generation are handled by other modules. This keeps the compiler organized
+    by phase.
+    The root (Program) node has a custom inspect method, so you can console.log
+    the root node and you'll get a lovely formatted string with details on the
+    entire AST. It even works well if you analyze the AST and turn it into a
+    graph with cycles.
+*/
 
 import util from "util"
 
@@ -32,13 +31,13 @@ export class Type {
   static NULL = new Type("Illused")
   static TYPE = new Type("type")
   // Equivalence: Iwhen are two types the same
-  tis(target) {
-    return this == target
-  }
+  // tis(target) {
+  //   return this == target
+  // }
 
-  tisAssignable(target) {
-    return this.isEquivalentTo(target)
-  }
+  // tisAssignable(target) {
+  //   return this.isEquivalentTo(target)
+  // }
 }
 
 export class ListeType extends Type {
@@ -49,9 +48,9 @@ export class ListeType extends Type {
   }
   // [T] equivalent to [U] only when T is equivalent to U. Same for
   // assignability: we do NOT want arrays to be covariant!
-  tis(target) {
-    return target.constructor === ListeType && this.baseType === target.baseType
-  }
+  // tis(target) {
+  //   return target.constructor === ListeType && this.baseType === target.baseType
+  // }
 }
 
 export class ConcordanceType extends Type {
@@ -62,33 +61,33 @@ export class ConcordanceType extends Type {
   }
   // [T] equivalent to [U] only when T is equivalent to U. Same for
   // assignability: we do NOT want arrays to be covariant!
-  tis(target) {
-    return (
-      target.constructor === ConcordanceType &&
-      this.keyType === target.keyType &&
-      this.valType === target.valType
-    )
-  }
+  // tis(target) {
+  //   return (
+  //     target.constructor === ConcordanceType &&
+  //     this.keyType === target.keyType &&
+  //     this.valType === target.valType
+  //   )
+  // }
 }
 
 export class CorollaryType extends Type {
   // Example: (boolean,[string]?)->float
-  constructor(name, parameterTypes, type) {
-    super(
-      `(${parameterTypes.map((t) => t.name).join(",")})->${type.name}`
-    )
-    Object.assign(this, { name, parameterTypes, type })
-  }
-  tisAssignable(target) {
-    return (
-      target.constructor === CorollaryType &&
-      this.type.tisAssignable(target.type) &&
-      this.parameterTypes.length === target.parameterTypes.length &&
-      this.parameterTypes.every((t, i) =>
-        target.parameterTypes[i].tisAssignable(t)
-      )
-    )
-  }
+  // constructor(name, parameterTypes, type) {
+  //   super(
+  //     `(${parameterTypes.map((t) => t.name).join(",")})->${type.name}`
+  //   )
+  //   Object.assign(this, { name, parameterTypes, type })
+  // }
+  // tisAssignable(target) {
+  //   return (
+  //     target.constructor === CorollaryType &&
+  //     this.type.tisAssignable(target.type) &&
+  //     this.parameterTypes.length === target.parameterTypes.length &&
+  //     this.parameterTypes.every((t, i) =>
+  //       target.parameterTypes[i].tisAssignable(t)
+  //     )
+  //   )
+  // }
 }
 
 export class Composition {
@@ -290,7 +289,7 @@ export class DictEntry {
   }
 }
 // Source:
-function prettied(node) {
+export function prettied(node) {
   // Return a compact and pretty string representation of the node graph,
   // taking care of cycles. Written here from scratch because the built-in
   // inspect function, while nice, isn't nice enough.
