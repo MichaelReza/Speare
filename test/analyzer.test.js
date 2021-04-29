@@ -112,6 +112,12 @@ const semanticChecks = [
     "variables",
     "alloweth Liste of Liste of Liste of Liste of Numeral x be [[[[1]]]]",
   ],
+  [
+    "variable assignment",
+    "alloweth Numeral x be 9 \
+     alloweth Numeral y be x \
+     y be 8",
+  ],
   // [25] DONE
   [
     "nested structs",
@@ -181,6 +187,12 @@ const semanticErrors = [
     "assign bad type",
     "alloweth Numeral x be faithful",
     /Variable initialized is not the same as declared type/,
+  ],
+  [
+    "bad type variable assignment",
+    "alloweth Numeral y be 8 \
+     y be faithful",
+     /Variable reassignment statement has incompatible types/
   ],
   // [44] DONE
   [
@@ -381,11 +393,19 @@ const semanticErrors = [
   // [80] DONE
   [
     "Too many args",
-    "enter Indistinguishable f(Numeral x) {\
-      returneth\
+    "enter Numeral f(Numeral x) {\
+      returneth x\
     }\
     f(1,2)",
     /1 argument\(s\) required but 2 passed/,
+  ],
+  [
+    "Wrong return value",
+    "enter Numeral f(Numeral x) {\
+      returneth \"wrong\" \
+    }\
+    f(1)",
+    /Expected return of type Numeral and instead got return type Lexicographical/,
   ],
   // [81] DONE
   [

@@ -1,32 +1,32 @@
-import assert from "assert/strict"
-import optimize from "../src/optimizer.js"
-import * as ast from "../src/ast.js"
+// import assert from "assert/strict"
+// import optimize from "../src/optimizer.js"
+// import * as ast from "../src/ast.js"
 
-// Make some test cases easier to read
-const x = new ast.VariableInitialization("ToBeOrNotToBe", "x", false)
-const xpp = new ast.IncDec(x, "increment")
-const xmm = new ast.IncDec(x, "decrement")
-const return1p1 = new ast.Return(new ast.BinaryExpression("+", 1, 1))
-const return2 = new ast.Return(2)
-const returnX = new ast.Return(x)
-const onePlusTwo = new ast.BinaryExpression(1, "with", 2)
-// Updated to this point
-const identity = Object.assign(new ast.Function("id"), { body: returnX })
-const intFun = body => new ast.FunctionDeclaration("f", [], "int", body)
-const callIdentity = args => new ast.Call(identity, args)
-const or = (...d) => d.reduce((x, y) => new ast.BinaryExpression("||", x, y))
-const and = (...c) => c.reduce((x, y) => new ast.BinaryExpression("&&", x, y))
-const less = (x, y) => new ast.BinaryExpression("<", x, y)
-const eq = (x, y) => new ast.BinaryExpression("==", x, y)
-const times = (x, y) => new ast.BinaryExpression("*", x, y)
-const neg = x => new ast.UnaryExpression("-", x)
-const array = (...elements) => new ast.ArrayExpression(elements)
-const emptyArray = new ast.EmptyArray(ast.Type.INT)
-const sub = (a, e) => new ast.SubscriptExpression(a, e)
-const unwrapElse = (o, e) => new ast.BinaryExpression("??", o, e)
-const conditional = (x, y, z) => new ast.Conditional(x, y, z)
-const emptyOptional = new ast.EmptyOptional(ast.Type.INT)
-const some = x => new ast.UnaryExpression("some", x)
+// // Make some test cases easier to read
+// const x = new ast.VariableInitialization("ToBeOrNotToBe", "x", false)
+// const xpp = new ast.IncDec(x, "increment")
+// const xmm = new ast.IncDec(x, "decrement")
+// const return1p1 = new ast.Return(new ast.BinaryExpression("+", 1, 1))
+// const return2 = new ast.Return(2)
+// const returnX = new ast.Return(x)
+// const onePlusTwo = new ast.BinaryExpression(1, "with", 2)
+// // Updated to this point
+// const identity = Object.assign(new ast.Function("id"), { body: returnX })
+// const intFun = body => new ast.FunctionDeclaration("f", [], "int", body)
+// const callIdentity = args => new ast.Call(identity, args)
+// const or = (...d) => d.reduce((x, y) => new ast.BinaryExpression("||", x, y))
+// const and = (...c) => c.reduce((x, y) => new ast.BinaryExpression("&&", x, y))
+// const less = (x, y) => new ast.BinaryExpression("<", x, y)
+// const eq = (x, y) => new ast.BinaryExpression("==", x, y)
+// const times = (x, y) => new ast.BinaryExpression("*", x, y)
+// const neg = x => new ast.UnaryExpression("-", x)
+// const array = (...elements) => new ast.ArrayExpression(elements)
+// const emptyArray = new ast.EmptyArray(ast.Type.INT)
+// const sub = (a, e) => new ast.SubscriptExpression(a, e)
+// const unwrapElse = (o, e) => new ast.BinaryExpression("??", o, e)
+// const conditional = (x, y, z) => new ast.Conditional(x, y, z)
+// const emptyOptional = new ast.EmptyOptional(ast.Type.INT)
+// const some = x => new ast.UnaryExpression("some", x)
 
 // const tests = [
 //   ["folds +", new ast.BinaryExpression("+", 5, 8), 13],
@@ -97,12 +97,12 @@ const some = x => new ast.UnaryExpression("some", x)
 //       new ast.ForStatement(x, array(1, 2, 3), []),
 //     ]),
 //   ],
-]
+// ]
 
-describe("The optimizer", () => {
-  for (const [scenario, before, after] of tests) {
-    it(`${scenario}`, () => {
-      assert.deepEqual(optimize(before), after)
-    })
-  }
-})
+// describe("The optimizer", () => {
+//   for (const [scenario, before, after] of tests) {
+//     it(`${scenario}`, () => {
+//       assert.deepEqual(optimize(before), after)
+//     })
+//   }
+// })
