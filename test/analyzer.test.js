@@ -50,7 +50,7 @@ const semanticChecks = [
   // [11] DONE
   [
     "else if",
-    "whether (faithful) { speaketh(1)} subsequently (faithful) { speaketh(0) } otherwise {speaketh(3) }",
+    "whether (faithful) { speaketh(1)} subsequently (faithful) { speaketh(0) } subsequently(fallacious) { speaketh(1) } subsequently(fallacious) { speaketh(2) } otherwise {speaketh(3) }",
   ],
   // [12] TODO
   // ["for over collection",
@@ -163,6 +163,7 @@ const semanticErrors = [
     'alloweth Concordance of Lexicographical and Numeral S be {"x": 1, "x": 2}',
     /Keys must be distinct/,
   ],
+  ["Class creation", "Composition foo {}", /Compositions cannot be analyzed/],
   // [39] DONE
   ["non-int increment", "alloweth Numeral x be fallacious x increment", /Variable initialized is not the same as declared type/],
   // [40] DONE

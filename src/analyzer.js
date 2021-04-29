@@ -26,7 +26,6 @@ const check = (self) => ({
     
     var t = typeof self.value !== "undefined" && typeof self.value.type !== "undefined" ? self.value.type : self.type
     must(
-      // Created addition for strange way that we handle identifier expressions
       [Type.NUMERAL, Type.NUMERAL.name].includes(t ?? t.type),
       `Expected a number, found ${t.name}`
     )
@@ -221,9 +220,9 @@ class Context {
           check(elif).isBoolean()
         })
     }
-    if (s.le3) {
-      s.body3 = this.analyze(s.body3)
-    }
+    // if (s.le3) {
+    //   s.body3 = this.analyze(s.body3)
+    // }
     return s
   }
   WhileLoop(s) {
@@ -293,7 +292,7 @@ class Context {
       check(e.value).isBoolean()
     } else if (e.sign === "absolutization" || e.sign === "quadrangle" || e.sign === "-") {
       check(e.value).isNumeral()
-    } else {}
+    }
     return e
   }
   Liste(a) {

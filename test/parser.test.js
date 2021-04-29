@@ -17,19 +17,16 @@ const source = `speaketh("hello")
   x be x accumulate 6 sunder 12
   x increment
   x incrementby 4
-
   whilst (x nobler 20) {
     whilst (x nobler 20) {
       speaketh("nested")
     }
   }
-
   execute {
     execute {
       speaketh(x)
     } whilst(x nobler x)
   } whilst(x nobler x)
-
   whether (x nobler x) {
     speaketh(x)
   }
@@ -39,7 +36,6 @@ const source = `speaketh("hello")
   otherwise {
     speaketh(x)
   }
-
   trigger x {
     condition 0:
       speaketh(x)
@@ -48,14 +44,12 @@ const source = `speaketh("hello")
       speaketh(x)
       exit
   }
-
   enter ToBeOrNotToBe foo(Numeral b) {
     alloweth Numeral c be 1
     enter ToBeOrNotToBe bar() {
       speaketh("hello")
     }
   }
-
   Composition foo {
     enter ToBeOrNotToBe foo(Numeral b) {
       alloweth Numeral c be 1
@@ -67,7 +61,6 @@ const source = `speaketh("hello")
       returneth c
     }
   }
-
   in regards to (alloweth Numeral d be 0, d nobler 20, d decrement) {
     in regards to (alloweth Numeral e be 0, e nobler 20, e decrement) {
       speaketh("nested")
