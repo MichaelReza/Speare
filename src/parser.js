@@ -11,9 +11,6 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   Composition_class(_composition, id, _sb, constructor, compBody, _eb) {
     return new ast.Composition(id.sourceString, constructor.ast(), compBody.ast())
   },
-  Constructor(_constructor, _sp, params, _ep, _sb, constBody, _eb) {
-    return new ast.Constructor(params.asIteration().ast(), constBody.ast())
-  },
   Corollary_function(
     _enter,
     type,
@@ -109,18 +106,18 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
     return new ast.WhileLoop(logicExp.ast(), body.ast())
   },
   // switch Factor "{" (case Factor ":" Body )+ "}"
-  ContFlow_switchcase(
-    _switch,
-    factor,
-    _open,
-    _cases,
-    factors,
-    _colon,
-    body,
-    _close
-  ) {
-    throw new Error("Not implemented")
-  },
+  // ContFlow_switchcase(
+  //   _switch,
+  //   factor,
+  //   _open,
+  //   _cases,
+  //   factors,
+  //   _colon,
+  //   body,
+  //   _close
+  // ) {
+  //   throw new Error("Not implemented")
+  // },
   ContFlow_dowhile(doo, _sb, body, _eb, whle, _sp, logExp, _ep) {
     return new ast.DoWhile(
       doo.sourceString,

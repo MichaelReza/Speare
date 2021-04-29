@@ -1,5 +1,4 @@
 import {
-  Variable,
   VariableAssignment,
   Type,
   Param,
@@ -44,18 +43,6 @@ const check = (self) => ({
       `Expected a boolean, found ${self.type.name}`
     )
   },
-  isBooleanOrNumeric() {
-    must(
-      ([Type.BOOLEAN, Type.NUMERAL].includes(self.type)),
-      `Expected a boolean or numeral, found ${self.type.name}`
-    )
-  },
-  isAType() {
-    must([Type, Corollary].includes(self.constructor), "Type expected")
-  },
-  isAConcordance() {
-    must(self.type.constructor === ConcordanceType, "Concordance expected")
-  },
   hasUniqueKeys() {
     var keySet = []
     var uniqueBool = true
@@ -68,9 +55,9 @@ const check = (self) => ({
     })
     must(uniqueBool, "Keys must be distinct")
   },
-  isAListe() {
-    must(self.type.constructor === ListeType, "Liste expected")
-  },
+  // isAListe() {
+  //   must(self.type.constructor === ListeType, "Liste expected")
+  // },
   hasSameTypeAs(other) {
     must((self.type.name ?? self.type) === (other.type.name ?? other.type), "Operands do not have the same type")
   },
@@ -88,26 +75,6 @@ const check = (self) => ({
       ((self.type.name ?? self.type) === (t.type.name ?? t.type ?? t.name ?? t)),
       `Cannot assign a ${(self.type.name ?? self.type)} to a ${(t.type.name ?? t.type ?? t.name ?? t)}`
     )
-  },
-  isNotReadOnly() {
-    must(!self.readOnly, `Cannot assign to constant ${self.name}`)
-  },
-  areAllDistinct() {
-    must(
-      new Set(self.map((f) => f.name)).size === self.length,
-      "Fields must be distinct"
-    )
-  },
-  isInTheDict(object) {
-
-    let incflag = false
-    object.dictEntries.forEach((e) => {
-      if (e.key.value === self.value) {
-        incflag = true
-        return
-      }
-    })
-    must(incflag, "No such field")
   },
   isInsideALoop() {
     must(self.inLoop, "Exit can only appear in a loop")
@@ -137,14 +104,6 @@ const check = (self) => ({
       `Expected return of type ${(f.type.name ?? f.type)} and instead got return type ${(self.type.name ?? self.type)}.`
     )
   },
-  match(targetTypes) {
-    // self is the array of arguments
-    must(
-      targetTypes.length === self.length,
-      `${targetTypes.length} argument(s) required but ${self.length} passed`
-    )
-    targetTypes.forEach((type, i) => check(self[i]).isAssignableTo(type))
-  },
   matchParametersOf(func) {
     must(
       self.length === func.params.length,
@@ -154,9 +113,6 @@ const check = (self) => ({
       must((self[i].type.name ?? self[i].name ?? self[i].type) === (param.type ?? param),
       `Cannot assign a ${self[i].type.name ?? self[i].name ?? self[i].type} to ${param.type ?? param} ${param.name}`)
     })
-  },
-  matchFieldsOf(corollaryType) {
-    check(self).match(structType.fields.map((f) => f.type))
   },
 })
 
@@ -208,21 +164,6 @@ class Context {
     p.statements = this.analyze(p.statements)
     return p
   }
-  ArrayType(t) {
-    t.baseType = this.analyze(t.baseType)
-    return t
-  }
-  FunctionType(t) {
-    if (t.parameterTypes != undefined) {
-      t.parameterTypes = this.analyze(t.parameterTypes)
-    }
-    t.returnType = this.analyze(t.returnType)
-    return t
-  }
-  OptionalType(t) {
-    t.baseType = this.analyze(t.baseType)
-    return t
-  }
   VariableInitialization(d) {
     // Declarations generate brand new variable objects
     d.initializer = this.analyze(d.initializer)
@@ -252,9 +193,6 @@ class Context {
     //check s.name, make sure it is integer and not readonly
     return s
   }
-  UnaryAssignment(s) {
-    return this.lookup(s.value)
-  }
   Break(s) {
     check(this).isInsideALoop()
     return s
@@ -272,11 +210,6 @@ class Context {
       check(this.function).returnsSomething()
       check(s.expression[0]).isReturnableFrom(this.function)
     }
-    return s
-  }
-  ShortReturnStatement(s) {
-    check(this).isInsideAFunction()
-    check(this.function).returnsNothing()
     return s
   }
   IfStatement(s) {
@@ -301,12 +234,6 @@ class Context {
     s.body = this.newChild({ inLoop: true }).analyze(s.body)
     return s
   }
-  RepeatStatement(s) {
-    s.count = this.analyze(s.count)
-    check(s.count).isInteger()
-    s.body = this.newChild({ inLoop: true }).analyze(s.body)
-    return s
-  }
   ForLoop(s) {
     s.init = this.analyze(s.init)
     s.condition = this.analyze(s.condition)
@@ -325,18 +252,6 @@ class Context {
   ForLoopAction(v) {
     check(this.lookup(v.name)).isNumeral()
     return v
-  }
-  OrExpression(e) {
-    e.disjuncts = this.analyze(e.disjuncts)
-    e.disjuncts.forEach((disjunct) => check(disjunct).isBoolean())
-    e.type = Type.BOOLEAN
-    return e
-  }
-  AndExpression(e) {
-    e.conjuncts = this.analyze(e.conjuncts)
-    e.conjuncts.forEach((conjunct) => check(conjunct).isBoolean())
-    e.type = Type.BOOLEAN
-    return e
   }
   BinaryExpression(e) {
     e.left = this.analyze(e.left)
@@ -402,11 +317,6 @@ class Context {
     a.val = this.analyze(a.val)
     return a
   }
-  EmptyArray(e) {
-    e.baseType = this.analyze(e.baseType)
-    e.type = new ListeType(e.baseType)
-    return e
-  }
   Call(c) {
     c.setParent = this.lookup(c.varname)
     c.setType = this.lookup(c.varname).type
@@ -428,11 +338,6 @@ class Context {
     // e.value = this.lookup(e.name)
     e.type = this.lookup(e.name).type
     return e
-  }
-  TypeId(t) {
-    t = this.lookup(t.name)
-    check(t).isAType()
-    return t
   }
   Numeral(e) {
     e.type = Type.NUMERAL
@@ -473,13 +378,6 @@ class Context {
     // this.add(c.id, c)
     // return c
     throw new Error("Compositions cannot be analyzed")
-  }
-
-  Constructor(c) {
-    const childContext = this.newChild({ inLoop: false, forFunction: c })
-    c.params = c.params.map(p => (childContext.analyze(p)))
-    c.body = childContext.analyze(c.body)
-    return c
   }
   
   DictLookup(e) {

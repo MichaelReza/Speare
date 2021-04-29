@@ -10,14 +10,14 @@ export default function generate(program) {
   // etc. This is because "switch", for example, is a legal name in Carlos,
   // but not in JS. So, the Carlos variable "switch" must become something
   // like "switch_1". We handle this by mapping each name to its suffix.
-  const targetName = (mapping => {
-    return entity => {
-      if (!mapping.has(entity)) {
-        mapping.set(entity, mapping.size + 1)
-      }
-      return `${entity.name ?? entity.description}_${mapping.get(entity)}`
-    }
-  })(new Map())
+  // const targetName = (mapping => {
+  //   return entity => {
+  //     if (!mapping.has(entity)) {
+  //       mapping.set(entity, mapping.size + 1)
+  //     }
+  //     return `${entity.name ?? entity.description}_${mapping.get(entity)}`
+  //   }
+  // })(new Map())
 
   // A very handy tool that maps our operators to JS operators :)
   const OPERATORS = { 
@@ -51,18 +51,18 @@ export default function generate(program) {
     Program(p) {
       gen(p.statements)
     },
-    Type(t) {
-      //Type generator
-    },
-    ListeType(t) {
-      //Liste Type Generator
-    },
-    ConcordanceType(t) {
-      //Concordance Type Generator
-    },
-    CorollaryType(t) {
-      //Corollary Type Generator
-    },
+    // Type(t) {
+    //   //Type generator
+    // },
+    // ListeType(t) {
+    //   //Liste Type Generator
+    // },
+    // ConcordanceType(t) {
+    //   //Concordance Type Generator
+    // },
+    // CorollaryType(t) {
+    //   //Corollary Type Generator
+    // },
     Corollary(f) {
       output.push(`function ${f.id}(${gen(f.params).join(", ")}) {`)
       gen(f.body)
@@ -105,9 +105,6 @@ export default function generate(program) {
     VariableAssignment(v) {
       output.push(`${v.name.name} = ${gen(v.value)}`)
     },
-    Variable(v) {
-      return targetName(v)
-    },
     Print(e) {
       output.push(`console.log(${gen(e.expression)})`)
     },
@@ -139,9 +136,6 @@ export default function generate(program) {
       } else if (u.sign === "-") {
         return (`-${gen(u.value)}`)
       }
-    },
-    UnaryAssignment(v) {
-      // Unary Assignment Generator
     },
     IdentifierExpression(n) {
       return n.name
@@ -175,9 +169,6 @@ export default function generate(program) {
     Numeral(n) {
       return n.value
     },
-    // StringValue(s) {
-    //   return JSON.stringify(s.value)
-    // },
     Tobeornottobe(t) {
       return t.value === `fallacious` ? "false" : "true"
     },
@@ -187,9 +178,6 @@ export default function generate(program) {
     DictEntry(d) {
       // DictEntry Generator
       return `${gen(d.key)} : ${gen(d.val)}`
-    },
-    NonEmptyList(a) {
-      // NonEmptyList Generator
     },
 
     /** REFERENCE MATERIAL ONLY

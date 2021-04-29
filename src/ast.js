@@ -97,19 +97,14 @@ export class Composition {
   }
 }
 
-export class Constructor {
-  constructor(params, constBody) {
-    Object.assign(this, { params, constBody })
-  }
-}
-
 export class Corollary {
   constructor(type, id, params, body) {
     Object.assign(this, { type, id, params, body })
   }
-  get returnType() {
-    return this.type
-  }
+
+  // get returnType() {
+  //   return this.type
+  // }
 }
 export class Param {
   constructor(type, name) {
@@ -124,11 +119,11 @@ export class IfStatement {
   }
 }
 
-export class SwitchStatement {
-  constructor(swtch, factor1, cse, factor2, body) {
-    Object.assign(this, { swtch, factor1, cse, factor2, body })
-  }
-}
+// export class SwitchStatement {
+//   constructor(swtch, factor1, cse, factor2, body) {
+//     Object.assign(this, { swtch, factor1, cse, factor2, body })
+//   }
+// }
 
 export class ForLoop {
   constructor(init, condition, action, body) {
@@ -174,12 +169,6 @@ export class VariableAssignment {
   }
 }
 
-export class Variable {
-  constructor(name, readOnly) {
-    Object.assign(this, { name, readOnly })
-  }
-}
-
 export class Print {
   constructor(expression) {
     this.expression = expression
@@ -217,12 +206,6 @@ export class BinaryExpression {
 export class UnaryExpression {
   constructor(sign, value) {
     Object.assign(this, { sign, value })
-  }
-}
-
-export class UnaryAssignment {
-  constructor(value) {
-    this.value = value
   }
 }
 
@@ -304,12 +287,6 @@ export class Concordance {
 export class DictEntry {
   constructor(key, val) {
     Object.assign(this, { key, val })
-  }
-}
-
-export class NonEmptyList {
-  constructor(firstItem, RemainingItems) {
-    Object.assign(this, { firstItem, RemainingItems })
   }
 }
 // Source:

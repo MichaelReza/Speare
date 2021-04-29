@@ -28,6 +28,17 @@ const fixtures = [
     `
   },
   {
+    name: "Square-root test",
+    source: `
+    alloweth Numeral a be quadrangle(4)
+    speaketh(a tis 2)
+    `,
+    expected: dedent`
+    let a = Math.sqrt(4)
+    console.log((a === 2))
+    `
+  },
+  {
     name: "small",
     source: `
       alloweth Numeral x be 3 accumulate 7
