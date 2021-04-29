@@ -21,13 +21,11 @@ function must(condition, errorMessage) {
 }
 
 const check = (self) => ({
-  // REVISIT
+
   isNumeral() {
-    
-    var t = typeof self.value !== "undefined" && typeof self.value.type !== "undefined" ? self.value.type : self.type
     must(
-      [Type.NUMERAL, Type.NUMERAL.name].includes(t ?? t.type),
-      `Expected a number, found ${t.name}`
+      self.type == "Numeral" || self.type.name == "Numeral",
+      `Expected a number, found ${self.type.name ?? self.type}`
     )
   },
   isNumericOrString() {
@@ -70,9 +68,14 @@ const check = (self) => ({
     )
   },
   isAssignableTo(t) {
+    console.log("-------------------------------------------")
+    console.log(self.type)
+    console.log(t.type)
+    // selfType = self.type.name ?? self.type
+    // tType = t.type.name ?? t.type ?? t
     must(
-      ((self.type.name ?? self.type) === (t.type.name ?? t.type ?? t.name ?? t)),
-      `Cannot assign a ${(self.type.name ?? self.type)} to a ${(t.type.name ?? t.type ?? t.name ?? t)}`
+      self.type.name ?? self.type === t.type.name ?? t.type ?? t,
+      `Cannot assign a ${(self.type.name ?? self.type)} to a ${(t.type ?? t)}`
     )
   },
   isInsideALoop() {
