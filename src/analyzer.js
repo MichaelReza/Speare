@@ -383,13 +383,6 @@ class Context {
   DictLookup(e) {
     e.dict = this.analyze(e.dict)
     e.type = e.dict.type.includes(":") ? e.dict.type.split(":")[1].split("]")[0] : e.dict.type
-    // e.dict = this.lookup(this.analyze(e.dict).name)
-    // check(e.key).isInTheDict(e.dict)
-    // e.dict.dictEntries.forEach((entry) => {
-    //   if (e.key.value === entry.key.value) {
-    //     e.value = entry.val
-    //   }
-    // })
     return e
   }
 }
