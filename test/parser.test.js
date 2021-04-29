@@ -431,5 +431,5 @@ describe("the Parser", () => {
   it("produces the expected AST for all node types", () => {
     assert.deepStrictEqual(util.format(parse(source)), expectedAst)
   })
-  console.log(util.format(parse(source)))
+  // console.log(util.format(parse(source)))
 })
