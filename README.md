@@ -42,7 +42,7 @@ Below, you will find a comprehensive set of examples of code in Speare. Hopefull
 
 <td>
 
-`speaketh("hello world")`
+`speaketh("hello, world")`
 
 </td>
 </table>
