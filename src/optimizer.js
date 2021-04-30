@@ -41,8 +41,8 @@ const optimizers = {
     return d
   },
   FunctionDeclaration(d) {
-    console.log(d)
-    console.log(d.fun)
+    // console.log(d)
+    // console.log(d.fun)
     d.body = optimize(d.body)
     return d
   },
@@ -120,38 +120,39 @@ const optimizers = {
       if (e.left.constructor === ast.EmptyOptional) {
         return e.right
       }
-    } else if (e.op === "&&") {
+    } else if (e.op === "furthermore") {
       // Optimize boolean constants in && and ||
       if (e.left === true) return e.right
       else if (e.right === true) return e.left
-    } else if (e.op === "||") {
+    } else if (e.op === "alternatively") {
       if (e.left === false) return e.right
       else if (e.right === false) return e.left
     } else if ([Number, BigInt].includes(e.left.constructor)) {
       // Numeric constant folding when left operand is constant
       if ([Number, BigInt].includes(e.right.constructor)) {
-        if (e.op === "+") return e.left + e.right
-        else if (e.op === "-") return e.left - e.right
-        else if (e.op === "*") return e.left * e.right
-        else if (e.op === "/") return e.left / e.right
-        else if (e.op === "**") return e.left ** e.right
-        else if (e.op === "<") return e.left < e.right
-        else if (e.op === "<=") return e.left <= e.right
-        else if (e.op === "==") return e.left === e.right
-        else if (e.op === "!=") return e.left !== e.right
-        else if (e.op === ">=") return e.left >= e.right
-        else if (e.op === ">") return e.left > e.right
-      } else if (e.left === 0 && e.op === "+") return e.right
-      else if (e.left === 1 && e.op === "*") return e.right
-      else if (e.left === 0 && e.op === "-") return new ast.UnaryExpression("-", e.right)
-      else if (e.left === 1 && e.op === "**") return 1
-      else if (e.left === 0 && ["*", "/"].includes(e.op)) return 0
+        if (e.op === "with") return e.left + e.right
+        else if (e.op === "without") return e.left - e.right
+        else if (e.op === "accumulate") return e.left * e.right
+        else if (e.op === "sunder") return e.left / e.right
+        else if (e.op === "exponentiate") return e.left ** e.right
+        else if (e.op === "residue") return e.left % e.right
+        else if (e.op === "lesser") return e.left < e.right
+        else if (e.op === "tis lesser") return e.left <= e.right
+        else if (e.op === "tis") return e.left === e.right
+        else if (e.op === "tis not") return e.left !== e.right
+        else if (e.op === "tis greater") return e.left >= e.right
+        else if (e.op === "greater") return e.left > e.right
+      } else if (e.left === 0 && e.op === "with") return e.right
+      else if (e.left === 1 && e.op === "accumulate") return e.right
+      else if (e.left === 0 && e.op === "without") return new ast.UnaryExpression("-", e.right)
+      else if (e.left === 1 && e.op === "exponentiate") return 1
+      else if (e.left === 0 && ["accumulate", "sunder"].includes(e.op)) return 0
     } else if (e.right.constructor === Number) {
       // Numeric constant folding when right operand is constant
-      if (["+", "-"].includes(e.op) && e.right === 0) return e.left
-      else if (["*", "/"].includes(e.op) && e.right === 1) return e.left
-      else if (e.op === "*" && e.right === 0) return 0
-      else if (e.op === "**" && e.right === 0) return 1
+      if (["with", "without"].includes(e.op) && e.right === 0) return e.left
+      else if (["accumulate", "sunder"].includes(e.op) && e.right === 1) return e.left
+      else if (e.op === "accumulate" && e.right === 0) return 0
+      else if (e.op === "exponentiate" && e.right === 0) return 1
     }
     return e
   },
@@ -162,9 +163,6 @@ const optimizers = {
         return -e.operand
       }
     }
-    return e
-  },
-  EmptyOptional(e) {
     return e
   },
   SubscriptExpression(e) {
@@ -204,4 +202,7 @@ const optimizers = {
     // Flatmap since each element can be an array
     return a.flatMap(optimize)
   },
+  Numeral(n) {
+    return n
+  }
 }

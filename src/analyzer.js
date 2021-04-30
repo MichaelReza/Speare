@@ -68,9 +68,9 @@ const check = (self) => ({
     )
   },
   isAssignableTo(t) {
-    console.log("-------------------------------------------")
-    console.log(self.type)
-    console.log(t.type)
+    // console.log("-------------------------------------------")
+    // console.log(self.type)
+    // console.log(t.type)
     // selfType = self.type.name ?? self.type
     // tType = t.type.name ?? t.type ?? t
     must(

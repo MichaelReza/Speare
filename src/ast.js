@@ -111,7 +111,7 @@ export class Param {
   }
 }
 
-// ContFlow -----------------------------------------------------------------
+// #region ContFlow ast ---------------------------------------
 export class IfStatement {
   constructor(le1, body, le2, body2, body3) {
     Object.assign(this, {le1, body, le2, body2, body3 })
@@ -153,9 +153,9 @@ export class DoWhile {
     Object.assign(this, { doo, body, whle, logExp })
   }
 }
-// End ContFlow --------------------------------------------
+// #endregion End ContFlow ------------------------------------
 
-// Statement ------------------------------------------
+// #region Statement ------------------------------------------
 export class VariableInitialization {
   constructor(type, name, initializer) {
     Object.assign(this, { type, name, initializer })
@@ -194,7 +194,7 @@ export class IncDec {
     Object.assign(this, { name, op })
   }
 }
-// End Statement -------------------------------
+// #endregion End Statement -------------------------------
 
 export class BinaryExpression {
   constructor(left, op, right) {
