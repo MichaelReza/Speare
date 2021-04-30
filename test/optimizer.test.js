@@ -11,7 +11,6 @@ const return2 = new ast.Return(2)
 const returnX = new ast.Return(x)
 const onePlusTwo = new ast.BinaryExpression(1, "with", 2)
 const body = returnX
-// Updated to this point
 const identity = Object.assign(new ast.Corollary("ToBeOrNotToBe", [], "foo", body))
 const intFun = body => new ast.Corollary("f", [], "bar", body)
 const callIdentity = args => new ast.Call(identity.id, args)

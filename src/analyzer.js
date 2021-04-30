@@ -61,21 +61,14 @@ const check = (self) => ({
   isSameTypeAs(other) {
     must((self.name ?? self) === (other.name ?? other), "Variable initialized is not the same as declared type")
   },
+  correctReassignment(other) {
+    must(
+      (self.type ?? self) === (other.type ?? other), `Variable reassignment statement has incompatible types`)
+  },
   allHaveSameType() {
     must(
       self.slice(1).every(e => e.type.name === self[0].type.name),
       "Not all elements have the same type"
-    )
-  },
-  isAssignableTo(t) {
-    // console.log("-------------------------------------------")
-    // console.log(self.type)
-    // console.log(t.type)
-    // selfType = self.type.name ?? self.type
-    // tType = t.type.name ?? t.type ?? t
-    must(
-      self.type.name ?? self.type === t.type.name ?? t.type ?? t,
-      `Cannot assign a ${(self.type.name ?? self.type)} to a ${(t.type ?? t)}`
     )
   },
   isInsideALoop() {
@@ -93,7 +86,7 @@ const check = (self) => ({
   },
   returnsNothing() {
     must(
-      self.type === (Type.VOID.name ?? Type.VOID),
+      self.type === Type.VOID,
       "Something should be returned here"
     )
   },
@@ -175,7 +168,7 @@ class Context {
   }
   VariableAssignment(v) {
     v.value = this.analyze(v.value)
-    check(v.value).isAssignableTo(this.lookup(v.name.name))
+    check(v.value).correctReassignment(this.lookup(v.name.name))
     return v
   }
   Param(p) {
