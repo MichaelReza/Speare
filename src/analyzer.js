@@ -1,16 +1,8 @@
 import {
-  VariableAssignment,
   Type,
-  Param,
-  CorollaryType,
   Corollary,
   ListeType,
-  Liste,
-  Tobeornottobe,
-  ConcordanceType,
   Concordance,
-  Numeral,
-  UnaryExpression,
 } from "./ast.js"
 import * as stdlib from "./stdlib.js"
 
@@ -52,18 +44,15 @@ const check = (self) => ({
     })
     must(uniqueBool, "Keys must be distinct")
   },
-  // isAListe() {
-  //   must(self.type.constructor === ListeType, "Liste expected")
-  // },
   hasSameTypeAs(other) {
     must((self.type.name ?? self.type) === (other.type.name ?? other.type), "Operands do not have the same type")
   },
   isSameTypeAs(other) {
-    must((self.name ?? self) === (other.name ?? other), "Variable initialized is not the same as declared type")
+    must(other === undefined || (self.name ?? self) === (other.name ?? other), "Variable initialized is not the same as declared type")
   },
   correctReassignment(other) {
     must(
-      (self.type ?? self) === (other.type ?? other), `Variable reassignment statement has incompatible types`)
+      (self.type) === (other.type), `Variable reassignment statement has incompatible types`)
   },
   allHaveSameType() {
     must(
@@ -105,34 +94,24 @@ const check = (self) => ({
       `${func.params.length} argument(s) required but ${self.length} passed`
     )
     func.params.forEach((param, i) => {
-      must((self[i].type.name ?? self[i].name ?? self[i].type) === (param.type ?? param),
-      `Cannot assign a ${self[i].type.name ?? self[i].name ?? self[i].type} to ${param.type ?? param} ${param.name}`)
+      must((self[i].type.name ?? self[i].name ?? self[i].type) === (param.type),
+      `Cannot assign a ${self[i].type.name ?? self[i].name ?? self[i].type} to ${param.type} ${param.name}`)
     })
   },
 })
 
 class Context {
   constructor(parent = null, configuration = {}) {
-    // Parent (enclosing scope) for static scope analysis
     this.parent = parent
-    // All local declarations. Names map to variable declarations, types, and
-    // function declarations
     this.locals = new Map()
-    // Whether we are in a loop, so that we know whether breaks and continues
-    // are legal here
     this.inLoop = configuration.inLoop ?? parent?.inLoop ?? false
-    // Whether we are in a function, so that we know whether a return
-    // statement can appear here, and if so, how we typecheck it
     this.function = configuration.forFunction ?? parent?.function ?? null
-    // Whether we are in a class
     this.class = configuration.forClass ?? false
   }
   sees(name) {
-    // Search "outward" through enclosing scopes
     return this.locals.has(name) || this.parent?.sees(name)
   }
   add(name, entity) {
-    // No shadowing! Prevent addition if id anywhere in scope chain!
     if (this.sees(name)) {
       throw new Error(`Identifier ${name} already declared`)
     }
@@ -148,8 +127,6 @@ class Context {
     throw new Error(`Identifier ${name} not declared`)
   }
   newChild(configuration = {}) {
-    // Create new (nested) context, which is just like the current context
-    // except that certain fields can be overridden
     return new Context(this, configuration)
   }
   analyze(node) {
@@ -160,7 +137,6 @@ class Context {
     return p
   }
   VariableInitialization(d) {
-    // Declarations generate brand new variable objects
     d.initializer = this.analyze(d.initializer)
     check(d.type).isSameTypeAs(d.initializer.type)
     this.add(d.name, d.initializer)
@@ -176,16 +152,12 @@ class Context {
     return p
   }
   IncDec(s) {
-    // Make sure s.name does not refer to readonly variable
-    // make sure s.name refers to a integer...
     check(this.lookup(s.name)).isNumeral()
     return s
   }
   IncDecby(s) {
     s.expression = this.analyze(s.expression)
     check(this.lookup(s.name)).isNumeral()
-    //check your expression type, should be integer
-    //check s.name, make sure it is integer and not readonly
     return s
   }
   Break(s) {
@@ -216,9 +188,6 @@ class Context {
           check(elif).isBoolean()
         })
     }
-    // if (s.le3) {
-    //   s.body3 = this.analyze(s.body3)
-    // }
     return s
   }
   WhileLoop(s) {
@@ -252,9 +221,6 @@ class Context {
     e.left = this.analyze(e.left)
     e.right = this.analyze(e.right)
     if (["furthermore", "alternatively"].includes(e.op)) {
-      //check(e.left).isInteger()
-      //check(e.right).isInteger()
-      //e.type = Type.INT
       check(e.left).hasSameTypeAs(e.right)
       e.type = Type.BOOLEAN
     } else if (["with"].includes(e.op)) {
@@ -300,16 +266,20 @@ class Context {
   Concordance(a) {
     check(a).hasUniqueKeys()
     a.dictEntries.forEach(x => x = this.analyze(x))
-    a.keyType = a.dictEntries[0].key.type
-    a.valType = a.dictEntries[0].val.type
-    let keyTypeName = typeof a.keyType.name !== "undefined" ? a.keyType.name : a.keyType
-    let valTypeName = typeof a.valType.name !== "undefined" ? a.valType.name : a.valType
-    a.type = "[" + keyTypeName + ":" + valTypeName + "]"
+    if (a.dictEntries.length > 0) {
+      a.keyType = a.dictEntries[0].key.type
+      a.valType = a.dictEntries[0].val.type
+      let keyTypeName = (a.keyType.name)
+      let valTypeName = (typeof a.valType.name !== "undefined" ? a.valType.name : a.valType)
+      a.type = "[" + keyTypeName + ":" + valTypeName + "]"
+    }
     return a
   }
   DictEntry(a) {
-    a.key = this.analyze(a.key)
-    a.val = this.analyze(a.val)
+    if (a !== undefined) {
+      a.key = this.analyze(a.key)
+      a.val = this.analyze(a.val)
+    }
     return a
   }
   Call(c) {
@@ -329,8 +299,6 @@ class Context {
     return c
   }
   IdentifierExpression(e) {
-    // Id expressions get "replaced" with the variables they refer to
-    // e.value = this.lookup(e.name)
     e.type = this.lookup(e.name).type
     return e
   }
@@ -368,10 +336,6 @@ class Context {
   }
 
   Composition(c) {
-    // const childContext = this.newChild({ inLoop: false, forClass: c })
-    // c.compBody = childContext.analyze(c.compBody)
-    // this.add(c.id, c)
-    // return c
     throw new Error("Compositions cannot be analyzed")
   }
   
@@ -383,14 +347,7 @@ class Context {
 }
 
 export default function analyze(node) {
-  // Allow primitives to be automatically typed
-  // BigInt.prototype.type = Type.Numeral;
-  // Number.prototype.type = Type.BOOLEAN;
-  // String.prototype.type = Type.STRING;
-  // Type.prototype.type = Type.TYPE;
   const initialContext = new Context()
-
-  // Add in all the predefined identifiers from the stdlib module
   const library = { ...stdlib.types, ...stdlib.constants, ...stdlib.functions }
   for (const [name, type] of Object.entries(library)) {
     initialContext.add(name, type)

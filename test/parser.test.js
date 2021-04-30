@@ -192,14 +192,9 @@ const expectedAst = String.raw`   1 | Program statements=[#2,#4,#8,#10,#14,#17,#
  130 | StringValue value='nested' name='Lexicographical'`
 
 const goodPrograms = {
-  // Empty Program:
   "Recognizes empty program": "",
-
-  // Printing:
   "Recognizes a simple print statement": 'speaketh("hello")',
   "Recognizes arithmetic print statement": "speaketh(6 with 7)",
-
-  // Variable Declaration:
   "Recognizes declaration of Integer numerals": "alloweth Numeral x be 6",
   "Recognizes declaration of floating point numerals":
     "alloweth Numeral x be 6.3373685",
@@ -215,7 +210,6 @@ const goodPrograms = {
     "alloweth Liste of Numeral x be [3, 5, 7, 9]",
   "Recognizes declaration of Concordance":
     "alloweth Concordance of Numeral and Numeral x be {12 : 6, 3 : 4, 8 : 9}",
-  // Arithmetic:
   "Recognizes a print statement": "speaketh(x accumulate 5)",
   "Recognizes parenthetical addition": "speaketh(x with (5 without 2))",
   "Recognizes arithmetic +-": "x be x with 5 without 6",
@@ -224,8 +218,6 @@ const goodPrograms = {
   "Recognizes specified decrementation": "x decrementby 4",
   "Recognizes incrememntation": "x increment",
   "Recognizes specified incrememntation": "x incrementby 4",
-
-  // Functions:
   "Recognizes basic functions":
     "enter ToBeOrNotToBe foo(Numeral x) { \
         alloweth Numeral x be 1 \
@@ -240,7 +232,6 @@ const goodPrograms = {
       returneth x \
     }',
   "Recognizes creation of empty function": "enter Numeral foo(Numeral x) {}",
-  // Classes:
   "Recognizes empty class": "Composition foo {}",
   "Recognizes classes":
     "Composition foo { \
@@ -267,8 +258,6 @@ const goodPrograms = {
     returneth x \
     } \
     }",
-
-  // For loops:
   "Recognizes basic for loop":
     "in regards to (alloweth Numeral x be 0, x nobler 20, x decrement) { \
       speaketh(x) \
@@ -279,7 +268,6 @@ const goodPrograms = {
         speaketh("nested") \
       } \
     }',
-  // While Loops:
   "Recognizes basic while loop":
     "whilst (x nobler 20) { \
       speaketh(x) \
@@ -294,8 +282,6 @@ const goodPrograms = {
         speaketh("nested") \
       } \
     }',
-
-  // Do-While Loops:
   "Recognizes basic while loop":
     "execute { \
       speaketh(x) \
@@ -306,8 +292,6 @@ const goodPrograms = {
         speaketh(x) \
       } whilst(y nobler z) \
     } whilst(x nobler y)",
-
-  // IF-statements:
   "Recognizes if statement": "whether (x nobler y) { speaketh(x) }",
   "Recognizes if-else statement":
     "whether (x nobler y) { speaketh(x) } otherwise { speaketh(y) }",
@@ -315,18 +299,10 @@ const goodPrograms = {
     "whether (x nobler y) { speaketh(x) } \
      subsequently(y nobler x) { speaketh(z) } \
      otherwise { speaketh(y) }",
-
-  // Switch-Case Statements:
-  // "Recognizes Switch-case statement":
-  //   "trigger x { condition 0: speaketh(z) condition 1: speaketh(y) }",
-  // "Recognizes Switch-case with break":
-  //   "trigger x { condition 0: speaketh(z) exit condition 1: speaketh(y) exit }",
 }
 
 const badPrograms = [
-  // Printing:
   ["Disallows saying type names", "speaketh(Numeral)", /Line 1, col 10:/],
-  // Variable Assignment:
   ["Disallows incomplete statement", "alloweth", /Line 1, col 9:/],
   ["Disallows declaration", "alloweth x", /Line 1, col 10:/],
   [
@@ -339,9 +315,6 @@ const badPrograms = [
     "x be x decrement",
     /Line 1, col 8:/,
   ],
-  // Arithmetic:
-
-  // Functions:
   [
     "Disallows non-type function",
     "enter toal foo(Numeral increment) { returneth 0 }",
@@ -352,15 +325,11 @@ const badPrograms = [
     "enter foo() { returneth 0}",
     /Line 1, col 7:/,
   ],
-
-  // Classes:
   [
     "Disallows mismatched exits between classes",
     'Composition foo { Composition bar } { speaketh("bar") }',
     /Line 1, col 35:/,
   ],
-
-  // For loops:
   [
     "Disallows inadequate statements in for-loop",
     "in regards to( Numeral x be 0) { speaketh(x) }",
@@ -371,21 +340,16 @@ const badPrograms = [
     "in regards to( alloweth x be 12) {  speaketh(x) }",
     /Line 1, col 25:/,
   ],
-
-  // While Loops:
   [
     "Disallows improper while loop",
     "whilst( Numeral x be 0) { speaketh(x) }",
     /Line 1, col 9:/,
   ],
-
-  // Do-While Loops:
   [
     "Disallows do loop without while",
     "execute{alloweth x be 12}",
     /Line 1, col 18:/,
   ],
-  // Do-While Loops:
   [
     "Disallows sqitch case",
     "trigger x { \
@@ -395,33 +359,21 @@ const badPrograms = [
     }",
     /Not implemented/,
   ],
-
-  // IF-statements:
   [
     "Disallows if-else-then",
     "whether (x) { speaketh(x) } otherwise { speaketh(y) } subsequently(y) {speaketh(x) }",
     /Line 1, col 55:/,
   ],
-
-  // Switch-Case Statements:
-  // ["Disallows switch with no cases", "trigger x { }", /Line 1, col 13:/],
-  // // Types:
-  // [
-  //   "Disallows incomplete statement",
-  //   "alloweth increment be",
-  //   /Line 1, col 10:/,
-  // ],
 ]
 
 describe("the Parser", () => {
-  // Accepted
+
   for (const [prompt, code] of Object.entries(goodPrograms)) {
     it(prompt, () => {
       assert.ok(parse(code))
     })
   }
 
-  // Recejcted
   for (const [scenario, source, errorMessagePattern] of badPrograms) {
     it(`throws on ${scenario}`, () => {
       assert.throws(() => parse(source), errorMessagePattern)
@@ -431,5 +383,5 @@ describe("the Parser", () => {
   it("produces the expected AST for all node types", () => {
     assert.deepStrictEqual(util.format(parse(source)), expectedAst)
   })
-  // console.log(util.format(parse(source)))
+
 })

@@ -1,44 +1,42 @@
 Speare {
   Program       = (Work | Statement)*
   Work          = Corollary | Composition
-  Composition   = "Composition" Varname "{" Constructor? Work* "}"              --class
-  Corollary     = enter type Varname "(" ListOf<Param, ","> ")" "{" Body "}"    --function
+  Composition   = "Composition" Varname "{" Constructor? Work* "}"                                                 --class
+  Corollary     = enter type Varname "(" ListOf<Param, ","> ")" "{" Body "}"                                       --function
   Body          = (Statement | Work)*
   Statement     = ContFlow+
-                | alloweth type Varname "be" LogicExp                           --variable
-                | Varname "be" LogicExp                                         --assignment
-                | speaketh "(" LogicExp ")"                                       --print
-                | returneth RelExp?                                             --return
+                | alloweth type Varname "be" LogicExp                                                              --variable
+                | Varname "be" LogicExp                                                                            --assignment
+                | speaketh "(" LogicExp ")"                                                                        --print
+                | returneth RelExp?                                                                                --return
                 | StatementFunctionCall                                         
-                | Varname (incrementby | decrementby) RelExp                    --incdecby
-                | Varname (increment | decrement)                               --incdec
-                | break                                                         --break
-  ContFlow      = if "(" LogicExp ")" "{" Body "}" ( elif "(" LogicExp ")" "{" Body "}" )* ( else "{" Body "}")? --complexconditional
-                | switch Factor "{" (case Factor ":" Body )+ "}"                                 --switchcase
-                | for "(" ForLoopVariable "," LogicExp "," ForLoopAction ")" "{" Body "}"      --forloop
-                | while "(" LogicExp+ ")" "{" Body  "}"                     --while
-                | do "{" Body "}" while "(" LogicExp+ ")"                --dowhile
-  LogicExp      = LogicExp logicalop LogicExp                                       --logicalcombo
+                | Varname (incrementby | decrementby) RelExp                                                       --incdecby
+                | Varname (increment | decrement)                                                                  --incdec
+                | break                                                                                            --break
+  ContFlow      = if "(" LogicExp ")" "{" Body "}" ( elif "(" LogicExp ")" "{" Body "}" )* ( else "{" Body "}")?   --complexconditional
+                | switch Factor "{" (case Factor ":" Body )+ "}"                                                   --switchcase
+                | for "(" ForLoopVariable "," LogicExp "," ForLoopAction ")" "{" Body "}"                          --forloop
+                | while "(" LogicExp+ ")" "{" Body  "}"                                                            --while
+                | do "{" Body "}" while "(" LogicExp+ ")"                                                          --dowhile
+  LogicExp      = LogicExp logicalop LogicExp                                                                      --logicalcombo
                 | RelExp
-  RelExp        = AddSub relop AddSub                                           --equality
-                | AddSub                                                        --defer
-  AddSub        = AddSub (subtraction | addition) MultDiv                       --addorsubtract
-                | MultDiv                                                       --defer
-  MultDiv       = MultDiv (multiplication | division | modulus) Exponentiate    --multordiv
+  RelExp        = AddSub relop AddSub                                                                              --equality
+                | AddSub                                                                                           --defer
+  AddSub        = AddSub (subtraction | addition) MultDiv                                                          --addorsubtract
+                | MultDiv                                                                                          --defer
+  MultDiv       = MultDiv (multiplication | division | modulus) Exponentiate                                       --multordiv
                 | Exponentiate
-  Exponentiate  = Factor (exponentiate) Exponentiate                            --raisepower
+  Exponentiate  = Factor (exponentiate) Exponentiate                                                               --raisepower
                 | Factor
   Factor        = StructureType
                 | ArrayLookup
                 | DictLookup
                 | FunctionCall
-                | "-"? Varname                                                   --variable
-                | "(" LogicExp ")"                                                --parens
-                | ("nay" | abs | sqrt)	"(" Factor ")"                          --unary
+                | "-"? Varname                                                                                     --variable
+                | "(" LogicExp ")"                                                                                 --parens
+                | ("nay" | abs | sqrt)	"(" Factor ")"                                                             --unary
                 | String
   
-
-  // Statement Specific Grammar Features
   DictEntry              = AddSub colon AddSub
   ArrayLookup            = Varname ("[" AddSub "]")+
   DictLookup             = Factor "." AddSub
@@ -47,23 +45,15 @@ Speare {
   ForLoopVariable        = alloweth type Varname "be" LogicExp
   ForLoopAction          = Varname (increment | decrement)
   Constructor            = "constructor" "(" ListOf<Param, ","> ")" "{" Body "}"
-
-
-  // Define ids for variables, params
-  Varname             = id                             --string
-
+Varname             = id                                                                                           --string
   Param               = type Varname
-              
-
-  //Reserved keywords
   alloweth            = "alloweth" ~alnum
   speaketh            = "speaketh" 
   returneth           = "returneth"
   enter               = "enter"
   colon               = ":"
-
-  type	              = "Liste of " type                                          --listdec
-                      | "Concordance of " type " and " type                        --dictdec
+  type	              = "Liste of " type                                                                           --listdec
+                      | "Concordance of " type " and " type                                                        --dictdec
                       | "Indistinguishable"
                       | "ToBeOrNotToBe"
                       | "Numeral"
@@ -71,8 +61,6 @@ Speare {
                       | "Illused"
                       | "Ideogram"
                       | "Corollary"
-
-
   StructureType       = Indistinguishable
                       | Tobeornottobe
                       | Numeral
@@ -80,20 +68,15 @@ Speare {
                       | Illused
                       | Liste
                       | Concordance
-
-  // Type
-  id                  = ~keyword letter alnum*            --name
-  String              = ~keyword "\"" alnum* "\""        --string
+  id                  = ~keyword letter alnum*                                                                     --name
+  String              = ~keyword "\"" alnum* "\""                                                                  --string
   Indistinguishable	  = "indistinguishable" ~alnum
   Tobeornottobe	   	  =	"fallacious" | "faithful"         
   Numeral             = "-"? digit+ ("." digit+)?
   Liste               = "[" ListOf<AddSub, ","> "]"
   Concordance         = "{" ListOf<DictEntry, ","> "}"
-
   Lexicographical     = "\"" alnum "\""
   Illused             = "null"
-
-  // Operations
   addition            = "with"
   subtraction         = "without"
   multiplication      = "accumulate"
@@ -103,8 +86,6 @@ Speare {
   abs                 = "absolutization" ~alnum
   sqrt                = "quadrangle" ~alnum
   composition         = "Composition" ~alnum
-
-  // Relational and Logical operations
   relop               = "tis nobler"
                       | "tis not"
                       | "tis lesser"
@@ -114,15 +95,11 @@ Speare {
   logicalop           = "furthermore"
                       | "alternatively"
                       | "nay"
-
-  //Incrementing
   assignment		      = "be"
   increment           = "increment"
   incrementby         = "incrementby"
   decrement           = "decrement"
   decrementby         = "decrementby"
-
-  // Control Flow
   if                  = "whether"
   elif                = "subsequently"
   else                = "otherwise"
@@ -133,7 +110,6 @@ Speare {
   do                  = "execute"
   for                 = "in regards to"
   in                  = "within"
-
   controlflow         = elif
                       | for
                       | if
@@ -144,8 +120,6 @@ Speare {
                       | while
                       | do
                       | in
-
-  // Defining symbols
   ideogram            = addition
                       | subtraction
                       | multiplication
@@ -158,11 +132,7 @@ Speare {
                       | abs
                       | increment
                       | decrement
-
-  // Defining Objects
   accommodation	      = type
-
-   //Defining Reserved Words
   keyword             = ideogram ~alnum
                       | alloweth ~alnum
                       | returneth ~alnum
@@ -170,5 +140,4 @@ Speare {
                       | accommodation ~alnum
                       | composition ~alnum
                       | controlflow ~alnum
-
 }

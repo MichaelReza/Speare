@@ -2,20 +2,6 @@
 //
 // This module exports a single function to perform machine-independent
 // optimizations on the analyzed semantic graph.
-//
-// The only optimizations supported here are:
-//
-//   - assignments to self (x = x) turn into no-ops
-//   - constant folding
-//   - some strength reductions (+0, -0, *0, *1, etc.)
-//   - turn references to built-ins true and false to be literals
-//   - remove all disjuncts in || list after literal true
-//   - remove all conjuncts in && list after literal false
-//   - while-false becomes a no-op
-//   - repeat-0 is a no-op
-//   - for-loop over empty array is a no-op
-//   - for-loop with low > high is a no-op
-//   - if-true and if-false reduce to only the taken arm
 
 import * as ast from "./ast.js"
 
@@ -25,110 +11,89 @@ export default function optimize(node) {
 
 const optimizers = {
   Program(p) {
-    // translated to Speare
     p.statements = optimize(p.statements)
     return p
   },
   VariableInitialization(d) {
-    // translated to Speare
     d.initializer = optimize(d.initializer)
     return d
   },
-  TypeDeclaration(d) {
-    return d
-  },
-  StructType(d) {
-    return d
-  },
-  FunctionDeclaration(d) {
-    // console.log(d)
-    // console.log(d.fun)
+  Corollary(d) {
+    d.params = optimize(d.params)
     d.body = optimize(d.body)
     return d
   },
-  Variable(v) {
-    return v
-  },
-  Function(f) {
-    // f.body = optimize(f.body)
-    return f
-  },
-  Parameter(p) {
+  Param(p) {
     return p
   },
   IncDec(s) {
-    // translated to speare
     return s
   },
-  Assignment(s) {
-    s.source = optimize(s.source)
-    s.target = optimize(s.target)
-    if (s.source === s.target) {
+  VariableAssignment(s) {
+    s.name = optimize(s.name)
+    s.value = optimize(s.value)
+    if (s.name === s.value) {
       return []
     }
     return s
   },
   Break(b) {
-    // translated to speare
     return b
   },
   Return(e) {
-    // translated to speare
-    e.expression = optimize(e.expression)
+    if (e.expression !== undefined) {
+      e.expression = optimize(e.expression)
+    }
     return e
   },
   IfStatement(s) {
-    s.test = optimize(s.test)
-    s.consequent = optimize(s.consequent)
-    s.alternate = optimize(s.alternate)
-    if (s.test.constructor === Boolean) {
-      return s.test ? s.consequent : s.alternate
+    s.le1 = optimize(s.le1)
+    if (s.body !== undefined) {
+      s.body = optimize(s.body)
+    }
+    if (s.le2 !== undefined) {
+      s.le2 = optimize(s.le2)
+      s.body2 = optimize(s.body2)
+    }
+    if (s.body3 !== undefined) {
+      s.body3 = optimize(s.body3)
+    }
+    if (s.le1.constructor === Boolean && s.le2 === undefined) {
+      return s.le1 ? s.body : (s.body3 !== undefined) ? s.body3 : []
+    } else if (s.le1.constructor === Boolean && s.le2.constructor === Boolean) {
+      return s.le1 ? s.body : s.le2 ? s.body2 : (s.body3 !== undefined) ? s.body3 : []
     }
     return s
   },
-  WhileStatement(s) {
-    s.test = optimize(s.test)
-    if (s.test === false) {
-      // while false is a no-op
+  WhileLoop(s) {
+    s.logicExp = optimize(s.logicExp)
+    if (s.logicExp === false) {
       return []
     }
     s.body = optimize(s.body)
     return s
   },
-  ForStatement(s) {
-    // Translated to Speare
+  ForLoop(s) {
     s.init = optimize(s.init)
     s.condition = optimize(s.condition)
     s.action = optimize(s.action)
     s.body = optimize(s.body)
+    if (s.condition == false) {
+      return []
+    }
     return s
   },
-  Conditional(e) {
-    e.test = optimize(e.test)
-    e.consequent = optimize(e.consequent)
-    e.alternate = optimize(e.alternate)
-    if (e.test.constructor === Boolean) {
-      return e.test ? e.consequent : e.alternate
-    }
-    return e
-  },
+  
   BinaryExpression(e) {
     e.left = optimize(e.left)
     e.right = optimize(e.right)
-    if (e.op === "??") {
-      // Coalesce Empty Optional Unwraps
-      if (e.left.constructor === ast.EmptyOptional) {
-        return e.right
-      }
-    } else if (e.op === "furthermore") {
-      // Optimize boolean constants in && and ||
+    if (e.op === "furthermore") {
       if (e.left === true) return e.right
       else if (e.right === true) return e.left
     } else if (e.op === "alternatively") {
       if (e.left === false) return e.right
       else if (e.right === false) return e.left
     } else if ([Number, BigInt].includes(e.left.constructor)) {
-      // Numeric constant folding when left operand is constant
       if ([Number, BigInt].includes(e.right.constructor)) {
         if (e.op === "with") return e.left + e.right
         else if (e.op === "without") return e.left - e.right
@@ -148,7 +113,6 @@ const optimizers = {
       else if (e.left === 1 && e.op === "exponentiate") return 1
       else if (e.left === 0 && ["accumulate", "sunder"].includes(e.op)) return 0
     } else if (e.right.constructor === Number) {
-      // Numeric constant folding when right operand is constant
       if (["with", "without"].includes(e.op) && e.right === 0) return e.left
       else if (["accumulate", "sunder"].includes(e.op) && e.right === 1) return e.left
       else if (e.op === "accumulate" && e.right === 0) return 0
@@ -157,32 +121,25 @@ const optimizers = {
     return e
   },
   UnaryExpression(e) {
-    e.operand = optimize(e.operand)
-    if (e.operand.constructor === Number) {
-      if (e.op === "-") {
-        return -e.operand
+    e.value = optimize(e.value)
+    if (e.value.constructor === Number) {
+      if (e.sign === "-") {
+        return -e.value
       }
     }
     return e
   },
-  SubscriptExpression(e) {
+  ArrayLookup(e) {
     e.array = optimize(e.array)
     e.index = optimize(e.index)
     return e
   },
-  ArrayExpression(e) {
-    e.elements = optimize(e.elements)
-    return e
-  },
-  EmptyArray(e) {
-    return e
-  },
-  MemberExpression(e) {
-    e.object = optimize(e.object)
+  Liste(e) {
+    e.values = optimize(e.values)
     return e
   },
   Call(c) {
-    c.callee = optimize(c.callee)
+    c.varname = optimize(c.varname)
     c.args = optimize(c.args)
     return c
   },
@@ -199,10 +156,6 @@ const optimizers = {
     return e
   },
   Array(a) {
-    // Flatmap since each element can be an array
     return a.flatMap(optimize)
   },
-  Numeral(n) {
-    return n
-  }
 }

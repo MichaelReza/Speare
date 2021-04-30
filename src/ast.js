@@ -30,27 +30,13 @@ export class Type {
   static VOID = new Type("Indistinguishable")
   static NULL = new Type("Illused")
   static TYPE = new Type("type")
-  // Equivalence: Iwhen are two types the same
-  // tis(target) {
-  //   return this == target
-  // }
-
-  // tisAssignable(target) {
-  //   return this.isEquivalentTo(target)
-  // }
 }
 
 export class ListeType extends Type {
-  // Example: [int]
   constructor(baseType) {
     super(`[${baseType.name ?? baseType}]`)
     this.baseType = baseType
   }
-  // [T] equivalent to [U] only when T is equivalent to U. Same for
-  // assignability: we do NOT want arrays to be covariant!
-  // tis(target) {
-  //   return target.constructor === ListeType && this.baseType === target.baseType
-  // }
 }
 
 export class ConcordanceType extends Type {
@@ -59,35 +45,10 @@ export class ConcordanceType extends Type {
     this.keyType = keyType
     this.valType = valType
   }
-  // [T] equivalent to [U] only when T is equivalent to U. Same for
-  // assignability: we do NOT want arrays to be covariant!
-  // tis(target) {
-  //   return (
-  //     target.constructor === ConcordanceType &&
-  //     this.keyType === target.keyType &&
-  //     this.valType === target.valType
-  //   )
-  // }
 }
 
 export class CorollaryType extends Type {
-  // Example: (boolean,[string]?)->float
-  // constructor(name, parameterTypes, type) {
-  //   super(
-  //     `(${parameterTypes.map((t) => t.name).join(",")})->${type.name}`
-  //   )
-  //   Object.assign(this, { name, parameterTypes, type })
-  // }
-  // tisAssignable(target) {
-  //   return (
-  //     target.constructor === CorollaryType &&
-  //     this.type.tisAssignable(target.type) &&
-  //     this.parameterTypes.length === target.parameterTypes.length &&
-  //     this.parameterTypes.every((t, i) =>
-  //       target.parameterTypes[i].tisAssignable(t)
-  //     )
-  //   )
-  // }
+  // Not implemented
 }
 
 export class Composition {
@@ -100,10 +61,6 @@ export class Corollary {
   constructor(type, id, params, body) {
     Object.assign(this, { type, id, params, body })
   }
-
-  // get returnType() {
-  //   return this.type
-  // }
 }
 export class Param {
   constructor(type, name) {
@@ -111,18 +68,11 @@ export class Param {
   }
 }
 
-// #region ContFlow ast ---------------------------------------
 export class IfStatement {
   constructor(le1, body, le2, body2, body3) {
     Object.assign(this, {le1, body, le2, body2, body3 })
   }
 }
-
-// export class SwitchStatement {
-//   constructor(swtch, factor1, cse, factor2, body) {
-//     Object.assign(this, { swtch, factor1, cse, factor2, body })
-//   }
-// }
 
 export class ForLoop {
   constructor(init, condition, action, body) {
@@ -153,9 +103,7 @@ export class DoWhile {
     Object.assign(this, { doo, body, whle, logExp })
   }
 }
-// #endregion End ContFlow ------------------------------------
 
-// #region Statement ------------------------------------------
 export class VariableInitialization {
   constructor(type, name, initializer) {
     Object.assign(this, { type, name, initializer })
@@ -194,7 +142,6 @@ export class IncDec {
     Object.assign(this, { name, op })
   }
 }
-// #endregion End Statement -------------------------------
 
 export class BinaryExpression {
   constructor(left, op, right) {
@@ -278,7 +225,11 @@ export class Tobeornottobe {
 
 export class Concordance {
   constructor(dictEntries) {
-    this.type = "[" + dictEntries[0].key.name + ":" + dictEntries[0].val.name + "]"
+    if (dictEntries.length > 0) {
+      this.type = "[" + dictEntries[0].key.name + ":" + dictEntries[0].val.name + "]"
+    } else {
+      this.type = undefined
+    }
     Object.assign(this, { dictEntries })
   }
 }
@@ -288,11 +239,7 @@ export class DictEntry {
     Object.assign(this, { key, val })
   }
 }
-// Source:
 export function prettied(node) {
-  // Return a compact and pretty string representation of the node graph,
-  // taking care of cycles. Written here from scratch because the built-in
-  // inspect function, while nice, isn't nice enough.
   const tags = new Map()
 
   function tag(node) {

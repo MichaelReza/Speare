@@ -11,17 +11,7 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   Composition_class(_composition, id, _sb, constructor, compBody, _eb) {
     return new ast.Composition(id.sourceString, constructor.ast(), compBody.ast())
   },
-  Corollary_function(
-    _enter,
-    type,
-    id,
-    _sb,
-    params,
-    _eb,
-    _sbrace,
-    body,
-    _eBrace
-  ) {
+  Corollary_function(_enter, type, id, _sb, params, _eb, _sbrace, body, _eBrace) {
     return new ast.Corollary(
       type.sourceString,
       id.sourceString,
@@ -54,26 +44,8 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   Statement_incdec(id, op) {
     return new ast.IncDec(id.sourceString, op.sourceString)
   },
-  ContFlow_complexconditional(
-    _if,
-    _sp,
-    le1,
-    _ep,
-    _sb,
-    body,
-    _eb,
-    _elif,
-    _sp2,
-    le2,
-    _ep2,
-    _sb2,
-    body2,
-    _eb2,
-    _else,
-    _sb3,
-    body3,
-    _eb3
-  ) {
+  ContFlow_complexconditional(_if, _sp, le1, _ep, _sb, body, _eb, _elif,
+    _sp2, le2, _ep2, _sb2, body2, _eb2, _else, _sb3, body3, _eb3) {
     return new ast.IfStatement(
       le1.ast(),
       body.ast(),
@@ -82,19 +54,7 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
       body3.ast()
     )
   },
-  ContFlow_forloop(
-    _for,
-    _sp,
-    init,
-    _comma,
-    condition,
-    _comma2,
-    action,
-    _ep,
-    _sb,
-    body,
-    _eb
-  ) {
+  ContFlow_forloop(_for, _sp, init, _comma, condition, _comma2, action, _ep, _sb, body, _eb) {
     return new ast.ForLoop(
       init.ast(),
       condition.ast(),
@@ -105,15 +65,14 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   ContFlow_while(_whle, _sp, logicExp, _ep, _sb, body, _eb) {
     return new ast.WhileLoop(logicExp.ast(), body.ast())
   },
-  // switch Factor "{" (case Factor ":" Body )+ "}"
   ContFlow_switchcase(
     _switch,
-    factor,
+    _factor,
     _open,
     _cases,
-    factors,
+    _factors,
     _colon,
-    body,
+    _body,
     _close
   ) {
     throw new Error("Not implemented")
@@ -156,7 +115,6 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
     return new ast.UnaryExpression(sign.sourceString, id.ast())
   },
   Factor_parens(_sp, logicExp, _cp) {
-    // return new ast.LogicExpression(addSub.ast())
     return logicExp.ast()
   },
   Factor_unary(sign, _sp, factor, _cp) {
@@ -198,7 +156,6 @@ const astBuilder = grammar.createSemantics().addOperation("ast", {
   Lexicographical(_squote, str, _equote) {
     return new ast.StringValue(str.sourceString)
   },
-  // [ Numeral, 1 ]
   Liste(_sb, values, _eb) {
     return new ast.Liste(values.asIteration().ast())
   },
@@ -226,8 +183,3 @@ export default function parse(sourceCode) {
   }
   return astBuilder(match).ast()
 }
-
-// export default function parse(source) {
-//   const match = grammar.match(source)
-//   return match.succeeded()
-// }
