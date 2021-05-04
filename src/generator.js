@@ -44,7 +44,7 @@ export default function generate(program) {
       return p.name
     },
     IfStatement(s) {
-      output.push(`if (${gen(s.le1)}) {.`)
+      output.push(`if (${gen(s.le1)}) {`)
       gen(s.body)
       if (s.le2[0] !== undefined) {
         s.le2.forEach((element, index) => {
