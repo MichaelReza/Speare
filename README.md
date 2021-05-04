@@ -300,7 +300,7 @@ That is the question, is it not? These are true/false values of `faithful` and `
 
 ### 3.4 | Compositions
 
-Compositions... or as the casuals call them, "classes," are very simple to create in Speare, yet so snazzy.
+Compositions... or as the casuals call them, "classes," are very simple to create in Speare, yet so snazzy. These are not currently supported in Speare.
 
 `Composition Foo {...}`
 
