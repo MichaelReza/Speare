@@ -8,4 +8,4 @@ enter ToBeOrNotToBe g() {
   returneth fallacious
 }
 
-f(z, g())
+speaketh(f(z, g()))

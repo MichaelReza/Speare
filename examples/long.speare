@@ -1,8 +1,8 @@
-speaketh("hello")
+  speaketh("hello")
   speaketh(6 with 7)
   alloweth Numeral x be 6
   alloweth Numeral qwerty be (47 without 14)
-  alloweth Numeral yuiop be nay(27)
+  alloweth Numeral yuiop be -27
   speaketh(x furthermore y)
   alloweth Numeral x be 6 exponentiate 2
   alloweth Numeral y be 6.33
@@ -46,33 +46,11 @@ speaketh("hello")
     speaketh(x)
   }
 
-  trigger x {
-    condition 0:
-      speaketh(x)
-      exit
-    condition 1:
-      speaketh(x)
-      exit
-  }
-
   enter ToBeOrNotToBe foo(Numeral b) {
     alloweth Numeral c be 1
     enter ToBeOrNotToBe bar() {
       speaketh("hello")
     }
-  }
-
-  Composition foo {
-      enter ToBeOrNotToBe foo(Numeral b) {
-        alloweth Numeral c be 1
-        returneth c
-      }
-      Composition bar {
-      }
-      enter ToBeOrNotToBe foo(Numeral b) {
-        alloweth Numeral c be 1
-        returneth c
-      }
   }
 
   in regards to (alloweth Numeral d be 0, d nobler 20, d decrement) {

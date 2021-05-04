@@ -6,6 +6,7 @@
 import * as ast from "./ast.js"
 
 export default function optimize(node) {
+  console.log(node.constructor.name)
   return optimizers[node.constructor.name](node)
 }
 
@@ -149,7 +150,16 @@ const optimizers = {
   Number(e) {
     return e
   },
+  Numeral(e) {
+    return e
+  },
+  Tobeornottobe(b) {
+    return b
+  },
   Boolean(e) {
+    return e
+  },
+  Print(e) {
     return e
   },
   String(e) {

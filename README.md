@@ -15,8 +15,7 @@ Welcome to the realm of sophisticated programming. No more are the days of writi
 Speare has a number of different features:
 
 - Static typing
-- Classes for object-oriented flow
-- Nesting
+- Complex Nesting
 - Sophistication
 - JS-like numeric types
 
@@ -61,8 +60,8 @@ Below, you will find a comprehensive set of examples of code in Speare. Hopefull
 
 ```javascript
 function foo(bar, baz) {
-  let x = 0;
-  return x;
+  let x = 0
+  return x
 }
 ```
 
@@ -82,7 +81,7 @@ enter Numeral foo(Numeral bar, Numeral baz) {
 
 ### Variable Declaration and Assignment
 
-- Speare allows for both declaration and assignment of variables
+- Speare allows for only assignment of variables. You may not create variables with no value
 - Speare requires that you state the type of the variable you are creating
 
 <table>
@@ -92,11 +91,11 @@ enter Numeral foo(Numeral bar, Numeral baz) {
 <td>
 
 ```javascript
-var a;
-var b = 0;
-var c = "hello";
-var d = [6, 4, 3];
-var e = { 6: 12, 3: 7 };
+var a
+var b = 0
+var c = "hello"
+var d = [6, 4, 3]
+var e = { 6: 12, 3: 7 }
 ```
 
 </td>
@@ -104,11 +103,10 @@ var e = { 6: 12, 3: 7 };
 <td>
 
 ```
-alloweth Numeral a
 alloweth Numeral b be 0
 alloweth Lexicographical c be "hello"
-alloweth Liste d be [6, 4, 3]
-alloweth Concordance e be {6 : 12, 3 : 7}
+alloweth Liste of Numeral d be [6, 4, 3]
+alloweth Concordance of Numeral and Numeral e be {6 : 12, 3 : 7}
 ```
 
 </td>
@@ -123,12 +121,13 @@ alloweth Concordance e be {6 : 12, 3 : 7}
 <td>
 
 ```javascript
+let x = 10
 if (x == 10) {
-  console.log(x);
+  console.log(x)
 } else if (x > 10) {
-  console.log("greater");
+  console.log("greater")
 } else {
-  console.log("less");
+  console.log("less")
 }
 ```
 
@@ -137,6 +136,7 @@ if (x == 10) {
 <td>
 
 ```
+alloweth Numeral x be 10
 whether (x tis 10) {
   speaketh(x)
 }
@@ -162,8 +162,8 @@ otherwise {
 <td>
 
 ```javascript
-for (int x = 0; x < 10; x++>) {
-  for (x in dataset) {
+for (int x = 0; x < 10; x++) {
+  for (int y = 0; y < 20; y++) {
     y += 5;
   }
 }
@@ -175,7 +175,7 @@ for (int x = 0; x < 10; x++>) {
 
 ```
 in regards to(alloweth x be 0, x lesser 10, x increment) {
-  in regards to (x within dataset) {
+  in regards to (alloweth y be 0, y lesser 20, y increment) {
     y incrementby 5
   }
 }
@@ -194,9 +194,7 @@ in regards to(alloweth x be 0, x lesser 10, x increment) {
 
 ```javascript
 while (x) {
-  do {
-    y++;
-  } while (y <= 10);
+  console.log("doing!")
 }
 ```
 
@@ -206,48 +204,7 @@ while (x) {
 
 ```
 whilst(x) {
-  execute {
-    y increment
-  } whilst(y tis lesser 10)
-}
-
-
-```
-
-</td>
-</table>
-
-### Switch Case
-
-<table>
-<tr> <th>JavaScript</th><th>Speare</th><tr>
-</tr>
-
-<td>
-
-```javascript
-switch (x) {
-  case 0:
-    y = 0;
-    break;
-  case 1:
-    y = 1;
-    break;
-}
-```
-
-</td>
-
-<td>
-
-```
-trigger(x) {
-  condition 0:
-    y be 0;
-    exit;
-  condition 1:
-    y be 1;
-    exit;
+  speaketh("doing!")
 }
 ```
 
@@ -401,10 +358,28 @@ Here is a list of all reserved words in the language:
 
 ### 3.6 | Semantic Errors
 
-As this language grows and begins to function, we will add a section on semantics!:
+- Variable assignment with incompatible types
+- Non-distinct keys for Concordances
+- Variable reassignment with incompatible types
+- Listes have inconsistent types
+- Exit outside of loop
+- Attempts to call a non-function or constructor
+- Function with no return
+- Returning a value where no value should be returned
+- Wrong return type
+- mismatching parameter types
+- Creating a variable with an id that has already been used
+- Referencing an unused identifier
+- Compositions will raise a semantic error. They are not yet implemented
 
 <br />
 
 ### 4.0 | Installation
 
-You cannot currently install and run Speare, but you can check out our tests by pulling the repository and running `npm install`, then `npm test` to see all of our current tests for the grammar of Speare.
+To run Spear, fork and pull this repo. Run `npm install`, cd to the speare project folder.
+You can run several different commands with the Speare compiler:
+`node ./src/speare.js <your/directory/code.speare ast` will output the ast for your speare program.
+`node ./src/speare.js <your/directory/code.speare analyzed` will output the analyzed speare file.
+`node ./src/speare.js <your/directory/code.speare generated` will output the JavaScript code version.
+`node ./src/speare.js <your/directory/code.speare optimized` will output the optimized semantically analyzed representation.
+`node ./src/speare.js <your/directory/code.speare js` will output the translation to JavaScript

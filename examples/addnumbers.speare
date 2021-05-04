@@ -1,0 +1,4 @@
+alloweth Numeral x be 1
+alloweth Numeral y be 2
+
+speaketh(x with y)

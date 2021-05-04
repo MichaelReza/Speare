@@ -1,0 +1,10 @@
+enter ToBeOrNotToBe isTriangle() {
+  alloweth Numeral a be 3
+  alloweth Numeral b be 4
+  alloweth Numeral c be 5
+  alloweth ToBeOrNotToBe result be fallacious
+  whether (a exponentiate 2 with b exponentiate 2 tis c exponentiate 2) {
+    result be faithful
+  }
+  returneth result
+}
