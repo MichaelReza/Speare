@@ -83,7 +83,6 @@ const optimizers = {
     }
     return s
   },
-  
   BinaryExpression(e) {
     e.left = optimize(e.left)
     e.right = optimize(e.right)

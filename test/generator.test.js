@@ -1,4 +1,4 @@
-import assert from "assert/strict"
+import assert from "assert"
 import parse from "../src/parser.js"
 import analyze from "../src/analyzer.js"
 import generate from "../src/generator.js"

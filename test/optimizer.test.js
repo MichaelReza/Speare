@@ -1,4 +1,4 @@
-import assert from "assert/strict"
+import assert from "assert"
 import optimize from "../src/optimizer.js"
 import * as ast from "../src/ast.js"
 
