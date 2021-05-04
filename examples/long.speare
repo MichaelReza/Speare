@@ -3,9 +3,9 @@
   alloweth Numeral x be 6
   alloweth Numeral qwerty be (47 without 14)
   alloweth Numeral yuiop be -27
-  speaketh(x furthermore y)
-  alloweth Numeral x be 6 exponentiate 2
   alloweth Numeral y be 6.33
+  speaketh(x furthermore y)
+  alloweth Numeral randomdudesittingonabike be 6 exponentiate 2
   alloweth Liste of Numeral z be [3, 5, 7, 9]
   alloweth Concordance of Numeral and Numeral a be {12 : 6, 3 : 4, 8 : 9}
   speaketh(x accumulate 5)
@@ -14,27 +14,11 @@
   x increment
   x incrementby 4
 
-  enter ToBeOrNotToBe foo(Numeral f) {
-    in regards to(f within z) {
-      in regards to (g within z) {
-        g be 6
-      }
-      f be 7
-    }
-    returneth f
-  }
-
   whilst (x nobler 20) {
     whilst (x nobler 20) {
       speaketh("nested")
     }
   }
-
-  execute {
-    execute {
-      speaketh(x)
-    } whilst(x nobler x)
-  } whilst(x nobler x)
 
   whether (x nobler x) {
     speaketh(x)
