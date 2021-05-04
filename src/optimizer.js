@@ -6,7 +6,6 @@
 import * as ast from "./ast.js"
 
 export default function optimize(node) {
-  console.log(node.constructor.name)
   return optimizers[node.constructor.name](node)
 }
 
