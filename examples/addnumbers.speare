@@ -2,3 +2,8 @@ alloweth Numeral x be 1
 alloweth Numeral y be 2
 
 speaketh(x with y)
+speaketh(y with x)
+
+y be y with x
+y incrementby x
+speaketh(y)
