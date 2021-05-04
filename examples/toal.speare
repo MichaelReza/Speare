@@ -1,0 +1,30 @@
+enter ToBeOrNotToBe toalcut() {
+  alloweth ToBeOrNotToBe hasToalGottenAHaircutYet be fallacious
+  returneth hasToalGottenAHaircutYet
+}
+
+enter Numeral toalHairLength(Lexicographical month) {
+  alloweth Numeral length be 0
+  whether (month tis "January") {
+    length be 2
+  } subsequently (month tis "February") {
+    length be 3.2
+  } subsequently (month tis "March") {
+    length be 3.4
+  } subsequently (month tis "April") {
+    length be 4.6
+  } subsequently (month tis "May") {
+    length be 5.6
+  } otherwise {
+    length be 0.4
+  }
+
+  whether (toalcut() tis faithful) {
+    length be 0
+  }
+
+  returneth length
+}
+
+toalHairLength("May")
+
