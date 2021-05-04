@@ -1,0 +1,6 @@
+alloweth Lexicographical longestYeahBoiEver be "Yeah bo"
+
+in regards to (alloweth Numeral i be 0, i lesser 20, i increment) {
+    longestYeahBoiEver be longestYeahBoiEver with "i"
+}
+speaketh(longestYeahBoiEver)
