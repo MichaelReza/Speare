@@ -86,6 +86,7 @@ const tests = [
       new ast.Tobeornottobe("fallacious"),
       new ast.VariableInitialization("Numeral", "x", 0),
       new ast.WhileLoop(true, [new ast.Break()]),
+      new ast.Print("Hello"),
       new ast.IfStatement(bool, undefined, undefined, undefined, undefined),
       new ast.ForLoop(x, less(x, 15), xpp, xmm),
     ]),
