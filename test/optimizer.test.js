@@ -83,6 +83,7 @@ const tests = [
       new ast.VariableAssignment(x, new ast.UnaryExpression("absolutization", x)),
       new ast.Call(identity, new ast.ArrayLookup(x, "f")),
       new ast.Numeral(44),
+      new ast.Tobeornottobe("fallacious"),
       new ast.VariableInitialization("Numeral", "x", 0),
       new ast.WhileLoop(true, [new ast.Break()]),
       new ast.IfStatement(bool, undefined, undefined, undefined, undefined),
