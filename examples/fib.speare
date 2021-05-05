@@ -1,0 +1,7 @@
+enter Numeral fib (Numeral x) {
+    whether (x be 1 alternatively x be 2) {
+        returneth 1
+    } otherwise {
+        returneth fib(x without 1) with fib(x without 2)
+    }
+}

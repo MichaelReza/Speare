@@ -6,7 +6,7 @@ enter Numeral countdown (Numeral x) {
         speaketh(x)
         x decrement
     }
-    return x
+    returneth x
 }
 
 countdown(10)
