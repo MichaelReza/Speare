@@ -11,3 +11,6 @@ speaketh("It takes screen-shots")
 
 speaketh("Why do Java programmers wear glasses?")
 speaketh("Because they don't C#")
+
+speaketh("Why did the functions stop calling each other?")
+speaketh("Because they had constant arguments")
