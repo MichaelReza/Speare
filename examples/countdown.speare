@@ -1,0 +1,12 @@
+enter Numeral countdown (Numeral x) {
+    whether (x tis lesser 0) {
+        x be absolutization(x)
+    }
+    whilest (x nay be 0) {
+        speaketh(x)
+        x decrement
+    }
+    return x
+}
+
+countdown(10)
