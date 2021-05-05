@@ -1,4 +1,7 @@
-alloweth Lexicographical question be "Why are people who use the metric system so good at computer science?"
-speaketh(question)
-alloweth Lexicographical answer be "Because they are pro-grammers"
-speaketh(answer)
+speaketh("Why are people who use the metric system so good at computer science?")
+speaketh("Because they are pro-grammers")
+
+speaketh("I don't like computer science jokes...Not one bit")
+
+speaketh("One thing I know is that a computer science major didn't name the original pokemon. 
+Otherwise, charmander would evolve into stringmander.")
