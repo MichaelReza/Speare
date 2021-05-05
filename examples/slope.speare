@@ -1,0 +1,3 @@
+enter Numeral slope (Numeral m, Numeral x, Numeral b) {
+    returneth m accumulate x with b
+}
